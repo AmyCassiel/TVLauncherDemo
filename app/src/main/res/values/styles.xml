@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+
+    </style>
+    <!-- 按钮 -->
+    <style name="NewBtnStyle">
+        <item name="android:layout_width">@dimen/btn_menu</item>
+        <item name="android:layout_height">@dimen/btn_menu</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:focusableInTouchMode">true</item>
+    </style>
+
+    <style name="NewTextStyle">
+        <item name="android:layout_width">@dimen/btn_menu</item>
+        <item name="android:layout_height">@dimen/menu_text_height</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:textSize">@dimen/text_size_welcome</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/text_padding</item>
+        <item name="android:layout_marginTop">@dimen/menu_text_margintop</item>
+    </style>
+
+    <!-- 输入文本 -->
+    <style name="NewEditTextStyle">
+        <item name="android:layout_width">@dimen/et_width</item>
+        <item name="android:layout_height">@dimen/et_height</item>
+        <item name="android:layout_marginLeft">@dimen/et_left_margin</item>
+        <item name="android:paddingLeft">@dimen/et_left_padding</item>
+        <item name="android:paddingRight">@dimen/et_left_padding</item>
+        <item name="android:background">@drawable/btn_bg_seletor_blue_gray</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/et_text_size</item>
+    </style>
+
+    <!-- 按钮 -->
+    <style name="NewBtStyle">
+        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:background">@drawable/btn_bg_seletor_blue_gray</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:textColor">@color/commom_all_white</item>
+        <item name="android:textSize">@dimen/btn_text_size</item>
+    </style>
+
+</resources>

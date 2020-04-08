@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@mipmap/about_background">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/introduce_hotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/btm_margin_bottom"
+                    android:layout_marginTop="@dimen/btn_height"
+                    android:alpha="0.7"
+                    android:background="@drawable/hotel_introduce"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/btn_height"
+                        android:layout_marginTop="@dimen/btn_height"
+                        android:layout_marginEnd="@dimen/btn_height"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/hotel_introduce_tittle"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_tittle_text" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/btn_height"
+                        android:background="@drawable/hotel_introduce"
+                        android:lineSpacingExtra="9dp"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/hotel_introduce_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_text" />
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/introduce_function"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/btn_height"
+                    android:layout_marginTop="@dimen/btn_height"
+                    android:alpha="0.7"
+                    android:background="@drawable/hotel_introduce"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/introduce_hotel"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/btn_height"
+                        android:padding="@dimen/text_padding"
+                        android:layout_marginTop="@dimen/btn_height"
+                        android:layout_marginEnd="@dimen/btn_height"
+                        android:text="@string/function_introduce_tittle"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_tittle_text" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/btn_height"
+                        android:lineSpacingExtra="9dp"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/function_introduce_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_text" />
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/introduce_weixin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/btn_height"
+                    android:layout_marginTop="@dimen/btn_height"
+                    android:alpha="0.7"
+                    android:background="@drawable/hotel_introduce"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/introduce_function"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/btn_height"
+                        android:layout_marginTop="@dimen/btn_height"
+                        android:layout_marginEnd="@dimen/btn_height"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/about_tittle"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_tittle_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/btn_height"
+                        android:layout_marginTop="@dimen/btn_height"
+                        android:layout_marginEnd="@dimen/btn_height"
+                        android:padding="@dimen/text_padding"
+                        android:lineSpacingExtra="9dp"
+                        android:text="@string/about_text"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/hotel_text" />
+
+                    <ImageView
+                        android:layout_width="@dimen/weixin_layout"
+                        android:layout_height="@dimen/weixin_layout"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/btn_height"
+                        android:layout_marginTop="@dimen/image_margin"
+                        android:layout_marginEnd="@dimen/btn_height"
+                        android:layout_marginBottom="45px"
+                        android:src="@mipmap/weixin" />
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+            <ImageButton
+                android:id="@+id/setting"
+                android:layout_width="@dimen/image_hw"
+                android:layout_height="@dimen/image_hw"
+                android:layout_gravity="end"
+                android:padding="@dimen/text_padding"
+                android:layout_marginTop="@dimen/image_margin"
+                android:layout_marginBottom="@dimen/image_margin"
+                android:layout_marginEnd="@dimen/btn_height"
+                android:background="@mipmap/service" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+</com.zhy.autolayout.AutoRelativeLayout>

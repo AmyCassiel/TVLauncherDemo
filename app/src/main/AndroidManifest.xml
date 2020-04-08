@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jiachang.tv_launcher">
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+
+    <!--bugly配置-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!--获取当前网络-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <!--获取本机的权限设置-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+        android:name="com.jiachang.tv_launcher.SampleApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/com_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:configChanges="navigation"
+        android:theme="@style/AppTheme">
+
+        <!--注入apache库-->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <!-- bugly所需要声明的activity和provider -->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="landscape"/>
+        <!--API 24以上配置-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="name,resource"/>
+        </provider>
+
+        <!-- 首页 -->
+        <activity
+            android:name="com.jiachang.tv_launcher.activity.MainActivity"
+            android:banner="@mipmap/com_logo"
+            android:icon="@mipmap/com_logo"
+            android:label="@string/app_name"
+            android:logo="@mipmap/com_logo"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+<!--        投屏界面-->
+        <activity android:name=".activity.ApowerMirrorActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
+
+<!--        菜单页面-->
+        <activity
+            android:name="com.jiachang.tv_launcher.activity.DiningActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
+
+<!--        食物详情页-->
+        <activity
+            android:launchMode="singleTask"
+            android:name="com.jiachang.tv_launcher.activity.foodDetailsActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
+
+<!--        关于酒店 页-->
+        <activity
+            android:launchMode="singleTask"
+            android:name="com.jiachang.tv_launcher.activity.HotelServiceActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
+
+<!--        更改设置页-->
+        <activity
+            android:launchMode="singleTask"
+            android:name="com.jiachang.tv_launcher.activity.SettingActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <!-- 应用程序发生改变，替换，被删除的广播监听 -->
+        <receiver android:name="com.jiachang.tv_launcher.receiver.PackageChangedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+            </intent-filter>
+        </receiver>
+        <!-- 开机广播监听 -->
+        <receiver android:name="com.jiachang.tv_launcher.receiver.StartUpReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- AutoLayout 基准分辨率初始化 -->
+        <meta-data
+            android:name="design_width"
+            android:value="1920"/>
+        <meta-data
+            android:name="design_height"
+            android:value="1080"/>
+
+        <meta-data
+            android:name="com.jiachang.tv_launcher.utils.GlideModelConfig"
+            android:value="GlideModule" />
+
+    </application>
+
+</manifest>

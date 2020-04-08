@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/about_background"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center_vertical">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_layout_height"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--<androidx.leanback.widget.SearchBar
+            android:layout_width="1600px"
+            android:layout_height="match_parent"
+            android:layout_margin="20px"
+            android:background="@drawable/search_shape_radius"
+            android:alpha="0.7"
+            android:gravity="center|end"
+            android:autofillHints="@string/menu_apower_mirror"
+            android:drawableEnd="@mipmap/seach">
+            <ImageView
+                android:id="@+id/btn_search"
+                android:src="@mipmap/speech"
+                android:layout_width="75px"
+                android:layout_height="75px"
+                android:layout_marginEnd="10px"/>
+        </androidx.leanback.widget.SearchBar>-->
+        <ImageView
+            android:id="@+id/shopping_cart"
+            android:layout_width="@dimen/icon_layout_height"
+            android:layout_height="@dimen/icon_layout_height"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/icon_margin"
+            android:gravity="center|end"
+            android:src="@mipmap/shopping_car" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/text_height"
+        android:layout_marginStart="25px"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fastScrollEnabled="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

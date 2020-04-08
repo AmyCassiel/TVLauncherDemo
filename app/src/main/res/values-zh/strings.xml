@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV_Launcher</string>
+
+    <string name="default_weather">5℃/9℃</string>
+    <string name="default_time">00:00</string>
+    <string name="default_day">2020年1月1日\n星期三</string>
+    <string name="menu_multimedia">多媒体</string>
+    <string name="menu_music">音乐</string>
+    <string name="menu_apower_mirror">投屏</string>
+    <string name="menu_dining">餐饮</string>
+    <string name="menu_service">酒店服务</string>
+
+    <string name="default_choose">选择</string>
+    <string name="default_return">返回</string>
+    <string name="home">首页</string>
+    <string name="welcome">欢迎&#8201;%1$s&#8201;入住本酒店\n\n房间号：007</string>
+
+    <string name="hotel_introduce_tittle">酒店介绍</string>
+    <string name="hotel_introduce_text">&#8195;&#8195;家畅智慧酒店于2020年开业，并在同年装修完成，全酒店共有44间房，酒店采用自助入住，小畅智能客控、高档慕斯床垫、以客户体验为首的上海市一家集自助服务、智能客控、管家式服务为一体的全新升级产品。
+            \n&#8195;&#8195;家畅智慧酒店(上海南翔店)坐落于上海市嘉定区真南路，毗邻轨交11号线南翔站、南翔古猗园。
+            \n&#8195;&#8195;联系电话：400—756-9888</string>
+
+    <string name="function_introduce_tittle">功能介绍</string>
+    <string name="function_introduce_text">◇&#8201;语音控制各种电器：\n&#8195;&#8195;床头灯；\n&#8195;&#8195;彩灯；\n&#8195;&#8195;空调；\n&#8195;&#8195;电视；\n&#8195;&#8195;卧室灯；
+        \n◇&#8201;语音开启场景模式：\n&#8195;&#8195;夏天模式；\n&#8195;&#8195;冬天模式；\n&#8195;&#8195;读书模式；</string>
+
+    <string name="about_tittle">关于</string>
+    <string name="about_text">想了解更丰富的功能信息，请打开“微信”，扫描下方二维码，进入“家畅智慧酒店”小程序，就可以用手机控制房间内的各种电器啦！</string>
+
+    <string name="roast_duck_detail">翡翠玉皮烤鸭\nRMB:95元</string>
+
+    <string name="user_login">用戶登录</string>
+    <string name="account">账号</string>
+    <string name="input_account_hint">输入管理员账号</string>
+    <string name="password">密码</string>
+    <string name="input_password_hint">输入管理员密码</string>
+    <string name="empty_pass_tip">账号或者密码不能为空</string>
+    <string name="pass_error_tip">账号或者密码错误</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
+    <string name="set_setting"><u>设置</u></string>
+    <string name="intro_apower_mirror">
+        <b>对于安卓设备：</b>\n
+        方法一：\n
+        1、将AirScreen设备和Andoid手机连接到同一WiFi网络下。\n
+        2、在您的安卓设备上，下载Google&#8201;Home应用程序<b>（在您的发送设备上）。</b>\n
+        3、打开Google&#8201;Home应用程序,点按左边导航图标打开菜单，然后从导航栏列表选择<b>投射屏幕。</b>\n
+        4、点按<b>投射屏幕</b>并选择您的设备<b>AS_T95ZPLUS[Cast]。</b>\n
+        方法二：\n
+        1、将AirScreen设备和Andoid手机连接到同一WiFi网络下。\n
+        2、打开Android设备的“设置应用”。<b>（在您的发送设备上）</b>\n
+        3、依次点按<b>显示&#8201;>&#8201;投射。</b>\n
+        4、在WLAN网络中的投射设备列表中，点按目标设备<b>AS_T95ZPLUS[Cast]</b>投射屏幕内容。\n
+        <b>对于Windows：</b>\n
+        1、将Windows设备和Andoid手机连接到同一(WiFi/Ethernet)网络下。\n
+        2、在您的Windows设备上打开Chrome浏览器。\n
+        3、单击Chrome浏览器中的“投射”按钮，然后选择您的设备<b>AS_T95ZPLUS[Cast]。</b>\n
+    </string>
+    <string name="intro_apower_mirror_title">手机投屏说明书\n</string>
+</resources>

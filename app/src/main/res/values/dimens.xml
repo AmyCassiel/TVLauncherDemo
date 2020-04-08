@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--top栏-->
+    <dimen name="top_log">120px</dimen>
+    <dimen name="text_size_time">50px</dimen>
+    <dimen name="text_size_weather">25px</dimen>
+    <dimen name="top_weather_tv">100px</dimen>
+    <dimen name="top_wire_margin">50px</dimen>
+    <dimen name="wire_width">5px</dimen>
+    <dimen name="top_bar_height">200px</dimen>
+    <dimen name="weather_width">550px</dimen>
+    <dimen name="marginStart">50px</dimen>
+    <dimen name="margin_start_weather">35px</dimen>
+    <dimen name="text_size">18px</dimen>
+    <dimen name="text_size_welcome">30px</dimen>
+
+    <!--主菜单栏-->
+    <dimen name="btn_menu">150px</dimen>
+    <dimen name="btn_menu_bottom">150px</dimen>
+    <dimen name="menu_height">350px</dimen>
+    <dimen name="menu_apower_mirror">180px</dimen>
+    <dimen name="menu_margin_start">150px</dimen>
+    <dimen name="menu_item_height">200px</dimen>
+    <dimen name="menu_text_height">50px</dimen>
+    <dimen name="menu_text_margintop">40px</dimen>
+    <dimen name="menu_margin">80px</dimen>
+
+    <!--底部按钮-->
+    <dimen name="btm_margin_bottom">35px</dimen>
+
+    <!--订餐界面-->
+    <dimen name="grid_width">400px</dimen>
+    <dimen name="grid_height">500px</dimen>
+    <dimen name="image_height">350px</dimen>
+    <dimen name="text_height">150px</dimen>
+    <dimen name="image_margin">35px</dimen>
+    <dimen name="icon_layout_height">130px</dimen>
+    <dimen name="icon_margin">20px</dimen>
+
+    <!--食物详情页-->
+    <dimen name="food_img_height">10px</dimen>
+
+    <!--服务界面-->
+    <dimen name="tool_bar_height">150px</dimen>
+    <dimen name="tool_icon_layout_width">75px</dimen>
+    <dimen name="tool_icon_layout_height">75px</dimen>
+    <dimen name="tool_icon_layout_margin">75px</dimen>
+    <dimen name="hotel_layout_width">700px</dimen>
+    <dimen name="function_layout_width">500px</dimen>
+    <dimen name="weixin_layout_width">500px</dimen>
+    <dimen name="weixin_layout">300px</dimen>
+    <dimen name="hotel_tittle_text">65px</dimen>
+    <dimen name="hotel_text">37px</dimen>
+    <dimen name="text_padding">5px</dimen>
+    <dimen name="image_hw">100px</dimen>
+
+    <!--按钮-->
+    <dimen name="btn_width">180px</dimen>
+    <dimen name="btn_height">75px</dimen>
+    <dimen name="btn_text_size">35px</dimen>
+    <dimen name="margin">10px</dimen>
+    <dimen name="bottom_width">700px</dimen>
+    <dimen name="bottom_height">75px</dimen>
+
+    <!--输入文本-->
+    <dimen name="et_width">419px</dimen>
+    <dimen name="et_height">59px</dimen>
+    <dimen name="et_text_size">35px</dimen>
+    <dimen name="et_left_margin">45px</dimen>
+    <dimen name="et_left_padding">20px</dimen>
+
+    <!--TextView文本显示 IP地址，有线网设定-->
+    <dimen name="tv_width">419px</dimen>
+    <dimen name="tv_height">59px</dimen>
+    <dimen name="tv_text_size">35px</dimen>
+    <dimen name="tv_left_margin">45px</dimen>
+    <dimen name="tv_left_padding">20px</dimen>
+    <dimen name="common_radius_of_shape">12px</dimen>
+
+    <!-- 影视筛选 -->
+    <dimen name="title_h">80px</dimen>
+    <dimen name="title_w">180px</dimen>
+    <dimen name="title_line_w">40px</dimen>
+    <dimen name="title_line_h">4px</dimen>
+
+    <!-- 搜索界面 -->
+    <dimen name="popup_key_padding">10px</dimen>
+
+    <!-- 全键盘字符串 -->
+    <string-array name="all_keys">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="t9_keys">
+        <item>0,1.|.]</item>
+        <item>2,A.B.C</item>
+        <item>3,D.E.F</item>
+        <item>4,G.H.I</item>
+        <item>5,J.K.L</item>
+        <item>6,M.N.O</item>
+        <item>7,P.Q.R.S</item>
+        <item>8,T.U.V</item>
+        <item>9,W.X.Y.Z</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">TV_Launcher</string>
+
+    <string name="default_weather">5℃/9℃</string>
+    <string name="default_time">00:00</string>
+    <string name="default_day">January 1, 2020\nWednesday</string>
+    <string name="menu_multimedia">TV</string>
+    <string name="menu_music">Music</string>
+    <string name="menu_apower_mirror">Apower-\nMirror</string>
+    <string name="menu_dining">Dining</string>
+    <string name="menu_service">Service</string>
+
+    <string name="default_choose">Choose</string>
+    <string name="default_return">Return</string>
+    <string name="home">Home</string>
+    <string name="welcome">Welcome&#8201;%1$s&#8201;stay at our hotel!\n\nRoom Number：007</string>
+
+    <string name="hotel_introduce_tittle">The introduction of hotel</string>
+    <string name="hotel_introduce_text">&#8195;&#8195;The Jiachang wisdom hotel opened in 2020, and the decoration was completed in the same year. The hotel has 44 rooms. The hotel adopts self-service check-in, xiaochang intelligent customer control, high-end mousse mattress, customer experience led by a set of Shanghai self-service, intelligent customer control, butler service as one of the new upgrade products.
+            \n&#8195;&#8195;The Jiachang wisdom hotel (Shanghai nanxiang hotel) is located at zhennan road, jiading district, Shanghai. Adjacent to the railway line 11 nanxiang station, nanxiang guyi garden.
+            \n&#8195;&#8195;TEL：400—756-9888</string>
+
+    <string name="function_introduce_tittle">The function Introduction</string>
+    <string name="function_introduce_text">◇&#8201;The voice control of various electrical appliances: \n&#8195;&#8195;the bedside lamp; \n&#8195;&#8195;the fancy lantern; \n&#8195;&#8195;the air conditioner;\n&#8195;&#8195;the TV; \n&#8195;&#8195;the bedroom lamp;
+        \n◇&#8201;The voice on scene mode: \n&#8195;&#8195;the summer mode;\n&#8195;&#8195;the winter mode; \n&#8195;&#8195;the reading mode；</string>
+    <string name="about_tittle">About</string>
+    <string name="about_text">If you want to know more about the functionality, please open "WeChat" and scan the qr code below. And enter "home wisdom hotel" small program. You can use your cell phone to control all kinds of appliances in the room.</string>
+
+    <string name="roast_duck_detail">The Roast Duck\nRMB:95yuan</string>
+
+    <string name="user_login">Login</string>
+    <string name="account">User&#8195;ID</string>
+    <string name="input_account_hint">Please enter administrator account</string>
+    <string name="password">Password</string>
+    <string name="input_password_hint">Please enter password</string>
+    <string name="empty_pass_tip">The account number or password cannot be empty！</string>
+    <string name="pass_error_tip">Wrong account number or password！</string>
+    <string name="ok">ok</string>
+    <string name="cancel">cancel</string>
+
+    <string name="set_setting"><u>设置</u></string>
+    <string name="intro_apower_mirror">
+        <b>For&#8201;Android：\n\n</b>
+        <b>Method&#8201;&#8201;1:\n</b>
+        1.Please Connect the AirScreen device and the Android phone to the same WiFi network.\n
+        2.On your android device, download the Google Home app (On your sending device).\n
+        3.Open the Google Home app, click on the left navigation icon to open the menu, and then choose to <b>project the screen</b> from the navigation bar list.\n
+        4.Click <b>projection screen</b> and select your device<b>AS_T95ZPLUS[Cast]</b>\n
+        <b>Method&#8201;&#8201;2:\n</b>
+        1.Please Connect the AirScreen device and the Android phone to the same WiFi network.\n
+        2.In turn, click <b>Display > Cast</b>\n
+        3.In the list of projection devices in the WLAN network, click on the target device <b>AS_T95ZPLUS[Cast]</b> to project the screen content.\n
+        <b>For&#8201;Windows:</b>\n\n
+        1.Connect Windows devices and Andoid phones to the same (WiFi/Ethernet) network.\n
+        2.Open the Chrome browser on your Windows device.\n
+        3.Click the project button in Chrome and select your device <b>AS_T95ZPLUS[Cast]</b>\n
+    </string>
+    <string name="intro_apower_mirror_title">Projection instruction\n</string>
+</resources>
