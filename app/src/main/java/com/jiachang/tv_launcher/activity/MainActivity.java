@@ -14,41 +14,29 @@
 
 package com.jiachang.tv_launcher.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.google.common.collect.Lists;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.fragment.BottomFragment;
 import com.jiachang.tv_launcher.fragment.MenuFragment;
 import com.jiachang.tv_launcher.fragment.TopbarFragment;
-import com.jiachang.tv_launcher.utils.PropertyUtils;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 
-import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.ButterKnife;
-import github.chenupt.multiplemodel.viewpager.PagerModelManager;
 
 import static com.jiachang.tv_launcher.utils.ViewUtils.getScaledSize;
 
@@ -64,7 +52,7 @@ public class MainActivity extends FragmentActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
         hideBottomMenu();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(3, 5,
                 1, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>(128));
@@ -76,8 +64,6 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
-        PagerModelManager manager = new PagerModelManager();
-
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
 

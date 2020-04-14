@@ -1,56 +1,42 @@
 package com.jiachang.tv_launcher.adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.activity.foodDetailsActivity;
 import com.jiachang.tv_launcher.bean.Food;
 import com.jiachang.tv_launcher.utils.ViewUtils;
+import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnFocusChange;
 
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
  * @description
  */
-public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
+public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> implements View.OnClickListener {
     private List<Food> mFoodList;
     private Context context;
+    private onItemClickListener itemClickListener;//ItemView的监听器
+    private RecyclerView recyclerView;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.food_image)
         ImageView foodImage;
         @BindView(R.id.food_name)
         TextView foodName;
-        @BindView(R.id.food)
-        LinearLayout food;
+        @BindView(R.id.food_card)
+        AutoRelativeLayout foodCard;
 
         public ViewHolder (View view) {
             super(view);
@@ -58,20 +44,22 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         }
     }
 
-    public  FoodAdapter (List <Food> fruitList){
-        mFoodList = fruitList;
+    public  FoodAdapter (Context context,List <Food> foodList){
+        this.context = context;
+        this.mFoodList = foodList;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dining_food_item,parent,false);
+        view.setOnClickListener(this);
         final ViewHolder holder = new ViewHolder(view);
         context = view.getContext();
 
-        holder.food.setFocusable(true);
+        holder.foodCard.setFocusable(true);
 
-        holder.food.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        holder.foodCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -82,46 +70,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             }
         });
 
-        holder.food.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = v.getVerticalScrollbarPosition();
-                Food food = mFoodList.get(position);
-                Intent intent = new Intent();
-                intent.setClass(context, foodDetailsActivity.class);
-                intent.putExtra("imageName", food.getName());
-                intent.putExtra("image",food.getImageId());
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptionsCompat  options = ActivityOptionsCompat
-                            .makeSceneTransitionAnimation((Activity) context,new Pair<View,String>(holder.foodImage,"food_image"),new Pair<View,String>(holder.foodName,"name"));
-                    Log.e("options = ",""+options);
-                    context.startActivity(intent, options.toBundle());
-                }else{
-                    context.startActivity(intent);
-                }
-                context.startActivity(new Intent(context,foodDetailsActivity.class),
-                        ActivityOptions.makeSceneTransitionAnimation((Activity) context,
-                                v, "food_image").toBundle());
-            }
-        });
-
         initView(holder);
 
         return holder;
     }
 
     private void initView(ViewHolder viewHolder){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metric = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(metric);
-        // 屏幕宽度（像素）
-        int width = metric.widthPixels/5;
-        // 屏幕高度（像素）
-        int height = metric.heightPixels/3;
-        ViewGroup.LayoutParams layoutParams =viewHolder.food.getLayoutParams();
-        layoutParams.width = width;
+        ViewGroup.LayoutParams layoutParams =viewHolder.foodCard.getLayoutParams();
+        layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
         layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+    }
+
+    public void setItemClickListener(onItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -139,5 +100,25 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public long getItemId(int i){
         return i;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView=recyclerView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (itemClickListener != null && recyclerView != null){
+            //recyclerView 21以下使用,　22时作废
+//             int position = recyclerView.getChildPosition(v);
+            //22时用些方法替换上面的方法
+            int position = recyclerView.getChildAdapterPosition(v);
+            itemClickListener.onItemClick(position,v,mFoodList.get(position));
+        }
+    }
+
+    public interface onItemClickListener{
+        void onItemClick(int position,View v,Food food);
     }
 }

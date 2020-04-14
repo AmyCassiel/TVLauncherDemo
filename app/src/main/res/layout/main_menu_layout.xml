@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/menu_margin_bottom"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:background="@color/common_gray_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/menu_tv"
+            style="@style/MenuAutoLinearLayout"
+            android:nextFocusLeft="@id/menu_service"
+            android:nextFocusRight="@id/menu_music"
+            android:nextFocusDown="@id/menu_music"
+            android:nextFocusUp="@id/menu_service">
+
+            <ImageView
+                style="@style/MenuImageViewStyle"
+                android:src="@mipmap/tv" />
+
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="@string/menu_multimedia" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/menu_music"
+            style="@style/MenuAutoLinearLayout"
+            android:nextFocusLeft="@id/menu_tv"
+            android:nextFocusRight="@id/menu_apower_mirror"
+            android:nextFocusDown="@id/menu_apower_mirror"
+            android:nextFocusUp="@id/menu_tv"
+            android:layout_marginStart="@dimen/menu_margin_start">
+
+            <ImageView
+                style="@style/MenuImageViewStyle"
+                android:src="@mipmap/music" />
+
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="@string/menu_music" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/menu_apower_mirror"
+            style="@style/MenuAutoLinearLayout"
+            android:nextFocusLeft="@id/menu_music"
+            android:nextFocusRight="@id/menu_dining"
+            android:nextFocusDown="@id/menu_dining"
+            android:nextFocusUp="@id/menu_music"
+            android:layout_marginStart="@dimen/menu_margin_start">
+
+            <ImageView
+                style="@style/MenuImageViewStyle"
+                android:src="@mipmap/apower_mirror" />
+
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="@string/menu_apower_mirror" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/menu_dining"
+            style="@style/MenuAutoLinearLayout"
+            android:nextFocusLeft="@id/menu_apower_mirror"
+            android:nextFocusRight="@id/menu_service"
+            android:nextFocusDown="@id/menu_service"
+            android:nextFocusUp="@id/menu_apower_mirror"
+            android:layout_marginStart="@dimen/menu_margin_start">
+
+            <ImageView
+                style="@style/MenuImageViewStyle"
+                android:src="@mipmap/dining"
+                android:transitionName="image_dining" />
+
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="@string/menu_dining" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/menu_service"
+            style="@style/MenuAutoLinearLayout"
+            android:nextFocusLeft="@id/menu_dining"
+            android:nextFocusRight="@id/menu_tv"
+            android:nextFocusDown="@id/menu_tv"
+            android:nextFocusUp="@id/menu_dining"
+            android:layout_marginStart="@dimen/menu_margin_start">
+
+            <ImageView
+                style="@style/MenuImageViewStyle"
+                android:src="@mipmap/hotel" />
+
+            <TextView
+                style="@style/MenuTextStyle"
+                android:text="@string/menu_service" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

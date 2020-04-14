@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/food_card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:layout_constraintCircleRadius="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:transitionName="food_card"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_margin="30px">
+
+
+    <LinearLayout
+        android:id="@+id/food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:scaleType="center"
+        android:duplicateParentState="true"
+        android:padding="@dimen/text_padding">
+
+        <com.jiachang.tv_launcher.view.MyImageView
+            android:id="@+id/food_image"
+            android:layout_width="275px"
+            android:layout_height="200px"
+            android:layout_gravity="center"
+            android:focusable="true"
+            android:transitionName="image_dining" />
+
+        <TextView
+            android:id="@+id/food_name"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:focusable="true"
+            android:background="@color/gray"
+            android:alpha="0.8"
+            android:padding="@dimen/text_padding"
+            android:textColor="@color/black"
+            android:textSize="20px" />
+    </LinearLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

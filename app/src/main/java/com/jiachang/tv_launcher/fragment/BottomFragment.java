@@ -24,7 +24,7 @@ public class BottomFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View bottomlayout = inflater.inflate(R.layout.bottom_bar,container,false);
+        View bottomlayout = inflater.inflate(R.layout.main_bottom_bar,container,false);
         mUnbinder = ButterKnife.bind(this,bottomlayout);
         return bottomlayout;
     }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+
+    <com.jiachang.tv_launcher.view.MyImageView
+        android:id="@+id/food_img"
+        android:layout_width="500px"
+        android:layout_height="400px"
+        android:transitionName="image_dining" />
+    <TextView
+        android:id="@+id/foodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TableLayout
+        android:id="@+id/hud_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="partOrderOpen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#77000000"
+        android:padding="8dp" />
+    <androidx.leanback.widget.HorizontalGridView
+        android:id="@+id/h_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_gravity="bottom"
+        android:transitionName="partOrderOpen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="80px"
+        android:layout_marginLeft="200px"
+        android:layout_marginRight="200px" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

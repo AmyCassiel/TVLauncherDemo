@@ -10,7 +10,7 @@ android {
         applicationId "com.jiachang.tv_launcher"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -46,6 +46,7 @@ dependencies {
     implementation 'androidx.leanback:leanback:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     // 适配库
     implementation 'com.zhy:autolayout:1.4.5'
@@ -87,6 +88,9 @@ dependencies {
     //qr code
     implementation 'com.google.zxing:core:3.2.1'
     implementation 'com.google.zxing:android-core:3.2.1'
+
+    //添加阴影效果
+    implementation 'com.github.devlight.shadowlayout:library:1.0.2'
 }
 // 依赖插件脚本
 //apply from: 'tinker-support.gradle'

@@ -1,5 +1,7 @@
 package com.jiachang.tv_launcher.fragment;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,7 +10,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
@@ -20,7 +21,6 @@ import com.zhy.autolayout.AutoLinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,23 +39,23 @@ public class MenuFragment extends Fragment{
     private Intent intent;
     private PackageManager pm;
 
-    @BindView(R.id.image_tv)
-    ImageView image_tv;
-    @BindView(R.id.image_music)
-    ImageView image_music;
-    @BindView(R.id.image_apower_mirror)
-    ImageView image_apower_mirror;
-    @BindView(R.id.image_dining)
-    ImageView image_dining;
-    @BindView(R.id.image_service)
-    ImageView image_service;
+    @BindView(R.id.menu_tv)
+    AutoLinearLayout menuTV;
+    @BindView(R.id.menu_music)
+    AutoLinearLayout menuMusic;
+    @BindView(R.id.menu_apower_mirror)
+    AutoLinearLayout menuApowerMirror;
+    @BindView(R.id.menu_dining)
+    AutoLinearLayout menuDining;
+    @BindView(R.id.menu_service)
+    AutoLinearLayout menuService;
     @BindView(R.id.lin)
     AutoLinearLayout menuItemLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View menuLayout = inflater.inflate(R.layout.menu_layout, container, false);
+        View menuLayout = inflater.inflate(R.layout.main_menu_layout, container, false);
 
         mUb = ButterKnife.bind(this, menuLayout);
 
@@ -76,10 +76,10 @@ public class MenuFragment extends Fragment{
         return menuLayout;
     }
 
-    @OnClick({R.id.image_tv,R.id.image_music,R.id.image_apower_mirror,R.id.image_dining,R.id.image_service})
+    @OnClick({R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     void imageClick( View v) {
         switch (v.getId()){
-            case R.id.image_tv:
+            case R.id.menu_tv:
                 intent = pm.getLaunchIntentForPackage("com.dianshijia.newlive");   //这个方法直接返回 访问特定包名下activity或service etc.的入口的intent， 省去设置componentName的参数
                 if (intent != null) {
                     mContext.startActivity(intent);
@@ -87,7 +87,7 @@ public class MenuFragment extends Fragment{
                     Toast.makeText(mContext, "你还没有安装“电视家”这个软件哦！", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.image_music:
+            case R.id.menu_music:
                 intent = pm.getLaunchIntentForPackage("com.netease.cloudmusic");
                 if (intent != null) {
                     mContext.startActivity(intent);
@@ -110,17 +110,20 @@ public class MenuFragment extends Fragment{
                     }
                 }
                 break;
-            case R.id.image_apower_mirror:
+            case R.id.menu_apower_mirror:
                 Intent ent = new Intent();
                 ent.setClass(mContext, ApowerMirrorActivity.class);
                 mContext.startActivity(ent);
                 break;
-            case R.id.image_dining:
-                Intent intent = new Intent();
+            case R.id.menu_dining:
+                /*Intent intent = new Intent();
                 intent.setClass(mContext, DiningActivity.class);
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);*/
+                startActivity(new Intent(mContext, DiningActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation((Activity) mContext,
+                                v, "image_dining").toBundle());
                 break;
-            case R.id.image_service:
+            case R.id.menu_service:
                 Intent in = new Intent();
                 in.setClass(mContext, HotelServiceActivity.class);
                 mContext.startActivity(in);
@@ -130,8 +133,7 @@ public class MenuFragment extends Fragment{
         }
     }
 
-    @OnFocusChange({R.id.image_tv,R.id.image_music,R.id.image_apower_mirror,R.id.image_dining,R.id.image_service,R.id.text_tv,
-    R.id.text_music,R.id.text_apower_mirror,R.id.text_dinging,R.id.text_service})
+    @OnFocusChange({R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     public void onViewFocusChange(View view, boolean isFocus){
         ViewUtils.scaleView(view, isFocus);
     }

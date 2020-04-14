@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg4">
+
+    <ImageButton
+        android:id="@+id/setting"
+        android:layout_width="@dimen/image_hw"
+        android:layout_height="@dimen/image_hw"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/image_margin"
+        android:layout_marginEnd="@dimen/btn_height"
+        android:layout_marginBottom="@dimen/image_margin"
+        android:background="@mipmap/service"
+        android:padding="@dimen/text_padding" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35px"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_gray"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/intro_hotel"
+                style="@style/AboutTextView"
+                android:nextFocusDown="@id/intro_need"
+                android:text="酒店介绍" />
+
+            <TextView
+                android:id="@+id/intro_need"
+                style="@style/AboutTextView"
+                android:text="使用客需" />
+
+            <TextView
+                android:id="@+id/intro_control"
+                style="@style/AboutTextView"
+                android:text="使用客控" />
+
+            <TextView
+                android:id="@+id/intro_service"
+                style="@style/AboutTextView"
+                android:text="客房服务" />
+
+            <TextView
+                android:id="@+id/service_request"
+                style="@style/AboutTextView"
+                android:text="服务反馈" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/introduce_hotel"
+            style="@style/AboutContextLL">
+
+            <TextView
+                style="@style/AboutContextTopicLL"
+                android:text="@string/hotel_introduce_tittle" />
+
+            <TextView
+                style="@style/AboutContextContextLL"
+                android:text="@string/hotel_introduce_text" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/introduce_function"
+            style="@style/AboutContextLL">
+
+            <TextView
+                style="@style/AboutContextTopicLL"
+                android:text="@string/function_introduce_tittle" />
+
+            <TextView
+                style="@style/AboutContextContextLL"
+                android:text="@string/function_introduce_text" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/introduce_weixin"
+            style="@style/AboutContextLL">
+
+            <TextView
+                style="@style/AboutContextTopicLL"
+                android:text="@string/about_tittle" />
+
+            <TextView
+                style="@style/AboutContextContextLL"
+                android:text="@string/about_text" />
+
+            <ImageView
+                android:layout_width="@dimen/weixin_layout"
+                android:layout_height="@dimen/weixin_layout"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/btn_height"
+                android:layout_marginTop="@dimen/image_margin"
+                android:layout_marginEnd="@dimen/btn_height"
+                android:layout_marginBottom="45px"
+                android:src="@mipmap/weixin" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoRelativeLayout>

@@ -1,59 +1,64 @@
 package com.jiachang.tv_launcher.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.FocusFinder;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.adapter.FoodAdapter;
-import com.jiachang.tv_launcher.bean.Food;
+import com.jiachang.tv_launcher.anim.ActivityAnimationHelper;
+import com.jiachang.tv_launcher.utils.ViewUtils;
+import com.zhy.autolayout.AutoLinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnFocusChange;
 
 /**
  * @author Mickey.Ma
- * @date 2020-03-26
+ * @date 2020-04-09
  * @description
  */
 public class DiningActivity extends Activity {
-    private List<Food> foodList = new ArrayList<>();
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    private Context mContext;
 
+    @BindView(R.id.dining_main)
+    ImageView diningMain;
+    @BindView(R.id.dining_cake)
+    ImageView diningCake;
+    @BindView(R.id.dining_drink)
+    ImageView diningDrink;
+    @BindView(R.id.dining_fruit)
+    ImageView diningFruit;
+    @BindView(R.id.dining_iceCream)
+    ImageView diningIceCream;
+    @BindView(R.id.dining_welcome)
+    ImageView diningWelcome;
 
+    @OnFocusChange({R.id.dining_main_all, R.id.dining_cake_all, R.id.dining_drink_all, R.id.dining_fruit_all, R.id.dining_iceCream_all})
+    public void onViewFocusChange(View view, boolean isfocus){
+        float scale = isfocus ? 1.05f : 1.0f;
+        view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideBottomMenu();
-        setContentView(R.layout.dining_layout);
+        setContentView(R.layout.dining_activity_layout);
         ButterKnife.bind(this);
-        initFood();
-        GridLayoutManager layoutManager = new GridLayoutManager(this,4);
-        FoodAdapter adapter = new FoodAdapter(foodList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setOnScrollListener(new OnPopRecyclerViewScrollListener());
-    }
 
-    private void initFood() {
-        for (int i = 0; i < 20; i++) {
-            Food duck = new Food("翡翠玉皮烤鸭\nRMB:95元", R.mipmap.roast_duck);
-            foodList.add(duck);
-        }
+        mContext = DiningActivity.this;
+        initView();
     }
-
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
@@ -69,70 +74,44 @@ public class DiningActivity extends Activity {
         }
     }
 
-    /*@Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        //在recyclerView的move事件情况下，拦截调，只让它响应五向键和左右箭头移动
-        Log.i("DiningActivity.this", "CustomRecycleView.dispatchTouchEvent.");
-        return ev.getAction() == MotionEvent.ACTION_MOVE || super.dispatchTouchEvent(ev);
+    private void initView(){
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        // 屏幕宽度（像素）
+        int width = metric.widthPixels;
+        // 屏幕高度（像素）
+        int height = metric.heightPixels;
+        ViewGroup.LayoutParams dM =diningMain.getLayoutParams();
+        dM.width = width/23*10;
+        dM.height = height/21*11;
+
+
+        ViewGroup.LayoutParams dC =diningCake.getLayoutParams();
+        dC.width = width/21*5;
+        dC.height = height/21*11;
+
+        ViewGroup.LayoutParams dD =diningDrink.getLayoutParams();
+        dD.width = width/21*5;
+        dD.height = height/21*11;
+
+
+        ViewGroup.LayoutParams dF =diningFruit.getLayoutParams();
+        dF.width = width/29*6;
+        dF.height = height/3;
+
+        ViewGroup.LayoutParams dI =diningIceCream.getLayoutParams();
+        dI.width = width/29*6;
+        dI.height = height/3;
+
+        ViewGroup.LayoutParams dW =diningWelcome.getLayoutParams();
+        dW.width = width/2;
+        dW.height = height/3;
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        boolean result = super.dispatchKeyEvent(event);
-        View focusView = recyclerView.getFocusedChild();
-        if (focusView != null) {
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        return true;
-                    } else {
-                        View rightView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_RIGHT);
-                        Log.i("DiningActivity.this", "rightView is null:" + (rightView == null));
-                        if (rightView != null) {
-                            rightView.requestFocusFromTouch();
-                            return true;
-                        } else {
-//                            this.smoothScrollBy(dx, 0);
-                            return true;
-                        }
-                    }
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                    View leftView = FocusFinder.getInstance().findNextFocus(this, focusView, View.FOCUS_LEFT);
-                    Log.i("DiningActivity.this", "left is null:" + (leftView == null));
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        return true;
-                    } else {
-                        if (leftView != null) {
-                            leftView.requestFocusFromTouch();
-                            return true;
-                        } else {
-//                            this.smoothScrollBy(-dx, 0);
-                            return true;
-                        }
-                    }
-            }
-        }
-        return result;
-    }*/
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        recyclerView.getAdapter();
-    }
-
-    //popWindow
-    private class OnPopRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-
-        }
+    @OnClick({R.id.dining_main_all, R.id.dining_cake_all, R.id.dining_drink_all, R.id.dining_fruit_all, R.id.dining_iceCream_all})
+    public void onclick(View v){
+        Intent intent = new Intent();
+        intent.setClass(mContext, FoodListActivity.class);
+        ActivityAnimationHelper.startActivity(mContext, intent, v);
     }
 }

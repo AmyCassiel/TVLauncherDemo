@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/girl">
+
+    <FrameLayout
+        android:id="@+id/top"
+        style="@style/MainLayoutFragmentStyle"/>
+
+    <FrameLayout
+        android:id="@+id/menu"
+        style="@style/MainLayoutFragmentStyle"/>
+
+    <FrameLayout
+        android:id="@+id/bottom"
+        style="@style/MainLayoutFragmentStyle"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

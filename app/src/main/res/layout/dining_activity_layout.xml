@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/gray">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_main_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:layout_marginTop="40px"
+        android:nextFocusRight="@id/dining_cake_all"
+        android:nextFocusDown="@id/dining_fruit_all"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_main"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_main_food" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="IN-ROOM DINING" />
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_cake_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:nextFocusLeft="@id/dining_main_all"
+        android:nextFocusRight="@id/dining_drink_all"
+        android:nextFocusDown="@id/dining_fruit_all"
+        android:layout_marginStart="250px"
+        app:layout_constraintBottom_toBottomOf="@id/dining_main_all"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dining_main_all">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_cake"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_cake" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="CAKE" />
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_drink_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:nextFocusLeft="@id/dining_cake_all"
+        android:nextFocusRight="@id/dining_fruit_all"
+        android:nextFocusDown="@id/dining_fruit_all"
+        app:layout_constraintBottom_toBottomOf="@id/dining_cake_all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dining_cake_all">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_drink"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_drink" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="DRINKS" />
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_fruit_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:nextFocusLeft="@id/dining_drink_all"
+        android:nextFocusRight="@id/dining_iceCream_all"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_fruit"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_fruit" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="FRUIT" />
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_iceCream_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:nextFocusLeft="@id/dining_fruit_all"
+        android:nextFocusRight="@id/dining_drink_all"
+        app:layout_constraintEnd_toEndOf="@id/dining_main_all"
+        app:layout_constraintTop_toTopOf="@id/dining_fruit_all">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_iceCream"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_ice_cream" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="ICE-CREAM" />
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_welcome_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        app:layout_constraintBottom_toBottomOf="@id/dining_iceCream_all"
+        app:layout_constraintEnd_toEndOf="@id/dining_drink_all"
+        app:layout_constraintStart_toStartOf="@id/dining_cake_all"
+        app:layout_constraintTop_toTopOf="@id/dining_iceCream_all">
+
+        <com.gigamole.library.ShadowLayout
+            style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_welcome"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_welcome" />
+
+                <TextView
+                    style="@style/DLTextStyle"
+                    android:text="WELCOME TO HOTEL" />
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

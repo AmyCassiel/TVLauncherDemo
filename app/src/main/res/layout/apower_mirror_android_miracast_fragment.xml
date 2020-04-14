@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="35px">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/step1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50px"
+                android:alpha="0.7"
+                android:orientation="vertical"
+                android:padding="@dimen/text_size_time">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@mipmap/help_android_miracast1"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="75px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="15dp"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:text="1. 打开Android设备的“设置”应用。（在您的发送设备上）"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="@dimen/hotel_text" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/step2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:layout_marginTop="50px"
+                android:orientation="vertical"
+                android:padding="@dimen/text_size_time">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@mipmap/help_android_miracast2"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="75px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="15dp"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:text="2. 依次点按 显示 > 投射。"
+                    android:padding="35px"
+                    android:textSize="@dimen/hotel_text" />
+            </com.zhy.autolayout.AutoLinearLayout>
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/step3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:layout_marginTop="50px"
+                android:orientation="vertical"
+                android:padding="@dimen/text_size_time">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@mipmap/help_android_miracast3"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="75px" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:singleLine="false"
+                    android:lineSpacingExtra="15dp"
+                    android:textColor="@color/black"
+                    android:text="3. 在WLAN网络中的投射设备列表中，点按目标设备AS-TS3Mini[AirPlay]，投射屏幕内容。"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="@dimen/hotel_text" />
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
+</LinearLayout>

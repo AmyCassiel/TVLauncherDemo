@@ -85,11 +85,16 @@
             android:name="com.jiachang.tv_launcher.activity.DiningActivity"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"/>
+<!--        食物列表-->
+        <activity
+            android:name="com.jiachang.tv_launcher.activity.FoodListActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
 
 <!--        食物详情页-->
         <activity
             android:launchMode="singleTask"
-            android:name="com.jiachang.tv_launcher.activity.foodDetailsActivity"
+            android:name="com.jiachang.tv_launcher.activity.FoodDetailsActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan"/>
 
