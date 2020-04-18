@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
+
+import com.jiachang.tv_launcher.activity.MainActivity;
 
 import androidx.core.view.ViewCompat;
 
@@ -27,52 +30,8 @@ public abstract class ViewUtils {
      * @param hasFocus
      */
     public static void scaleView(View view, boolean hasFocus) {
-        float scale = hasFocus ? 1.3f : 1.0f;
-        view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
-    }
-
-    public static void scalerView(View view, boolean hasFocus) {
         float scale = hasFocus ? 1.2f : 1.0f;
         view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
-    }
-
-    /**
-     * 隐藏底边状态栏
-     */
-    protected void hideBottomMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
-    }
-
-    /**
-     * item获得焦点时调用
-     *
-     * @param itemView view
-     */
-    public static void onFocusStatus(View itemView) {
-        if (itemView == null) {
-            return;
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            //抬高Z轴
-            ViewCompat.animate(itemView).scaleX(1.05f).scaleY(1.05f).translationZ(1).start();
-        } else {
-            ViewCompat.animate(itemView).scaleX(1.05f).scaleY(1.05f).start();
-            ViewGroup parent = (ViewGroup) itemView.getParent();
-            parent.requestLayout();
-            parent.invalidate();
-        }
-        onItemFocus(itemView);
     }
 
     /**
@@ -130,18 +89,6 @@ public abstract class ViewUtils {
      * @param itemView 条目对应的View
      */
     protected static void onItemGetNormal(View itemView) {
-    }
-
-
-    /**
-     * 改变图片的颜色
-     * 参考：https://www.jianshu.com/p/9cae2250d0ed
-     *
-     * @param view  ImageView
-     * @param color 颜色格式：0xA6FFFFFF
-     */
-    public static void setViewColorFilter(ImageView view, int color) {
-        view.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
     // the minimum scaling factor for the web dialog (50% of screen size)

@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg4">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/setting"
-        android:layout_width="@dimen/image_hw"
-        android:layout_height="@dimen/image_hw"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/image_margin"
-        android:layout_marginEnd="@dimen/btn_height"
-        android:layout_marginBottom="@dimen/image_margin"
-        android:background="@mipmap/service"
-        android:padding="@dimen/text_padding" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,12 +27,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:background="@drawable/bg_btn_gray"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/intro_hotel"
                 style="@style/AboutTextView"
+                android:nextFocusUp="@id/intro_hotel"
                 android:nextFocusDown="@id/intro_need"
                 android:text="酒店介绍" />
 
@@ -73,7 +72,8 @@
 
         <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/introduce_hotel"
-            style="@style/AboutContextLL">
+            style="@style/AboutContextLL"
+            android:visibility="visible">
 
             <TextView
                 style="@style/AboutContextTopicLL"
@@ -121,4 +121,4 @@
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoLinearLayout>
 
-</com.zhy.autolayout.AutoRelativeLayout>
+</RelativeLayout>

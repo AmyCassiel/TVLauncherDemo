@@ -1,12 +1,8 @@
 package com.jiachang.tv_launcher.activity;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -14,8 +10,6 @@ import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.fragment.ApowerMirrorAndroidDLNAFragment;
 import com.jiachang.tv_launcher.fragment.ApowerMirrorAndroidMiracastFragment;
 import com.jiachang.tv_launcher.fragment.ApowerMirrorIOSFragment;
-import com.jiachang.tv_launcher.utils.ViewUtils;
-import com.zhy.autolayout.AutoLinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,9 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnFocusChange;
-import github.chenupt.multiplemodel.viewpager.PagerModelManager;
 
 /**
  * @author Mickey.Ma
@@ -66,6 +58,7 @@ public class ApowerMirrorActivity extends FragmentActivity {
 
         ButterKnife.bind(this);
 
+        //
         fM = getSupportFragmentManager();
         fT = fM.beginTransaction();
         aIOSfragment=new ApowerMirrorIOSFragment();
@@ -81,7 +74,6 @@ public class ApowerMirrorActivity extends FragmentActivity {
     @OnFocusChange({R.id.apowermirror_ios, R.id.apowermirror_android, R.id.apower_mirror_android_miracast,
             R.id.apower_mirror_android_dlna})
     void onViewFocusChange(View v,boolean isFocus){
-
         if (isFocus){
             switch (v.getId()){
                 case R.id.apowermirror_ios:
@@ -165,5 +157,11 @@ public class ApowerMirrorActivity extends FragmentActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

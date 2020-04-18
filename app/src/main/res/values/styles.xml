@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen"/>
+    <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen" />
 
     <!--主界面-->
     <style name="MainLayoutFragmentStyle">
@@ -15,30 +15,56 @@
 
     <!--主菜单界面的AutoLinearLayout-->
     <style name="MenuAutoLinearLayout">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">247px</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:clipChildren">false</item>
-        <item name="android:clipToPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/menu_bg_menu_item_selector</item>
         <item name="android:focusable">true</item>
-        <item name="android:focusableInTouchMode">true</item>
         <item name="android:orientation">vertical</item>
     </style>
     <!-- 主菜单界面的imageView -->
     <style name="MenuImageViewStyle">
-        <item name="android:layout_width">@dimen/btn_menu</item>
-        <item name="android:layout_height">@dimen/btn_menu</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">130px</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <!--主菜单界面的文本-->
     <style name="MenuTextStyle">
-        <item name="android:layout_width">@dimen/btn_menu</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/menu_text_height</item>
-        <item name="android:textSize">@dimen/text_size_welcome</item>
+        <item name="android:textSize">35px</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">10px</item>
         <item name="android:padding">@dimen/text_padding</item>
     </style>
+
+    <!--主菜单界面的item文本-->
+    <style name="MenuItemTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">8px</item>
+        <item name="android:clipChildren">false</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:background">@drawable/menu_bg_item_selector</item>
+    </style>
+
+    <!--主菜单界面Item的AutoLinearLayout-->
+    <style name="MenuItemAutoLinearLayout">
+        <item name="android:layout_width">247px</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/gray_bg</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <!--主界面底部的Image-->
     <style name="BottomLayoutImageStyle">
         <item name="android:layout_width">@dimen/btm_image_width</item>
@@ -51,10 +77,31 @@
     <style name="BottomLayoutTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_margin">@dimen/btm_image_margin</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">1px</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">@dimen/btm_image_margin</item>
+        <item name="android:layout_marginEnd">@dimen/btm_image_margin</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/btm_text_size</item>
+    </style>
+
+    <!--投屏-->
+    <style name="ApowerMirrorFLStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+    </style>
+
+    <!--投屏textView-->
+    <style name="ApowerMirrorTVStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">35px</item>
     </style>
 
     <!--登陆设置的AutoLinearLayout-->
@@ -63,11 +110,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clipChildren">false</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:visibility">gone</item>
+        <item name="android:visibility">visible</item>
         <item name="android:paddingTop">5px</item>
-        <item name="android:paddingStart">70px</item>
+        <item name="android:paddingStart">50px</item>
         <item name="android:paddingEnd">70px</item>
         <item name="android:paddingBottom">5px</item>
     </style>
@@ -75,10 +122,10 @@
     <style name="SettingEditTextStyle">
         <item name="android:layout_width">@dimen/et_width</item>
         <item name="android:layout_height">@dimen/et_height</item>
-        <item name="android:layout_marginLeft">@dimen/et_left_margin</item>
+        <item name="android:layout_marginLeft">5px</item>
         <item name="android:paddingLeft">@dimen/et_left_padding</item>
         <item name="android:paddingRight">@dimen/et_left_padding</item>
-        <item name="android:background">@drawable/btn_bg_seletor_blue_gray</item>
+        <item name="android:background">@drawable/bg_btn_selector</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:singleLine">true</item>
@@ -89,7 +136,7 @@
     <style name="SettingBtStyle">
         <item name="android:layout_width">@dimen/btn_width</item>
         <item name="android:layout_height">@dimen/btn_height</item>
-        <item name="android:background">@drawable/btn_bg_seletor_blue_gray</item>
+        <item name="android:background">@drawable/bg_btn_selector</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:textColor">@color/commom_all_white</item>
@@ -145,7 +192,7 @@
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:textSize">30px</item>
         <item name="android:layout_margin">25px</item>
-        <item name="android:background">@drawable/bg_service_selector</item>
+        <item name="android:background">@drawable/about_bg_sidebar_selector</item>
     </style>
 
     <!--AboutService的正文Layout-->
@@ -154,7 +201,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">@dimen/btm_margin_bottom</item>
         <item name="android:layout_marginTop">50px</item>
-        <item name="android:background">@drawable/hotel_introduce</item>
+        <item name="android:background">@drawable/about_bg_context</item>
         <item name="android:orientation">vertical</item>
         <item name="android:alpha">0.7</item>
         <item name="android:gravity">center</item>

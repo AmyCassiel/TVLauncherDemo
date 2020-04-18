@@ -8,7 +8,7 @@ buildscript {
         maven { url uri('./repo') }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.6.2'
 // tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4
         classpath "com.tencent.bugly:tinker-support:1.2.0"
 

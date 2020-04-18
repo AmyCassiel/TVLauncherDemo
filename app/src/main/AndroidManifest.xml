@@ -135,10 +135,6 @@
             android:name="design_height"
             android:value="1080"/>
 
-        <meta-data
-            android:name="com.jiachang.tv_launcher.utils.GlideModelConfig"
-            android:value="GlideModule" />
-
     </application>
 
 </manifest>

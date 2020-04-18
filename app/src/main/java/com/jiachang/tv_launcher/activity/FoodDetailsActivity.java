@@ -24,9 +24,8 @@ public class FoodDetailsActivity extends Activity implements View.OnClickListene
 
     @BindView(R.id.food_img)
     ImageView foodImg;
-
-
-    private int resId;
+    @BindView(R.id.foodName)
+    TextView foodName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +38,11 @@ public class FoodDetailsActivity extends Activity implements View.OnClickListene
         Intent intent = getIntent();
         int image = intent.getIntExtra("image", 0);
         String text = intent.getStringExtra("text");
-        ImageView imageView_share = findViewById(R.id.food_img);
-        TextView textView_share = findViewById(R.id.foodName);
 
-        imageView_share.setImageResource(image);
-        textView_share.setText(text);
+        foodImg.setImageResource(image);
+        foodName.setText(text);
 
-        imageView_share.setOnClickListener(this);
+        foodImg.setOnClickListener(this);
     }
 
     @Override
@@ -75,77 +72,9 @@ public class FoodDetailsActivity extends Activity implements View.OnClickListene
         ActivityCompat.finishAfterTransition(this);
     }
 
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_LEFT: //向左键
-                Log.d(TAG,"left--->");
-                Toast.makeText(this,"left--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:  //向右键
-                Log.d(TAG,"right--->");
-                Toast.makeText(this,"right--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_DPAD_UP:   //向上键
-                Log.d(TAG,"up--->");
-                Toast.makeText(this,"up--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_DPAD_DOWN:   //向下键
-                *//* 实际开发中有时候会触发两次，所以要判断一下按下时触发 ，松开按键时不触发
-                 *    exp:KeyEvent.ACTION_UP*//*
-
-                if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    Toast.makeText(this,"enter--->",Toast.LENGTH_LONG).show();
-                    Log.d(TAG,"enter--->");
-                }
-                break;
-
-//            case KeyEvent.KEYCODE_ENTER:     //确定键enter
-            case KeyEvent.KEYCODE_DPAD_CENTER:
-                Log.d(TAG,"enter--->");
-                Toast.makeText(this,"enter--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_BACK:    //返回键
-                Log.d(TAG,"back--->");
-                Toast.makeText(this,"back--->",Toast.LENGTH_LONG).show();
-                *//*if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (down && repeatCount == 0) {
-                    } else if((event.getFlags() & KeyEvent.FLAG_LONG_PRESS) != 0) {
-                        mHandler.postDelayed(MouseRunable, 100);
-//                        return -1;
-                    }
-                }
-                return true;   //这里由于break会退出，所以我们自己要处理掉 不返回上一层*//*
-                break;
-            case KeyEvent.KEYCODE_MENU: //菜单键
-                Log.d(TAG,"setting--->");
-                Toast.makeText(this,"setting--->",Toast.LENGTH_LONG).show();
-                break;
-            *//*case KeyEvent.KEYCODE_PAGE_DOWN:     //向上翻页键
-            case KeyEvent.KEYCODE_MEDIA_NEXT:
-                Log.d(TAG,"page down--->");
-                Toast.makeText(mContext,"page down--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_PAGE_UP:     //向下翻页键
-            case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-                Log.d(TAG,"page up--->");
-                Toast.makeText(mContext,"page up--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_VOLUME_UP:   //调大声音键
-                Log.d(TAG,"voice up--->");
-                Toast.makeText(mContext,"voice up--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_VOLUME_DOWN: //降低声音键
-                Log.d(TAG,"voice down--->");
-                Toast.makeText(mContext,"voice down--->",Toast.LENGTH_LONG).show();
-                break;
-            case KeyEvent.KEYCODE_VOLUME_MUTE: //禁用声音
-                Log.d(TAG,"voice mute--->");
-                Toast.makeText(mContext,"voice mute--->",Toast.LENGTH_LONG).show();
-                break;*//*
-            default:
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
-    }*/
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

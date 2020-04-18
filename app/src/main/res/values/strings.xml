@@ -13,7 +13,7 @@
     <string name="default_choose">Choose</string>
     <string name="default_return">Return</string>
     <string name="home">Home</string>
-    <string name="welcome">Welcome&#8201;%1$s&#8201;stay at our hotel!\n\nRoom Number：007</string>
+    <string name="welcome">Welcome&#8201;%1$s&#8201;stay at our hotel!\nRoom Number：007</string>
 
     <string name="hotel_introduce_tittle">The introduction of hotel</string>
     <string name="hotel_introduce_text">&#8195;&#8195;The Jiachang wisdom hotel opened in 2020, and the decoration was completed in the same year. The hotel has 44 rooms. The hotel adopts self-service check-in, xiaochang intelligent customer control, high-end mousse mattress, customer experience led by a set of Shanghai self-service, intelligent customer control, butler service as one of the new upgrade products.
@@ -29,9 +29,9 @@
     <string name="roast_duck_detail">The Roast Duck\nRMB:95yuan</string>
 
     <string name="user_login">Login</string>
-    <string name="account">User&#8195;ID</string>
+    <string name="account">UserName:</string>
     <string name="input_account_hint">Please enter administrator account</string>
-    <string name="password">Password</string>
+    <string name="password">Password:</string>
     <string name="input_password_hint">Please enter password</string>
     <string name="empty_pass_tip">The account number or password cannot be empty！</string>
     <string name="pass_error_tip">Wrong account number or password！</string>
@@ -56,4 +56,10 @@
         3.Click the project button in Chrome and select your device <b>AS_T95ZPLUS[Cast]</b>\n
     </string>
     <string name="intro_apower_mirror_title">Projection instruction\n</string>
+
+    <string-array name="action_tv">
+        <item>音乐</item>
+        <item>电视</item>
+        <item>爱奇艺</item>
+    </string-array>
 </resources>

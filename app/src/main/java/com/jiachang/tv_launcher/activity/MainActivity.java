@@ -14,20 +14,26 @@
 
 package com.jiachang.tv_launcher.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.fragment.BottomFragment;
 import com.jiachang.tv_launcher.fragment.MenuFragment;
 import com.jiachang.tv_launcher.fragment.TopbarFragment;
 import com.jiachang.tv_launcher.utils.ViewUtils;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -44,6 +50,8 @@ public class MainActivity extends FragmentActivity {
 
     private String TAG = "key";
     private Context mContext;
+    private MenuFragment mF;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +75,7 @@ public class MainActivity extends FragmentActivity {
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
 
-        MenuFragment mF = new MenuFragment();
+        mF = new MenuFragment();
         TopbarFragment tF = new TopbarFragment();
         BottomFragment bF = new BottomFragment();
 
@@ -75,6 +83,23 @@ public class MainActivity extends FragmentActivity {
         fT.add(R.id.top, tF);
         fT.add(R.id.bottom, bF);
         fT.commit();
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                /*PackageManager packageManager = mContext.getPackageManager();
+                Intent intent= packageManager.getLaunchIntentForPackage("com.aispeech.tvui.service.TelenetService");
+                startService(intent);*/
+
+                Intent intent = new Intent();
+                ComponentName comp = new ComponentName("com.aispeech.tvui", "com.aispeech.tvui.service.TelenetService");
+                Log.e("comp",""+comp);
+                intent.setComponent(comp);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startService(intent);
+            }
+        }.start();
     }
 
     @Override
@@ -83,10 +108,10 @@ public class MainActivity extends FragmentActivity {
         hideBottomMenu();
     }
 
-    protected void hideBottomMenu() {
+    public void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
+            View v = getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
         } else if (Build.VERSION.SDK_INT >= 19) {
             //for new api versions.
@@ -96,39 +121,27 @@ public class MainActivity extends FragmentActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
+
     }
 
-
-
-    // width below which there are no extra margins
-    private static final int NO_PADDING_SCREEN_WIDTH = 480;
-    // width beyond which we're always using the MIN_SCALE_FACTOR
-    private static final int MAX_PADDING_SCREEN_WIDTH = 800;
-    // height below which there are no extra margins
-    private static final int NO_PADDING_SCREEN_HEIGHT = 800;
-    // height beyond which we're always using the MIN_SCALE_FACTOR
-    private static final int MAX_PADDING_SCREEN_HEIGHT = 1280;
-
-    private void calculateSize() {
-        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        // always use the portrait dimensions to do the scaling calculations so we always get a portrait shaped
-        // web dialog
-        int width = metrics.widthPixels < metrics.heightPixels ? metrics.widthPixels : metrics.heightPixels;
-        int height = metrics.widthPixels < metrics.heightPixels ? metrics.heightPixels : metrics.widthPixels;
-
-        int dialogWidth = Math.min(
-                getScaledSize(width, metrics.density, NO_PADDING_SCREEN_WIDTH, MAX_PADDING_SCREEN_WIDTH),
-                metrics.widthPixels);
-        int dialogHeight = Math.min(
-                getScaledSize(height, metrics.density, NO_PADDING_SCREEN_HEIGHT, MAX_PADDING_SCREEN_HEIGHT),
-                metrics.heightPixels);
-
-        Log.e("dialogWidth", ""+dialogWidth);
-        Log.e("dialogHeight", ""+dialogHeight);
-        getWindow().setLayout(dialogWidth, dialogHeight);
-    }
+    /*@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                LinearLayout ll0= mF.getView().findViewById(R.id.spinner_multimedia_item);
+                LinearLayout ll1= mF.getView().findViewById(R.id.spinner_music_item);
+                LinearLayout ll2= mF.getView().findViewById(R.id.spinner_apowermirror_item);
+                LinearLayout ll3= mF.getView().findViewById(R.id.spinner_dining_item);
+                LinearLayout ll4= mF.getView().findViewById(R.id.spinner_about_item);
+                ll0.setVisibility(View.GONE);
+                ll1.setVisibility(View.GONE);
+                ll2.setVisibility(View.GONE);
+                ll3.setVisibility(View.GONE);
+                ll4.setVisibility(View.GONE);
+                break;
+            default:
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
 }
 
