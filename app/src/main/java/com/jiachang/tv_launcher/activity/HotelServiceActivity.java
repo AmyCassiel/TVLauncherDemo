@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.jiachang.tv_launcher.R;
@@ -25,8 +26,7 @@ import butterknife.OnFocusChange;
  * @description
  */
 public class HotelServiceActivity extends FragmentActivity {
-    @BindView(R.id.setting)
-    ImageView setting;
+
     @BindView(R.id.introduce_hotel)
     AutoLinearLayout introduceHotel;
     @BindView(R.id.introduce_function)
@@ -45,23 +45,25 @@ public class HotelServiceActivity extends FragmentActivity {
         initView();
     }
 
-    private void initView(){
+    /**
+     * 初始化视图，设置控件的长宽高*/
+    private void initView() {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         // 屏幕宽度（像素）
         int width = metric.widthPixels;
         // 屏幕高度（像素）
         int height = AutoLinearLayout.LayoutParams.WRAP_CONTENT;
-        ViewGroup.LayoutParams iH =introduceHotel.getLayoutParams();
-        iH.width = width/2;
+        ViewGroup.LayoutParams iH = introduceHotel.getLayoutParams();
+        iH.width = width / 2;
         iH.height = height;
 
-        ViewGroup.LayoutParams iF =introduceFunction.getLayoutParams();
-        iF.width = width/2;
+        ViewGroup.LayoutParams iF = introduceFunction.getLayoutParams();
+        iF.width = width / 2;
         iF.height = height;
 
-        ViewGroup.LayoutParams iW =introduceWeixin.getLayoutParams();
-        iW.width = width/2;
+        ViewGroup.LayoutParams iW = introduceWeixin.getLayoutParams();
+        iW.width = width / 2;
         iW.height = height;
     }
 
@@ -86,46 +88,47 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
-    @OnFocusChange({R.id.intro_hotel,R.id.intro_need,R.id.intro_control,R.id.intro_service,R.id.service_request})
-    public void onViewFocusChange(View view, boolean isfocus){
-        switch (view.getId()){
-            case R.id.intro_hotel:
-                introduceHotel.setVisibility(View.VISIBLE);
-                introduceWeixin.setVisibility(View.GONE);
-                introduceFunction.setVisibility(View.GONE);
-                break;
-            case R.id.intro_need:
-                introduceWeixin.setVisibility(View.VISIBLE);
-                introduceHotel.setVisibility(View.GONE);
-                introduceFunction.setVisibility(View.GONE);
-                break;
-            case R.id.intro_control:
-                introduceFunction.setVisibility(View.VISIBLE);
-                introduceHotel.setVisibility(View.GONE);
-                introduceWeixin.setVisibility(View.GONE);
-                break;
-            case R.id.intro_service:
-                introduceHotel.setVisibility(View.VISIBLE);
-                introduceWeixin.setVisibility(View.GONE);
-                introduceFunction.setVisibility(View.GONE);
-                break;
-            case R.id.service_request:
-                introduceWeixin.setVisibility(View.VISIBLE);
-                introduceHotel.setVisibility(View.GONE);
-                introduceFunction.setVisibility(View.GONE);
-                break;
-            default:
+    /**设置焦点*/
+    @OnFocusChange({R.id.intro_hotel, R.id.intro_need, R.id.intro_control, R.id.intro_service, R.id.service_request})
+    public void onViewFocusChange(View view, boolean isfocus) {
+        if (isfocus) {
+            switch (view.getId()) {
+                case R.id.intro_hotel:
+                    introduceHotel.setVisibility(View.VISIBLE);
+                    introduceWeixin.setVisibility(View.GONE);
+                    introduceFunction.setVisibility(View.GONE);
+                    break;
+                case R.id.intro_need:
+                    introduceWeixin.setVisibility(View.VISIBLE);
+                    introduceHotel.setVisibility(View.GONE);
+                    introduceFunction.setVisibility(View.GONE);
+                    break;
+                case R.id.intro_control:
+                    introduceFunction.setVisibility(View.VISIBLE);
+                    introduceHotel.setVisibility(View.GONE);
+                    introduceWeixin.setVisibility(View.GONE);
+                    break;
+                case R.id.intro_service:
+                    introduceHotel.setVisibility(View.VISIBLE);
+                    introduceWeixin.setVisibility(View.GONE);
+                    introduceFunction.setVisibility(View.GONE);
+                    break;
+                case R.id.service_request:
+                    introduceWeixin.setVisibility(View.VISIBLE);
+                    introduceHotel.setVisibility(View.GONE);
+                    introduceFunction.setVisibility(View.GONE);
+                    break;
+                default:
+            }
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode){
+        switch (keyCode) {
             case KeyEvent.KEYCODE_MENU: //菜单键
-
-                        Intent in = new Intent(HotelServiceActivity.this, SettingActivity.class);
-                        startActivity(in);
-
+                Intent in = new Intent(HotelServiceActivity.this, SettingActivity.class);
+                startActivity(in);
                 break;
             default:
         }

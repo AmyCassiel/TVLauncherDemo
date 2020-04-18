@@ -5,16 +5,16 @@
     <string name="default_weather">5℃/9℃</string>
     <string name="default_time">00:00</string>
     <string name="default_day">2020年1月1日\n星期三</string>
-    <string name="menu_multimedia">多媒体</string>
-    <string name="menu_music">音乐</string>
-    <string name="menu_apower_mirror">投屏</string>
-    <string name="menu_dining">餐饮</string>
+    <string name="menu_multimedia">高清电视</string>
+    <string name="menu_music">音&#8195;乐</string>
+    <string name="menu_apower_mirror">多屏互动</string>
+    <string name="menu_dining">餐饮服务</string>
     <string name="menu_service">酒店服务</string>
 
     <string name="default_choose">选择</string>
     <string name="default_return">返回</string>
     <string name="home">首页</string>
-    <string name="welcome">欢迎&#8201;<b>莫小姐</b>&#8201;入住家畅智慧酒店\n\n房间号：007</string>
+    <string name="welcome">欢迎&#8201;<b>莫小姐</b>&#8201;入住家畅智慧酒店\n房间号：007</string>
 
     <string name="hotel_introduce_tittle">酒店介绍</string>
     <string name="hotel_introduce_text">&#8195;&#8195;家畅智慧酒店于2020年开业，并在同年装修完成，全酒店共有44间房，酒店采用自助入住，小畅智能客控、高档慕斯床垫、以客户体验为首的上海市一家集自助服务、智能客控、管家式服务为一体的全新升级产品。

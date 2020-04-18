@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/girl">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/bg7">
 
     <FrameLayout
         android:id="@+id/top"
@@ -15,5 +16,13 @@
     <FrameLayout
         android:id="@+id/bottom"
         style="@style/MainLayoutFragmentStyle"/>
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="本系统由上海家畅集团提供技术支持"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="15px"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,15 +17,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.bean.Tb_LocationBaseResult;
+import com.jiachang.tv_launcher.utils.IPUtils;
 
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -37,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 
 /**
  * @author Mickey.Ma
@@ -55,13 +54,12 @@ public class TopbarFragment extends Fragment {
 
     private Unbinder mUb;
 
+    //天气APIkey
     private String API_KEY = "l7in2sysjxkwjolf";
-    private String temperature, text;
-    private String code;
-    private String mainCity;
+    private String temperature, text, code;
+
 
     private Context mContext;
-    private Tb_LocationBaseResult tb_locationBaseResult;
 
     Handler mHandler = new Handler() {
         @Override
@@ -76,7 +74,7 @@ public class TopbarFragment extends Fragment {
                     getTime();
                     break;
                 case 3:
-                    getPubIp();
+                    getWeather(IPUtils.getPubIp());
                     break;
                 default:
             }
@@ -95,111 +93,25 @@ public class TopbarFragment extends Fragment {
 
     private void initView() {
         getTime();
-        Message msg = new Message();
-        msg.what = 3;
-        mHandler.sendMessage(msg);
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                getWeather(IPUtils.getPubIp());
+                Message msg = new Message();
+                msg.what = 1;
+                msg.arg1 = Integer.parseInt(temperature);//传对象，还有arg1、arg2……
+                msg.obj = text;
+                msg.obj = code;
+                mHandler.sendMessage(msg);
+            }
+        }.start();
 
         new TimeThread().start(); //启动新的线程
         new WeatherThread().start();
     }
-    private void getPubIp(){
-        new Thread(){
-            @Override
-            public void run() {
-                URL infoUrl = null;
-                InputStream inStream = null;
-                String line = "";
-                String cname = "";
-                try {
-                    infoUrl = new URL("http://pv.sohu.com/cityjson?ie=utf-8");
-                    URLConnection connection = infoUrl.openConnection();
-                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                    int responseCode = httpConnection.getResponseCode();
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        inStream = httpConnection.getInputStream();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
-                        StringBuilder strber = new StringBuilder();
-                        while ((line = reader.readLine()) != null)
-                            strber.append(line + "\n");
-                        inStream.close();
-                        // 从反馈的结果中提取出IP地址
-                        int start = strber.indexOf("{");
-                        int end = strber.indexOf("}");
-                        String json = strber.substring(start, end + 1);
-                        if (json != null) {
-                            try {
-                                org.json.JSONObject jsonObject = new org.json.JSONObject(json);
-                                cname = jsonObject.optString("cname");
-                                getWeather(cname);
-                                System.out.println(cname);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
 
-                        }else {
-                            Log.e("提示", "IP接口异常，无法获取IP地址！");
-                        }
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    private void getWeather(String city) {
-        String url = "https://api.seniverse.com/v3/weather/now.json?key=" + API_KEY + "&location=" + city + "&language=zh-Hans&unit=c";
-
-        //异步加载
-        new AsyncTask<String, Void, Void>() {
-            @Override
-            protected Void doInBackground(String... strings) {
-                try {
-                    URL url = new URL(strings[0]);
-                    URLConnection connection = url.openConnection();//获取互联网连接
-                    InputStream is = connection.getInputStream();//获取输入流
-                    InputStreamReader isr = new InputStreamReader(is, "utf-8");//字节转字符，字符集是utf-8
-                    BufferedReader bufferedReader = new BufferedReader(isr);//通过BufferedReader可以读取一行字符串
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        JSONObject json = JSONObject.parseObject(line);
-                        String result = json.getString("results");
-                        Log.i("result", result);
-                        JSONArray array = json.getJSONArray("results");
-                        for (int i = 0; i < array.size(); i++) {
-                            JSONObject jo = array.getJSONObject(i);
-                            String now = jo.getString("now");
-                            Log.i("now", now);
-                            JSONObject jos = jo.getJSONObject("now");
-                            temperature = jos.getString("temperature");
-                            Log.i("temperature", temperature);
-                            text = jos.getString("text");
-                            Log.i("text", text);
-                            code = jos.getString("code");
-                            Log.i("code", code);
-                            Message msg = new Message();
-                            msg.what = 1;
-                            msg.arg1 = Integer.parseInt(temperature);//传对象，还有arg1、arg2……
-                            msg.obj = text;
-                            msg.obj = code;
-                            mHandler.sendMessage(msg);
-                        }
-                    }
-                    bufferedReader.close();
-                    isr.close();
-                    is.close();
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-            //使用api的数据接口
-        }.execute(url);
-    }
 
     @Override
     public void onResume() {
@@ -212,20 +124,52 @@ public class TopbarFragment extends Fragment {
         int week = calendar.get(Calendar.DAY_OF_WEEK);
         Log.i("weekday", "" + week);
         long sysTime = System.currentTimeMillis();//获取系统时间
-        if (sysTime != 0){
-            CharSequence sysTimeStr = DateFormat.format("HH:mm",sysTime);//时间显示格式
+        if (sysTime != 0) {
+            CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
             Log.i("sysTimeStr", "" + sysTimeStr);
-            CharSequence sysDayStr = DateFormat.format("yyyy/MM/dd",sysTime);
+            CharSequence sysDayStr = DateFormat.format("yyyy/MM/dd", sysTime);
             Log.i("sysDayStr", "" + sysDayStr);
-            if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)){
+            if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
                 time.setText(sysTimeStr);
                 month_day.setText(sysDayStr);
-            } else {
-                Toast.makeText(mContext,"Day:"+sysDayStr,Toast.LENGTH_LONG).show();
-                Toast.makeText(mContext,"Time:"+sysTimeStr,Toast.LENGTH_LONG).show();
             }
-        }else {
-            Toast.makeText(mContext,"时间为空",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(mContext, "时间为空", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void getWeather(String city) {
+        String Url = "https://api.seniverse.com/v3/weather/now.json?key=" + API_KEY + "&location=" + city + "&language=zh-Hans&unit=c";
+        try {
+            URL url = new URL(Url);
+            URLConnection connection = url.openConnection();//获取互联网连接
+            InputStream is = connection.getInputStream();//获取输入流
+            InputStreamReader isr = new InputStreamReader(is, "utf-8");//字节转字符，字符集是utf-8
+            BufferedReader bufferedReader = new BufferedReader(isr);//通过BufferedReader可以读取一行字符串
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(line);
+                String result = json.getString("results");
+                Log.i("result", result);
+                JSONArray array = json.getJSONArray("results");
+                for (int i = 0; i < array.size(); i++) {
+                    JSONObject jo = array.getJSONObject(i);
+                    JSONObject jos = jo.getJSONObject("now");
+                    temperature = jos.getString("temperature");
+                    Log.i("temperature", temperature);
+                    text = jos.getString("text");
+                    Log.i("text", text);
+                    code = jos.getString("code");
+                    Log.i("code", code);
+                }
+            }
+            bufferedReader.close();
+            isr.close();
+            is.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -252,7 +196,7 @@ public class TopbarFragment extends Fragment {
                 try {
                     Thread.sleep(3600000);
                     Message msg = new Message();
-                    msg.what = 3;  //消息(一个整型值)
+                    msg.what = 1;  //消息(一个整型值)
                     mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
                 } catch (InterruptedException e) {
                     e.printStackTrace();

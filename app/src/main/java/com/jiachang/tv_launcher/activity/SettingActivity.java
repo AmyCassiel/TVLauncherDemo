@@ -14,9 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.utils.HttpUtil;
+import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.QRCodeUtil;
-import com.jiachang.tv_launcher.utils.ViewUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
@@ -64,8 +63,6 @@ public class SettingActivity extends Activity {
 
     }
 
-
-
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
@@ -86,7 +83,7 @@ public class SettingActivity extends Activity {
      * @return
      */
     private String getMac(){
-        String mac = HttpUtil.getLocalEthernetMacAddress();
+        String mac = IPUtils.getLocalEthernetMacAddress();
         img.setImageBitmap(QRCodeUtil.createQRCode(mac));
         return mac;
     }
@@ -128,5 +125,11 @@ public class SettingActivity extends Activity {
                 break;
             default:
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

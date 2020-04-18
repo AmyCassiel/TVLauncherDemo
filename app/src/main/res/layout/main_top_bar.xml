@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_bar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/btn_width"
+    android:layout_height="130px"
     android:alpha="0.8"
     android:background="@color/common_gray_bg">
 
@@ -25,7 +25,7 @@
         android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_welcome"
-        android:layout_marginStart="@dimen/marginStart"
+        android:layout_marginStart="25px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/hotel_icon"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -42,10 +42,10 @@
             android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
             android:orientation="horizontal"
+            android:layout_marginEnd="10px"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/img"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -71,10 +71,11 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/img"
             android:layout_width="@dimen/wire_width"
             android:layout_height="@dimen/btn_height"
             android:background="#fff"
-            android:layout_marginEnd="@dimen/marginStart"
+            android:layout_marginEnd="15px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/time_day"
             app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/bottom_height"
+                android:textSize="50px"
                 android:text="@string/default_time"
                 android:layout_gravity="center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"

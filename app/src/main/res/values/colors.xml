@@ -2,7 +2,7 @@
     <color name="background_gradient_start">#000000</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="fastlane_background">#0096a6</color>
-    <color name="search_opaque">#ffaa3f</color>
+    <color name="search_opaque">#DAA569</color>
     <color name="selected_background">#ffaa3f</color>
     <color name="default_background">#3d3d3d</color>
 
@@ -28,4 +28,8 @@
     <color name="color_btn_blue_bg">#C83053BE</color>
     <color name="color_btn_gray_bg">#B2121111</color>
     <color name="common_gray_bg">#4C000000</color>
+    <color name="gray_bg">#7a000000</color>
+
+    <color name="golden">#8B6914</color>
+    <color name="blue">#1E90FF</color>
 </resources>
