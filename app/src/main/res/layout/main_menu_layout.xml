@@ -31,116 +31,20 @@
                 android:nextFocusRight="@id/menu_music"
                 android:nextFocusDown="@id/multimedia_item_2"
                 android:nextFocusUp="@id/multimedia_item_1"
-                android:text="超清电影" />
+                android:text="在线直播" />
 
             <TextView
                 android:id="@+id/multimedia_item_2"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusRight="@id/menu_music"
-                android:nextFocusDown="@id/multimedia_item_3"
-                android:text="高清电视" />
+                android:text="视频点播" />
 
-            <TextView
-                android:id="@+id/multimedia_item_3"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusRight="@id/menu_music"
-                android:text="网络电视" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/spinner_music_item"
-            style="@style/MenuItemAutoLinearLayout"
-            android:layout_marginEnd="500px">
-
-            <TextView
-                android:id="@+id/music_item_1"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_tv"
-                android:nextFocusRight="@id/menu_apower_mirror"
-                android:nextFocusDown="@id/music_item_2"
-                android:nextFocusUp="@id/music_item_1"
-                android:text="酷狗音乐" />
-
-            <TextView
-                android:id="@+id/music_item_2"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_music"
-                android:nextFocusRight="@id/menu_apower_mirror"
-                android:nextFocusDown="@id/music_item_3"
-                android:text="QQ音乐" />
-
-            <TextView
-                android:id="@+id/music_item_3"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_music"
-                android:nextFocusRight="@id/menu_apower_mirror"
-                android:text="酷我音乐" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/spinner_apowermirror_item"
-            style="@style/MenuItemAutoLinearLayout">
-
-            <TextView
-                android:id="@+id/apowermirror_item_1"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_music"
-                android:nextFocusRight="@id/menu_dining"
-                android:nextFocusDown="@id/apowermirror_item_2"
-                android:nextFocusUp="@id/apowermirror_item_1"
-                android:text="iOS" />
-
-            <TextView
-                android:id="@+id/apowermirror_item_2"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_music"
-                android:nextFocusRight="@id/menu_dining"
-                android:nextFocusDown="@id/apowermirror_item_3"
-                android:text="Miracast" />
-
-            <TextView
-                android:id="@+id/apowermirror_item_3"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_music"
-                android:nextFocusRight="@id/menu_dining"
-                android:text="DLNA" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/spinner_dining_item"
-            style="@style/MenuItemAutoLinearLayout"
-            android:layout_marginStart="500px">
-
-            <TextView
-                android:id="@+id/dining_item_1"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_apower_mirror"
-                android:nextFocusRight="@id/menu_service"
-                android:nextFocusDown="@id/dining_item_2"
-                android:nextFocusUp="@id/dining_item_1"
-                android:text="甜品订餐" />
-
-            <TextView
-                android:id="@+id/dining_item_2"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_apower_mirror"
-                android:nextFocusRight="@id/menu_service"
-                android:nextFocusDown="@id/dining_item_3"
-                android:text="饮品订餐" />
-
-            <TextView
-                android:id="@+id/dining_item_3"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_apower_mirror"
-                android:nextFocusRight="@id/menu_service"
-                android:text="正餐订餐" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/spinner_about_item"
             style="@style/MenuItemAutoLinearLayout"
             android:layout_marginStart="1000px">
-
             <TextView
                 android:id="@+id/about_item_1"
                 style="@style/MenuItemTextStyle"
@@ -148,16 +52,26 @@
                 android:nextFocusDown="@id/about_item_2"
                 android:nextFocusUp="@id/about_item_1"
                 android:text="酒店介绍" />
-
             <TextView
                 android:id="@+id/about_item_2"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_3"
-                android:text="客控客需" />
-
+                android:text="客控服务" />
             <TextView
                 android:id="@+id/about_item_3"
+                style="@style/MenuItemTextStyle"
+                android:nextFocusLeft="@id/menu_dining"
+                android:nextFocusDown="@id/about_item_4"
+                android:text="客需服务" />
+            <TextView
+                android:id="@+id/about_item_4"
+                style="@style/MenuItemTextStyle"
+                android:nextFocusLeft="@id/menu_dining"
+                android:nextFocusDown="@id/about_item_5"
+                android:text="WIFI密码" />
+            <TextView
+                android:id="@+id/about_item_5"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:text="服务反馈" />
@@ -183,12 +97,12 @@
             android:layout_marginEnd="@dimen/menu_margin_start"
             android:nextFocusLeft="@id/menu_tv"
             android:nextFocusRight="@id/menu_music"
-            android:nextFocusUp="@id/multimedia_item_3"
+            android:nextFocusUp="@id/multimedia_item_2"
             android:nextFocusDown="@id/txtV">
 
             <ImageView
                 style="@style/MenuImageViewStyle"
-                android:src="@mipmap/tv" />
+                android:src="@mipmap/menutv" />
 
             <TextView
                 style="@style/MenuTextStyle"
@@ -201,7 +115,7 @@
             android:layout_marginEnd="@dimen/menu_margin_start"
             android:nextFocusLeft="@id/menu_tv"
             android:nextFocusRight="@id/menu_apower_mirror"
-            android:nextFocusUp="@id/music_item_3"
+            android:nextFocusUp="@id/menu_music"
             android:nextFocusDown="@id/txtV">
 
             <ImageView
@@ -218,12 +132,12 @@
             style="@style/MenuAutoLinearLayout"
             android:nextFocusLeft="@id/menu_music"
             android:nextFocusRight="@id/menu_dining"
-            android:nextFocusUp="@id/apowermirror_item_3"
+            android:nextFocusUp="@null"
             android:nextFocusDown="@id/txtV">
 
             <ImageView
                 style="@style/MenuImageViewStyle"
-                android:src="@mipmap/menu_apowermirror" />
+                android:src="@mipmap/menu_apower_mirror" />
 
             <TextView
                 style="@style/MenuTextStyle"
@@ -237,12 +151,12 @@
             android:layout_marginStart="@dimen/menu_margin_start"
             android:nextFocusLeft="@id/menu_apower_mirror"
             android:nextFocusRight="@id/menu_service"
-            android:nextFocusUp="@id/dining_item_3"
+            android:nextFocusUp="@id/menu_dining"
             android:nextFocusDown="@id/txtV">
 
             <ImageView
                 style="@style/MenuImageViewStyle"
-                android:src="@mipmap/dining"
+                android:src="@mipmap/menudining"
                 android:transitionName="image_dining" />
 
             <TextView
@@ -255,12 +169,12 @@
             style="@style/MenuAutoLinearLayout"
             android:layout_marginStart="@dimen/menu_margin_start"
             android:nextFocusLeft="@id/menu_dining"
-            android:nextFocusUp="@id/about_item_3"
+            android:nextFocusUp="@id/about_item_5"
             android:nextFocusDown="@id/txtV">
 
             <ImageView
                 style="@style/MenuImageViewStyle"
-                android:src="@mipmap/hotel" />
+                android:src="@mipmap/menuhotel" />
 
             <TextView
                 style="@style/MenuTextStyle"

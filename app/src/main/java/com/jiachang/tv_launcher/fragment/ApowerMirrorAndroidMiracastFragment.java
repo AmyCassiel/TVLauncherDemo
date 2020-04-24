@@ -35,4 +35,6 @@ public class ApowerMirrorAndroidMiracastFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

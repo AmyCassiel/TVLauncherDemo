@@ -1,24 +1,54 @@
 package com.jiachang.tv_launcher.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.bean.PresentCachInfo;
+import com.jiachang.tv_launcher.utils.CacheMapManager;
+import com.jiachang.tv_launcher.utils.Constants;
+import com.jiachang.tv_launcher.utils.HttpUtils;
+import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
+import okhttp3.Cache;
+
+import static com.jiachang.tv_launcher.utils.Constants.MAC;
+import static com.jiachang.tv_launcher.utils.Constants.breakfastTime;
+import static com.jiachang.tv_launcher.utils.Constants.dinnerTime;
+import static com.jiachang.tv_launcher.utils.Constants.hotelIntroduction;
+import static com.jiachang.tv_launcher.utils.Constants.hotelName;
+import static com.jiachang.tv_launcher.utils.Constants.lunchTime;
+import static com.jiachang.tv_launcher.utils.Constants.tel;
+import static com.jiachang.tv_launcher.utils.Constants.usageMonitoring;
+import static com.jiachang.tv_launcher.utils.Constants.userNeeds;
+import static com.jiachang.tv_launcher.utils.Constants.wifiName;
+import static com.jiachang.tv_launcher.utils.Constants.wifiPassword;
+import static com.jiachang.tv_launcher.utils.HttpUtils.netWorkCheck;
 
 /**
  * @author Mickey.Ma
@@ -26,14 +56,41 @@ import butterknife.OnFocusChange;
  * @description
  */
 public class HotelServiceActivity extends FragmentActivity {
+    private static final String TAG = "HotelServiceActivity";
+    private Context context;
 
     @BindView(R.id.introduce_hotel)
     AutoLinearLayout introduceHotel;
-    @BindView(R.id.introduce_function)
-    AutoLinearLayout introduceFunction;
-    @BindView(R.id.introduce_weixin)
-    AutoLinearLayout introduceWeixin;
+    @BindView(R.id.introduce_control)
+    AutoLinearLayout introduceControl;
+    @BindView(R.id.introduce_need)
+    AutoLinearLayout introduceNeed;
+    @BindView(R.id.introduce_wifi)
+    AutoLinearLayout introduceWifi;
+    @BindView(R.id.introduce_request)
+    AutoLinearLayout introduceRequest;
 
+    @BindView(R.id.intro_hotel)
+    TextView introhotel;
+    @BindView(R.id.intro_control)
+    TextView introcontrol;
+    @BindView(R.id.intro_need)
+    TextView introneed;
+    @BindView(R.id.intro_wifi)
+    TextView introwifi;
+    @BindView(R.id.intro_request)
+    TextView servicerequest;
+
+    @BindView(R.id.introduce_hotel_txt)
+    TextView introHotelTxt;
+    @BindView(R.id.introduce_control_txt)
+    TextView introControlTxt;
+    @BindView(R.id.introduce_need_txt)
+    TextView introNeedTxt;
+    @BindView(R.id.introce_wifi)
+    TextView introceWifi;
+
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +98,46 @@ public class HotelServiceActivity extends FragmentActivity {
         setContentView(R.layout.service_activity);
 
         ButterKnife.bind(this);
-
+        context = this;
+        getData();
         initView();
     }
 
+    private void getData() {
+        if(netWorkCheck(context)){
+            //网络已连接
+            if (hotelName != null){
+                introHotelTxt.setText("\u3000\u3000"+hotelIntroduction+"\n\u3000\u3000早餐供应时间：" +breakfastTime
+                        +"\n\u3000\u3000午餐供应时间："+lunchTime+"\n\u3000\u3000晚餐供应时间："+dinnerTime+"\n\u3000\u3000前台电话："+tel);
+                introControlTxt.setText(usageMonitoring);
+                introNeedTxt.setText(userNeeds);
+                introceWifi.setText("WIFI："+wifiName+"\n"+"密码："+wifiPassword);
+            }
+        }else{
+            // 网络未连接
+            SharedPreferences preferences= getSharedPreferences("hotel", Context.MODE_PRIVATE);
+            hotelIntroduction = preferences.getString("hotelIntroduction", "defaultname");
+            breakfastTime = preferences.getString("breakfastTime", "defaultname");
+            lunchTime = preferences.getString("lunchTime", "defaultname");
+            dinnerTime = preferences.getString("dinnerTime", "defaultname");
+            usageMonitoring = preferences.getString("usageMonitoring", "defaultname");
+            userNeeds = preferences.getString("userNeeds", "defaultname");
+            wifiName = preferences.getString("wifiName", "defaultname");
+            wifiPassword = preferences.getString("wifiPassword", "defaultname");
+            Log.d(TAG,"hotelIntroduction = "+hotelIntroduction);
+            if (hotelName != null) {
+                introHotelTxt.setText("\u3000\u3000" + hotelIntroduction + "\n\u3000\u3000早餐供应时间：" + breakfastTime
+                        + "\n\u3000\u3000午餐供应时间：" + lunchTime + "\n\u3000\u3000晚餐供应时间：" + dinnerTime + "\n\u3000\u3000前台电话：" + tel);
+                introControlTxt.setText(usageMonitoring);
+                introNeedTxt.setText(userNeeds);
+                introceWifi.setText("WIFI：" + wifiName + "\n" + "密码：" + wifiPassword);
+            }
+        }
+    }
+
     /**
-     * 初始化视图，设置控件的长宽高*/
+     * 初始化视图，设置控件的长宽高
+     */
     private void initView() {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -58,13 +149,63 @@ public class HotelServiceActivity extends FragmentActivity {
         iH.width = width / 2;
         iH.height = height;
 
-        ViewGroup.LayoutParams iF = introduceFunction.getLayoutParams();
+        ViewGroup.LayoutParams iF = introduceControl.getLayoutParams();
         iF.width = width / 2;
         iF.height = height;
 
-        ViewGroup.LayoutParams iW = introduceWeixin.getLayoutParams();
+        ViewGroup.LayoutParams iN = introduceNeed.getLayoutParams();
+        iN.width = width / 2;
+        iN.height = height;
+
+        ViewGroup.LayoutParams iW = introduceRequest.getLayoutParams();
         iW.width = width / 2;
         iW.height = height;
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle.getBoolean("about_item_1")) {
+            introhotel.setFocusable(true);
+            introhotel.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introduceHotel.setVisibility(View.VISIBLE);
+            introduceControl.setVisibility(View.GONE);
+            introduceNeed.setVisibility(View.GONE);
+            introduceWifi.setVisibility(View.GONE);
+            introduceRequest.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_2")) {
+            introcontrol.setFocusable(true);
+            introcontrol.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introduceHotel.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.VISIBLE);
+            introduceNeed.setVisibility(View.GONE);
+            introduceWifi.setVisibility(View.GONE);
+            introduceRequest.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_3")) {
+            introneed.setFocusable(true);
+            introneed.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introduceHotel.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.GONE);
+            introduceNeed.setVisibility(View.VISIBLE);
+            introduceWifi.setVisibility(View.GONE);
+            introduceRequest.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_4")) {
+            introwifi.setFocusable(true);
+            introwifi.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introduceHotel.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.GONE);
+            introduceNeed.setVisibility(View.GONE);
+            introduceWifi.setVisibility(View.VISIBLE);
+            introduceRequest.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_5")) {
+            servicerequest.setFocusable(true);
+            servicerequest.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introduceHotel.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.GONE);
+            introduceNeed.setVisibility(View.GONE);
+            introduceWifi.setVisibility(View.GONE);
+            introduceRequest.setVisibility(View.VISIBLE);
+        } else if (bundle.getBoolean("main")) {
+
+        }
     }
 
     @Override
@@ -76,7 +217,7 @@ public class HotelServiceActivity extends FragmentActivity {
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
+            View v = getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
         } else if (Build.VERSION.SDK_INT >= 19) {
             //for new api versions.
@@ -88,35 +229,47 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
-    /**设置焦点*/
-    @OnFocusChange({R.id.intro_hotel, R.id.intro_need, R.id.intro_control, R.id.intro_service, R.id.service_request})
+    /**
+     * 设置焦点
+     */
+    @OnFocusChange({R.id.intro_hotel, R.id.intro_need, R.id.intro_control, R.id.intro_wifi, R.id.intro_request})
     public void onViewFocusChange(View view, boolean isfocus) {
         if (isfocus) {
             switch (view.getId()) {
                 case R.id.intro_hotel:
                     introduceHotel.setVisibility(View.VISIBLE);
-                    introduceWeixin.setVisibility(View.GONE);
-                    introduceFunction.setVisibility(View.GONE);
-                    break;
-                case R.id.intro_need:
-                    introduceWeixin.setVisibility(View.VISIBLE);
-                    introduceHotel.setVisibility(View.GONE);
-                    introduceFunction.setVisibility(View.GONE);
+                    introduceControl.setVisibility(View.GONE);
+                    introduceNeed.setVisibility(View.GONE);
+                    introduceWifi.setVisibility(View.GONE);
+                    introduceRequest.setVisibility(View.GONE);
                     break;
                 case R.id.intro_control:
-                    introduceFunction.setVisibility(View.VISIBLE);
                     introduceHotel.setVisibility(View.GONE);
-                    introduceWeixin.setVisibility(View.GONE);
+                    introduceControl.setVisibility(View.VISIBLE);
+                    introduceNeed.setVisibility(View.GONE);
+                    introduceWifi.setVisibility(View.GONE);
+                    introduceRequest.setVisibility(View.GONE);
                     break;
-                case R.id.intro_service:
-                    introduceHotel.setVisibility(View.VISIBLE);
-                    introduceWeixin.setVisibility(View.GONE);
-                    introduceFunction.setVisibility(View.GONE);
-                    break;
-                case R.id.service_request:
-                    introduceWeixin.setVisibility(View.VISIBLE);
+                case R.id.intro_need:
                     introduceHotel.setVisibility(View.GONE);
-                    introduceFunction.setVisibility(View.GONE);
+                    introduceControl.setVisibility(View.GONE);
+                    introduceNeed.setVisibility(View.VISIBLE);
+                    introduceWifi.setVisibility(View.GONE);
+                    introduceRequest.setVisibility(View.GONE);
+                    break;
+                case R.id.intro_wifi:
+                    introduceHotel.setVisibility(View.GONE);
+                    introduceControl.setVisibility(View.GONE);
+                    introduceNeed.setVisibility(View.GONE);
+                    introduceWifi.setVisibility(View.VISIBLE);
+                    introduceRequest.setVisibility(View.GONE);
+                    break;
+                case R.id.intro_request:
+                    introduceHotel.setVisibility(View.GONE);
+                    introduceControl.setVisibility(View.GONE);
+                    introduceNeed.setVisibility(View.GONE);
+                    introduceWifi.setVisibility(View.GONE);
+                    introduceRequest.setVisibility(View.VISIBLE);
                     break;
                 default:
             }

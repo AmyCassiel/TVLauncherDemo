@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.ApowerMirrorActivity;
 import com.jiachang.tv_launcher.activity.DiningActivity;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
-import com.jiachang.tv_launcher.utils.ViewUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import androidx.annotation.NonNull;
@@ -52,12 +50,6 @@ public class MenuFragment extends Fragment{
 
     @BindView(R.id.spinner_multimedia_item)
     LinearLayout multimediaItem;
-    @BindView(R.id.spinner_music_item)
-    LinearLayout musicItem;
-    @BindView(R.id.spinner_apowermirror_item)
-    LinearLayout apowermirrorItem;
-    @BindView(R.id.spinner_dining_item)
-    LinearLayout diningItem;
     @BindView(R.id.spinner_about_item)
     LinearLayout aboutItem;
 
@@ -77,8 +69,8 @@ public class MenuFragment extends Fragment{
         // 屏幕宽度（像素）
         int width = metric.widthPixels;
         // 屏幕高度（像素）
-        int height = metric.heightPixels/3;
-        Log.e("height",""+height);
+        int height = metric.heightPixels/4;
+        Log.d("MenuFragment","height:"+height);
         ViewGroup.LayoutParams layoutParams =menuItemLayout.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
@@ -87,19 +79,12 @@ public class MenuFragment extends Fragment{
         layoutParams1.bottomMargin = 95;
         menuItemLayout.setLayoutParams(layoutParams1);
 
-        initView();
         return menuLayout;
     }
 
-    public void initView(){
-//        menuTV.setFocusable(true);
-//        menuTV.setFocusableInTouchMode(true);
-        menuTV.setNextFocusDownId(R.id.txtV);
-    }
-
-    @OnClick({R.id.multimedia_item_1,R.id.multimedia_item_2,R.id.multimedia_item_3,R.id.music_item_1,R.id.music_item_2,R.id.music_item_3,
-            R.id.apowermirror_item_1,R.id.apowermirror_item_2,R.id.apowermirror_item_3,R.id.dining_item_1,R.id.dining_item_2,R.id.dining_item_3,
-            R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
+    @OnClick({R.id.multimedia_item_1,R.id.multimedia_item_2,
+            R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.about_item_4,R.id.about_item_5,
+            R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     void imageClick( View v) {
         switch (v.getId()){
             case R.id.multimedia_item_1:
@@ -109,6 +94,8 @@ public class MenuFragment extends Fragment{
                 } else {
                     Toast.makeText(mContext, "暂时不提供该服务！", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.menu_tv:
             case R.id.multimedia_item_2:
                 intent = pm.getLaunchIntentForPackage("com.dianshijia.newlive");   //这个方法直接返回 访问特定包名下activity或service etc.的入口的intent， 省去设置componentName的参数
                 if (intent != null) {
@@ -117,7 +104,7 @@ public class MenuFragment extends Fragment{
                     Toast.makeText(mContext, "你还没有安装“电视家”这个软件哦！", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.music_item_1:
+            case R.id.menu_music:
                 intent = pm.getLaunchIntentForPackage("com.netease.cloudmusic");
                 if (intent != null) {
                     mContext.startActivity(intent);
@@ -140,20 +127,57 @@ public class MenuFragment extends Fragment{
                     }
                 }
                 break;
-            case R.id.apowermirror_item_1:
+            case R.id.menu_apower_mirror:
                 Intent ent = new Intent();
                 ent.setClass(mContext, ApowerMirrorActivity.class);
                 mContext.startActivity(ent);
                 break;
-            case R.id.dining_item_1:
+            case R.id.menu_dining:
                 startActivity(new Intent(mContext, DiningActivity.class),
                         ActivityOptions.makeSceneTransitionAnimation((Activity) mContext,
                                 v, "image_dining").toBundle());
                 break;
-            case R.id.about_item_1:
+            case R.id.menu_service:
                 Intent in = new Intent();
+                in.putExtra("main",true);
                 in.setClass(mContext, HotelServiceActivity.class);
                 mContext.startActivity(in);
+                break;
+            case R.id.about_item_1:
+                Intent it = new Intent();
+                it.setClass(mContext, HotelServiceActivity.class);
+                it.putExtra("about_item_1",true);
+                it.putExtras(new Bundle());
+                mContext.startActivity(it);
+                break;
+            case R.id.about_item_2:
+                Intent ti = new Intent();
+                ti.setClass(mContext, HotelServiceActivity.class);
+                ti.putExtra("about_item_2",true);
+                ti.putExtras(new Bundle());
+                mContext.startActivity(ti);
+                break;
+            case R.id.about_item_3:
+                Intent ite = new Intent();
+                Bundle bundle = new Bundle();
+                ite.setClass(mContext, HotelServiceActivity.class);
+                ite.putExtra("about_item_3",true);
+                ite.putExtras(bundle);
+                mContext.startActivity(ite);
+                break;
+            case R.id.about_item_4:
+                Intent ie = new Intent();
+                ie.setClass(mContext, HotelServiceActivity.class);
+                ie.putExtra("about_item_4",true);
+                ie.putExtras(new Bundle());
+                mContext.startActivity(ie);
+                break;
+            case R.id.about_item_5:
+                Intent iten = new Intent();
+                iten.setClass(mContext, HotelServiceActivity.class);
+                iten.putExtra("about_item_5",true);
+                iten.putExtras(new Bundle());
+                mContext.startActivity(iten);
                 break;
             default:
                 break;
@@ -166,44 +190,20 @@ public class MenuFragment extends Fragment{
             switch (view.getId()){
                 case R.id.txtV:
                     multimediaItem.setVisibility(View.GONE);
-                    musicItem.setVisibility(View.GONE);
-                    apowermirrorItem.setVisibility(View.GONE);
-                    diningItem.setVisibility(View.GONE);
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_tv:
                     multimediaItem.setVisibility(View.VISIBLE);
-                    musicItem.setVisibility(View.GONE);
-                    apowermirrorItem.setVisibility(View.GONE);
-                    diningItem.setVisibility(View.GONE);
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_music:
                     multimediaItem.setVisibility(View.GONE);
-                    musicItem.setVisibility(View.VISIBLE);
-                    apowermirrorItem.setVisibility(View.GONE);
-                    diningItem.setVisibility(View.GONE);
-                    aboutItem.setVisibility(View.GONE);
-                    break;
-                case R.id.menu_apower_mirror:
-                    multimediaItem.setVisibility(View.GONE);
-                    musicItem.setVisibility(View.GONE);
-                    apowermirrorItem.setVisibility(View.VISIBLE);
-                    diningItem.setVisibility(View.GONE);
-                    aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_dining:
-                    multimediaItem.setVisibility(View.GONE);
-                    musicItem.setVisibility(View.GONE);
-                    apowermirrorItem.setVisibility(View.GONE);
-                    diningItem.setVisibility(View.VISIBLE);
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_service:
                     multimediaItem.setVisibility(View.GONE);
-                    musicItem.setVisibility(View.GONE);
-                    apowermirrorItem.setVisibility(View.GONE);
-                    diningItem.setVisibility(View.GONE);
                     aboutItem.setVisibility(View.VISIBLE);
                     break;
                 default:

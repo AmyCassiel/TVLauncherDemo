@@ -24,8 +24,9 @@
         android:layout_height="wrap_content"
         android:text="@string/welcome"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_welcome"
+        android:textSize="30px"
         android:layout_marginStart="25px"
+        android:lineSpacingExtra="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/hotel_icon"
         app:layout_constraintTop_toTopOf="parent"/>

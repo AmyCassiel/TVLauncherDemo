@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+
+import static com.jiachang.tv_launcher.utils.Constants.MAC;
 
 /**
  * @author Mickey.Ma
@@ -84,8 +87,9 @@ public class SettingActivity extends Activity {
      */
     private String getMac(){
         String mac = IPUtils.getLocalEthernetMacAddress();
-        img.setImageBitmap(QRCodeUtil.createQRCode(mac));
-        return mac;
+        Log.d("mac",MAC);
+        img.setImageBitmap(QRCodeUtil.createQRCode(MAC));
+        return MAC;
     }
 
     @OnFocusChange({R.id.et_account,R.id.et_pwd,R.id.tv_confirm,R.id.tv_cancle,R.id.set_setting})
@@ -104,8 +108,8 @@ public class SettingActivity extends Activity {
                 break;
             case R.id.tv_confirm:
                 String username = ed_account.getText().toString();
-                String Mypwd = ed_pwd.getText().toString();
-                if (username.equals("admin") && Mypwd.equals("jiachang888")) {
+                String mypwd = ed_pwd.getText().toString();
+                if (username.equals("admin") && mypwd.equals("jiachang888")) {
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);
                     finish();

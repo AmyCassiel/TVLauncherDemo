@@ -23,7 +23,7 @@
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginStart="@dimen/btn_height"
             android:layout_marginTop="@dimen/btn_height"
             android:layout_marginEnd="@dimen/btn_height"
@@ -39,7 +39,7 @@
             android:textColor="@color/commom_all_white"
             android:textSize="48px"
             android:padding="5px"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <!--账号-->
         <com.zhy.autolayout.AutoLinearLayout
@@ -59,6 +59,7 @@
             <EditText
                 android:id="@+id/et_account"
                 style="@style/SettingEditTextStyle"
+                android:focusable="false"
                 android:hint="@string/input_account_hint"
                 android:nextFocusDown="@+id/ed_pwd"
                 android:text="admin" />
@@ -86,6 +87,7 @@
                 android:hint="@string/input_password_hint"
                 android:inputType="textPassword"
                 android:maxLength="18"
+                android:focusable="true"
                 android:layout_gravity="center"
                 android:nextFocusUp="@id/et_account"
                 android:nextFocusDown="@id/tv_confirm" />
@@ -101,7 +103,7 @@
             android:clipToPadding="false"
             android:paddingLeft="160px"
             android:paddingRight="120px"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/tv_confirm"
@@ -138,7 +140,7 @@
         android:background="@color/Transparent"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="@string/set_setting"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_text_size" />
