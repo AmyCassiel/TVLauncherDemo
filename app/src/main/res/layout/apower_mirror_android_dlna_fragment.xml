@@ -28,7 +28,7 @@
                 android:textSize="75px" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="15dp"
@@ -48,12 +48,12 @@
                 android:textSize="75px" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:lineSpacingExtra="15dp"
                 android:padding="35px"
-                android:text="2. 打开Android设备的“AllConnect”应用，在WLAN网络中的设备列表中，点按目标设备AS-TS3Mini[AirPlay]准备投射媒体内容"
+                android:text="2. 打开Android设备的“AllConnect”应用，在WLAN网络中的设备列表中，点按目标设备AS-TS3Mini[AirPlay]准备投射媒体内容。"
                 android:textColor="@color/black"
                 android:textSize="@dimen/hotel_text" />
 
@@ -75,11 +75,11 @@
                     android:textSize="75px" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/text_padding"
-                    android:text="3. 选择您希望在AirScreen设备上看到的媒体内容"
+                    android:text="3. 选择您希望在AirScreen设备上看到的媒体内容。"
                     android:textColor="@color/black"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>

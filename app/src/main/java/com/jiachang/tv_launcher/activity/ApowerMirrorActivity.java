@@ -1,7 +1,9 @@
 package com.jiachang.tv_launcher.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -58,7 +60,6 @@ public class ApowerMirrorActivity extends FragmentActivity {
 
         ButterKnife.bind(this);
 
-        //
         fM = getSupportFragmentManager();
         fT = fM.beginTransaction();
         aIOSfragment=new ApowerMirrorIOSFragment();
@@ -147,7 +148,7 @@ public class ApowerMirrorActivity extends FragmentActivity {
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
+            View v = getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
         } else if (Build.VERSION.SDK_INT >= 19) {
             //for new api versions.

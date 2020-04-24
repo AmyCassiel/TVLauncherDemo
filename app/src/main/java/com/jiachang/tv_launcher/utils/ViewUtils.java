@@ -137,7 +137,7 @@ public abstract class ViewUtils {
                 + "\n屏幕高度（像素）: " + height
                 + "\n屏幕密度:  " + density
                 + "\n屏幕密度DPI: " + densityDpi;
-        Log.e("System INFO", info);
+        Log.i("ViewUtils", info);
 
         // 屏幕宽度算法:屏幕宽度（像素）/屏幕密度
         int screenWidth = (int) (width / density);  // 屏幕宽度(dp)

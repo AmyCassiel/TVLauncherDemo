@@ -13,16 +13,24 @@
     <string name="default_choose">Choose</string>
     <string name="default_return">Return</string>
     <string name="home">Home</string>
-    <string name="welcome">Welcome&#8201;%1$s&#8201;stay at our hotel!\nRoom Number：007</string>
+    <string name="welcome">Welcome to stay at our hotel!</string>
 
     <string name="hotel_introduce_tittle">The introduction of hotel</string>
     <string name="hotel_introduce_text">&#8195;&#8195;The Jiachang wisdom hotel opened in 2020, and the decoration was completed in the same year. The hotel has 44 rooms. The hotel adopts self-service check-in, xiaochang intelligent customer control, high-end mousse mattress, customer experience led by a set of Shanghai self-service, intelligent customer control, butler service as one of the new upgrade products.
             \n&#8195;&#8195;The Jiachang wisdom hotel (Shanghai nanxiang hotel) is located at zhennan road, jiading district, Shanghai. Adjacent to the railway line 11 nanxiang station, nanxiang guyi garden.
-            \n&#8195;&#8195;TEL：400—756-9888</string>
+            \n&#8195;&#8195;TEL：021-888-8888</string>
 
     <string name="function_introduce_tittle">The function Introduction</string>
     <string name="function_introduce_text">◇&#8201;The voice control of various electrical appliances: \n&#8195;&#8195;the bedside lamp; \n&#8195;&#8195;the fancy lantern; \n&#8195;&#8195;the air conditioner;\n&#8195;&#8195;the TV; \n&#8195;&#8195;the bedroom lamp;
         \n◇&#8201;The voice on scene mode: \n&#8195;&#8195;the summer mode;\n&#8195;&#8195;the winter mode; \n&#8195;&#8195;the reading mode；</string>
+
+    <string name="need_introduce_tittle">The Introduce of Needs</string>
+    <string name="need_introduce_text">◇&#8201;You can say:\n&#8195;&#8195;I want a towel;\n&#8195;&#8195;I want a bathrobe;\n
+        &#8195;&#8195;I want to check out;\n&#8195;&#8195;I need cleaning;\n&#8195;&#8195;I want to stay;\n&#8195;&#8195;I want to repair;</string>
+
+    <string name="wifi_introduce_tittle">WIFI</string>
+    <string name="wifi_introduce_text"><b>Please go to the front desk and ask the hotel staff.</b></string>
+
     <string name="about_tittle">About</string>
     <string name="about_text">If you want to know more about the functionality, please open "WeChat" and scan the qr code below. And enter "home wisdom hotel" small program. You can use your cell phone to control all kinds of appliances in the room.</string>
 
@@ -38,7 +46,7 @@
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 
-    <string name="set_setting"><u>设置</u></string>
+    <string name="set_setting"><u>Setting</u></string>
     <string name="intro_apower_mirror">
         <b>For&#8201;Android：\n\n</b>
         <b>Method&#8201;&#8201;1:\n</b>
@@ -58,8 +66,8 @@
     <string name="intro_apower_mirror_title">Projection instruction\n</string>
 
     <string-array name="action_tv">
-        <item>音乐</item>
-        <item>电视</item>
-        <item>爱奇艺</item>
+        <item>music</item>
+        <item>television</item>
+        <item>iQIYI</item>
     </string-array>
 </resources>

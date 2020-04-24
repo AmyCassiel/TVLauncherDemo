@@ -38,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:orientation="horizontal"
-        android:background="@drawable/border"
         android:gravity="center"
         android:visibility="visible">
         <FrameLayout
@@ -46,6 +45,7 @@
             style="@style/ApowerMirrorFLStyle"
             android:background="@drawable/apower_mirror_solid_bg_focus">
             <TextView
+                android:textColor = "@color/darkgray"
                 style="@style/ApowerMirrorTVStyle"
                 android:text="Miracast"/>
         </FrameLayout>
@@ -55,6 +55,7 @@
             android:background="@drawable/apower_mirror_solid_bg_focus">
             <TextView
                 style="@style/ApowerMirrorTVStyle"
+                android:textColor = "@color/darkgray"
                 android:text="DLNA"/>
         </FrameLayout>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.jiachang.tv_launcher.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.utils.IPUtils;
+import com.jiachang.tv_launcher.utils.ImageUtil;
 
 
 import java.io.BufferedReader;
@@ -36,6 +38,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.jiachang.tv_launcher.utils.Constants.API_KEY;
+import static com.jiachang.tv_launcher.utils.Constants.hotelName;
+import static com.jiachang.tv_launcher.utils.Constants.img;
+import static com.jiachang.tv_launcher.utils.HttpUtils.netWorkCheck;
+
 
 /**
  * @author Mickey.Ma
@@ -46,16 +53,19 @@ public class TopbarFragment extends Fragment {
     @BindView(R.id.time)
     TextView time;
     @BindView(R.id.day)
-    TextView month_day;
+    TextView monthDay;
     @BindView(R.id.weather_txt)
-    TextView weather_txt;
+    TextView weatherTxt;
     @BindView(R.id.weather_icon)
     ImageView mImageView;
+    @BindView(R.id.welcome)
+    TextView welcome;
+    @BindView(R.id.hotel_icon)
+    ImageView hotelIcon;
 
     private Unbinder mUb;
 
     //天气APIkey
-    private String API_KEY = "l7in2sysjxkwjolf";
     private String temperature, text, code;
 
 
@@ -67,7 +77,7 @@ public class TopbarFragment extends Fragment {
             switch (msg.what) {
                 case 1:
                     if (temperature.isEmpty() && text.isEmpty()) return;
-                    weather_txt.setText(temperature + "℃" + "\n" + "\n" + text);
+                    weatherTxt.setText(temperature + "℃" + "\n" + "\n" + text);
                     weatherIcon(code);
                     break;
                 case 2:
@@ -88,6 +98,26 @@ public class TopbarFragment extends Fragment {
         mUb = ButterKnife.bind(this, topLayout);
         mContext = getActivity();
         initView();
+        if(netWorkCheck(mContext)){
+            //网络已连接
+            if (hotelName!=null && !hotelName.isEmpty()){
+                welcome.setText("欢迎入住"+hotelName);
+                if (img != null && !hotelName.isEmpty()){
+                    hotelIcon.setImageBitmap(ImageUtil.getNativeImage(img));
+                }
+            }
+        }else{
+            // 网络未连接
+            SharedPreferences preferences= getActivity().getSharedPreferences("hotel", Context.MODE_PRIVATE);
+            hotelName = preferences.getString("hotelName", "defaultname");
+            Log.d("TopbarFragment","hotelName = "+hotelName);
+            if (hotelName!=null && !hotelName.isEmpty()){
+                welcome.setText("欢迎入住"+hotelName);
+                if (img != null && !hotelName.isEmpty()){
+                    hotelIcon.setImageBitmap(ImageUtil.getNativeImage(img));
+                }
+            }
+        }
         return topLayout;
     }
 
@@ -131,7 +161,7 @@ public class TopbarFragment extends Fragment {
             Log.i("sysDayStr", "" + sysDayStr);
             if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
                 time.setText(sysTimeStr);
-                month_day.setText(sysDayStr);
+                monthDay.setText(sysDayStr);
             }
         } else {
             Toast.makeText(mContext, "时间为空", Toast.LENGTH_LONG).show();
@@ -157,6 +187,7 @@ public class TopbarFragment extends Fragment {
                     JSONObject jos = jo.getJSONObject("now");
                     temperature = jos.getString("temperature");
                     Log.i("temperature", temperature);
+                    if (temperature == null) return;
                     text = jos.getString("text");
                     Log.i("text", text);
                     code = jos.getString("code");
@@ -211,75 +242,75 @@ public class TopbarFragment extends Fragment {
             case 0:
             case 2:
             case 38:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_sunny));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_sunny));
                 break;
             case 1:
             case 3:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_clear));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_clear));
                 break;
             case 4:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_cloudy));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_cloudy));
                 break;
             case 5:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_partly_cloudy));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_partly_cloudy));
                 break;
             case 6:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_partly_cloudy_night));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_partly_cloudy_night));
                 break;
             case 7:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_mostly_cloudy));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_mostly_cloudy));
                 break;
             case 8:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_mostly_cloudy_night));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_mostly_cloudy_night));
                 break;
             case 9:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_overcast));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_overcast));
                 break;
             case 10:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_shower));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_shower));
                 break;
             case 11:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_thundershower));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_thundershower));
                 break;
             case 12:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_thundershower_with_hail));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_thundershower_with_hail));
                 break;
             case 13:
             case 19:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_light_rain));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_light_rain));
                 break;
             case 14:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_moderaterain));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_moderaterain));
                 break;
             case 15:
             case 16:
             case 17:
             case 18:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_heavy_rain));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_heavy_rain));
                 break;
             case 20:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_sleet));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_sleet));
                 break;
             case 21:
             case 22:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_light_snow));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_light_snow));
                 break;
             case 23:
             case 24:
             case 25:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_moderate_snow));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_moderate_snow));
                 break;
             case 26:
             case 27:
             case 28:
             case 29:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_dusty));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_dusty));
                 break;
             case 30:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_foggy));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_foggy));
                 break;
             case 31:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_haze));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_haze));
                 break;
             case 32:
             case 33:
@@ -287,10 +318,10 @@ public class TopbarFragment extends Fragment {
             case 35:
             case 36:
             case 37:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_windy));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_windy));
                 break;
             case 99:
-                mImageView.setImageDrawable(getResources().getDrawable(R.mipmap.weather_overcast));
+                mImageView.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.weather_unknown));
                 break;
             default:
         }

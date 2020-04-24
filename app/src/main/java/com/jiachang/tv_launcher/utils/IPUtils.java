@@ -75,11 +75,11 @@ public class IPUtils {
         String mac = null;
         try {
             Enumeration localEnumeration = NetworkInterface.getNetworkInterfaces();
-            Log.e("localEnumeration = ", "" + localEnumeration);
+            Log.d("localEnumeration = ", "" + localEnumeration);
             while (localEnumeration.hasMoreElements()) {
                 NetworkInterface localNetworkInterface = (NetworkInterface) localEnumeration.nextElement();
                 String interfaceName = localNetworkInterface.getDisplayName();
-                Log.e("interfaceName = ", interfaceName);
+                Log.d("interfaceName = ", interfaceName);
                 if (interfaceName == null) {
                     continue;
                 }
@@ -88,7 +88,7 @@ public class IPUtils {
                     mac = convertToMac(localNetworkInterface.getHardwareAddress());
                     if (mac != null) {
                         mac = "00000AISPVUI00000000" + mac.toUpperCase(Locale.ENGLISH);
-                        Log.e("mac = ", mac);
+                        Log.d("mac = ", mac);
                     }
                     break;
                 }
