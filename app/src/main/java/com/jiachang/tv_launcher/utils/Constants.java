@@ -14,7 +14,6 @@ public class Constants {
     public static String userNeeds = "";
     public static String wifiName = "";
     public static String wifiPassword = "";
-    public static String mac = "";
     public static String breakfastTime = "";
     public static String lunchTime = "";
     public static String dinnerTime = "";

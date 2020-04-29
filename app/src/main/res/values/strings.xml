@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TV_Launcher</string>
+    <string name="app_name">JC_TVLauncher</string>
 
     <string name="default_weather">5℃/9℃</string>
     <string name="default_time">00:00</string>
