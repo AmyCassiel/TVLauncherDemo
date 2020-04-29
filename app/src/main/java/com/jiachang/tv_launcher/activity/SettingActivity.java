@@ -1,7 +1,6 @@
 package com.jiachang.tv_launcher.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.QRCodeUtil;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
-
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;

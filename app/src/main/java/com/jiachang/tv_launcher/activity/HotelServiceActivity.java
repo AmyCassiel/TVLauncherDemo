@@ -99,6 +99,25 @@ public class HotelServiceActivity extends FragmentActivity {
 
         ButterKnife.bind(this);
         context = this;
+
+        hotelIntroduction = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("hotelIntroduction", "");
+        breakfastTime = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("breakfastTime", "");
+        lunchTime = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("lunchTime", "");
+        dinnerTime = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("dinnerTime", "");
+        usageMonitoring = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("usageMonitoring", "");
+        userNeeds = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("userNeeds", "");
+        wifiName = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("wifiName", "");
+        wifiPassword = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                .getString("wifiPassword", "");
+        Log.d(TAG,"hotelIntroduction = "+hotelIntroduction);
+
         getData();
         initView();
     }
@@ -106,7 +125,7 @@ public class HotelServiceActivity extends FragmentActivity {
     private void getData() {
         if(netWorkCheck(context)){
             //网络已连接
-            if (hotelName != null){
+            if (hotelName != null && !hotelName.isEmpty()){
                 introHotelTxt.setText("\u3000\u3000"+hotelIntroduction+"\n\u3000\u3000早餐供应时间：" +breakfastTime
                         +"\n\u3000\u3000午餐供应时间："+lunchTime+"\n\u3000\u3000晚餐供应时间："+dinnerTime+"\n\u3000\u3000前台电话："+tel);
                 introControlTxt.setText(usageMonitoring);
@@ -115,17 +134,7 @@ public class HotelServiceActivity extends FragmentActivity {
             }
         }else{
             // 网络未连接
-            SharedPreferences preferences= getSharedPreferences("hotel", Context.MODE_PRIVATE);
-            hotelIntroduction = preferences.getString("hotelIntroduction", "defaultname");
-            breakfastTime = preferences.getString("breakfastTime", "defaultname");
-            lunchTime = preferences.getString("lunchTime", "defaultname");
-            dinnerTime = preferences.getString("dinnerTime", "defaultname");
-            usageMonitoring = preferences.getString("usageMonitoring", "defaultname");
-            userNeeds = preferences.getString("userNeeds", "defaultname");
-            wifiName = preferences.getString("wifiName", "defaultname");
-            wifiPassword = preferences.getString("wifiPassword", "defaultname");
-            Log.d(TAG,"hotelIntroduction = "+hotelIntroduction);
-            if (hotelName != null) {
+            if (hotelName != null && !hotelName.isEmpty()) {
                 introHotelTxt.setText("\u3000\u3000" + hotelIntroduction + "\n\u3000\u3000早餐供应时间：" + breakfastTime
                         + "\n\u3000\u3000午餐供应时间：" + lunchTime + "\n\u3000\u3000晚餐供应时间：" + dinnerTime + "\n\u3000\u3000前台电话：" + tel);
                 introControlTxt.setText(usageMonitoring);
@@ -165,7 +174,7 @@ public class HotelServiceActivity extends FragmentActivity {
         Bundle bundle = intent.getExtras();
         if (bundle.getBoolean("about_item_1")) {
             introhotel.setFocusable(true);
-            introhotel.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introhotel.setBackgroundColor(getResources().getColor(R.color.blue));
             introduceHotel.setVisibility(View.VISIBLE);
             introduceControl.setVisibility(View.GONE);
             introduceNeed.setVisibility(View.GONE);
@@ -173,7 +182,7 @@ public class HotelServiceActivity extends FragmentActivity {
             introduceRequest.setVisibility(View.GONE);
         } else if (bundle.getBoolean("about_item_2")) {
             introcontrol.setFocusable(true);
-            introcontrol.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introcontrol.setBackgroundColor(getResources().getColor(R.color.blue));
             introduceHotel.setVisibility(View.GONE);
             introduceControl.setVisibility(View.VISIBLE);
             introduceNeed.setVisibility(View.GONE);
@@ -181,7 +190,7 @@ public class HotelServiceActivity extends FragmentActivity {
             introduceRequest.setVisibility(View.GONE);
         } else if (bundle.getBoolean("about_item_3")) {
             introneed.setFocusable(true);
-            introneed.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introneed.setBackgroundColor(getResources().getColor(R.color.blue));
             introduceHotel.setVisibility(View.GONE);
             introduceControl.setVisibility(View.GONE);
             introduceNeed.setVisibility(View.VISIBLE);
@@ -189,7 +198,7 @@ public class HotelServiceActivity extends FragmentActivity {
             introduceRequest.setVisibility(View.GONE);
         } else if (bundle.getBoolean("about_item_4")) {
             introwifi.setFocusable(true);
-            introwifi.setBackgroundColor(Color.parseColor("#64A4A4"));
+            introwifi.setBackgroundColor(getResources().getColor(R.color.blue));
             introduceHotel.setVisibility(View.GONE);
             introduceControl.setVisibility(View.GONE);
             introduceNeed.setVisibility(View.GONE);
@@ -197,7 +206,7 @@ public class HotelServiceActivity extends FragmentActivity {
             introduceRequest.setVisibility(View.GONE);
         } else if (bundle.getBoolean("about_item_5")) {
             servicerequest.setFocusable(true);
-            servicerequest.setBackgroundColor(Color.parseColor("#64A4A4"));
+            servicerequest.setBackgroundColor(getResources().getColor(R.color.blue));
             introduceHotel.setVisibility(View.GONE);
             introduceControl.setVisibility(View.GONE);
             introduceNeed.setVisibility(View.GONE);

@@ -152,12 +152,10 @@ public class MainActivity extends FragmentActivity {
                 try {
                     String req = HttpUtils.mPost(url, map);
                     Log.d(TAG, "req = " + req);
-                    if (req != null && !req.isEmpty()){
+                    if (!req.isEmpty()) {
                         JSONObject json = JSONObject.parseObject(req);
-                        Log.d(TAG, "json = " + json);
                         String msg = json.getString("msg");
-                        Log.d(TAG, "status = " + msg);
-                        if (msg.equals("success")) {
+                        if (msg.contains("success")) {
                             Log.d(TAG, "状态:成功");
                             JSONObject dataBean = json.getJSONObject("data");
                             hotelName = dataBean.getString("hotelName");
@@ -171,28 +169,30 @@ public class MainActivity extends FragmentActivity {
                             dinnerTime = dataBean.getString("dinnerTime");
                             tel = dataBean.getString("phone");
                             img = dataBean.getString("image");
-                            if (hotelName != null && !hotelName.isEmpty()){
-                                SharedPreferences sp = getSharedPreferences("hotel", Context.MODE_PRIVATE);
-                                sp.edit().putString("hotelName", hotelName).putString("hotelIntroduction", hotelIntroduction)
+                            if (hotelName != null && !hotelName.isEmpty()) {
+                                getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).edit()
+                                        .putString("hotelName", hotelName).putString("hotelIntroduction", hotelIntroduction)
                                         .putString("usageMonitoring", usageMonitoring).putString("userNeeds", userNeeds)
                                         .putString("wifiName", wifiName).putString("wifiPassword", wifiPassword)
                                         .putString("breakfastTime", breakfastTime).putString("lunchTime", lunchTime)
-                                        .putString("dinnerTime", dinnerTime).putString("phone",tel)
-                                        .putString("image",img).commit();
+                                        .putString("dinnerTime", dinnerTime).putString("phone", tel)
+                                        .putString("image", img)
+                                        .apply();
                             }
                         }
-                    }else {
+                    } else {
                         return;
 
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
         }.start();
-
     }
+
+
 
     @Override
     protected void onResume() {

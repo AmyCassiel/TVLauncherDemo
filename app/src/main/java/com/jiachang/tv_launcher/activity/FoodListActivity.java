@@ -55,15 +55,18 @@ public class FoodListActivity extends Activity implements FoodAdapter.onItemClic
         intent.putExtra("image", food.getImageId());
         intent.putExtra("text", food.getName());
         ImageView imageView = v.findViewById(R.id.food_image);
-        AutoLinearLayout layout = v.findViewById(R.id.food_card);
+//        AutoLinearLayout layout = v.findViewById(R.id.food_card);
         //android5.0以上的api有这些方法（在Android5.0以下的手机运行会报错，只有在5.0之上才能正确运行并且看到效果）
 //           ActivityOptions options= ActivityOptions.makeSceneTransitionAnimation(this, Pair.create(textView,"textView"),Pair.create(textView,"textView"));
-           ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(this, imageView, "image_dining");
-           startActivity(intent,options.toBundle());
+//           ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(this, imageView, "image_dining");
+//           startActivity(intent,options.toBundle());
         //向下兼容（在Android5.0以下看不到共享元素的那种效果，但是在5.0以下的手机上能正常运行）
 //        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, "food_image");
 //        startActivity(intent, optionsCompat.toBundle());
-
+        ActivityOptions options = ActivityOptions.makeScaleUpAnimation(
+                imageView, 0, 0, //拉伸开始的坐标
+                imageView.getMeasuredWidth(), imageView.getMeasuredHeight()); // 初始的宽高
+        startActivity(intent, options.toBundle());
     }
 
     private void initFood() {
