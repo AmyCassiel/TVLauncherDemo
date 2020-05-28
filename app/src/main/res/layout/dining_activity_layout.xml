@@ -28,9 +28,12 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_main_food" />
 
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="IN-ROOM DINING" />
+                    android:text="美食正餐" />
+                </LinearLayout>
             </FrameLayout>
         </com.gigamole.library.ShadowLayout>
 
@@ -42,7 +45,7 @@
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_main_all"
         android:nextFocusRight="@id/dining_drink_all"
-        android:nextFocusDown="@id/dining_fruit_all"
+        android:nextFocusDown="@id/dining_welcome_all"
         android:layout_marginStart="250px"
         app:layout_constraintBottom_toBottomOf="@id/dining_main_all"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,10 +63,12 @@
                     android:id="@+id/dining_cake"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_cake" />
-
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="CAKE" />
+                    android:text="快餐小吃" />
+                </LinearLayout>
             </FrameLayout>
         </com.gigamole.library.ShadowLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -73,7 +78,7 @@
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_cake_all"
         android:nextFocusRight="@id/dining_fruit_all"
-        android:nextFocusDown="@id/dining_fruit_all"
+        android:nextFocusDown="@id/dining_welcome_all"
         app:layout_constraintBottom_toBottomOf="@id/dining_cake_all"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/dining_cake_all">
@@ -90,9 +95,12 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_drink" />
 
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="DRINKS" />
+                    android:text="酒水茶饮" />
+                </LinearLayout>
             </FrameLayout>
         </com.gigamole.library.ShadowLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
@@ -116,10 +124,12 @@
                     android:id="@+id/dining_fruit"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_fruit" />
-
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="FRUIT" />
+                    android:text="水果/轻食" />
+                </LinearLayout>
             </FrameLayout>
 
         </com.gigamole.library.ShadowLayout>
@@ -129,7 +139,7 @@
         android:id="@+id/dining_iceCream_all"
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_fruit_all"
-        android:nextFocusRight="@id/dining_drink_all"
+        android:nextFocusRight="@id/dining_welcome_all"
         app:layout_constraintEnd_toEndOf="@id/dining_main_all"
         app:layout_constraintTop_toTopOf="@id/dining_fruit_all">
 
@@ -145,9 +155,12 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_ice_cream" />
 
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="ICE-CREAM" />
+                    android:text="时尚甜品" />
+                </LinearLayout>
             </FrameLayout>
 
         </com.gigamole.library.ShadowLayout>
@@ -156,6 +169,7 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/dining_welcome_all"
         style="@style/DLAutoRelativeLayoutStyle"
+        android:nextFocusLeft="@id/dining_iceCream_all"
         app:layout_constraintBottom_toBottomOf="@id/dining_iceCream_all"
         app:layout_constraintEnd_toEndOf="@id/dining_drink_all"
         app:layout_constraintStart_toStartOf="@id/dining_cake_all"
@@ -172,10 +186,12 @@
                     android:id="@+id/dining_welcome"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_welcome" />
-
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
                 <TextView
                     style="@style/DLTextStyle"
-                    android:text="WELCOME TO HOTEL" />
+                    android:text="更多菜单" />
+                </LinearLayout>
             </FrameLayout>
 
         </com.gigamole.library.ShadowLayout>

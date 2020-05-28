@@ -31,7 +31,7 @@
                 android:nextFocusRight="@id/menu_music"
                 android:nextFocusDown="@id/multimedia_item_2"
                 android:nextFocusUp="@id/multimedia_item_1"
-                android:text="在线直播" />
+                android:text="电视频道" />
 
             <TextView
                 android:id="@+id/multimedia_item_2"
@@ -57,19 +57,19 @@
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_3"
-                android:text="客控服务" />
+                android:text="酒店设施" />
             <TextView
                 android:id="@+id/about_item_3"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_4"
-                android:text="客需服务" />
+                android:text="客控服务" />
             <TextView
                 android:id="@+id/about_item_4"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_5"
-                android:text="WIFI密码" />
+                android:text="客需服务" />
             <TextView
                 android:id="@+id/about_item_5"
                 style="@style/MenuItemTextStyle"
@@ -83,7 +83,7 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/common_gray_bg"
+        android:background="@color/gray_bg"
         android:gravity="center"
         android:orientation="horizontal"
         android:clipChildren="false"

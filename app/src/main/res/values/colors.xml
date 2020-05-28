@@ -11,21 +11,26 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="gray_white">#F5FFFF</color>
     <color name="gray">#dbdbdb</color>
     <color name="black_gray">#8a8a8a</color>
     <color name="darkgray">#515151</color>
     <color name="black">#000</color>
+    <color name="red">#FF0000</color>
+    <color name="gray_yellow">#FAFF00</color>
     <color name="DKgray">#FF444444</color>
 
     <color name="indicator_1">#55B3C2</color>
     <color name="indicator_2">#64A4A4</color>
     <color name="indicator_3">#66D7B9</color>
     <color name="indicator_4">#FDBC7D</color>
+    <color name="orange">#FF9100</color>
     
-    <color name="Transparent">#00000000</color>
+    <color name="transparent">#00000000</color>
 
     <color name="commom_all_white">#FFFFFF</color>
     <color name="color_btn_blue_bg">#C83053BE</color>
+    <color name="color_btn_blue_bg1">#A83053AF</color>
     <color name="color_btn_gray_bg">#B2121111</color>
     <color name="common_gray_bg">#4C000000</color>
     <color name="gray_bg">#7a000000</color>

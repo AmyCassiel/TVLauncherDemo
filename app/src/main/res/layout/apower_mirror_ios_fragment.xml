@@ -39,7 +39,7 @@
                     android:lineSpacingExtra="15dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
-                    android:text="1. 将ios设备和Android设备连接到同一WIFI网络。"
+                    android:text="1. 将苹果手机和电视机盒子连接到同一WIFI网络。"
                     android:padding="@dimen/text_padding"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -69,7 +69,7 @@
                     android:lineSpacingExtra="15dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
-                    android:text="2. 在您的iOS设备上，从屏幕底部向上轻扫以打开“控制中心”，轻点“AirPlay。"
+                    android:text="2. 在您的苹果手机上，从屏幕底部向上轻扫以打开“控制中心”，轻点“AirPlay”。"
                     android:padding="35px"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -97,7 +97,7 @@
                     android:singleLine="false"
                     android:lineSpacingExtra="15dp"
                     android:textColor="@color/black"
-                    android:text="3. 轻点您要将内容流化到的设备名称AS-TS3Mini[AirPlay],打开镜像。"
+                    android:text="3. 轻点您要投屏的视频，到设备名称名叫（例如）AS-TS3Mini[AirPlay]上进行投屏。"
                     android:padding="@dimen/text_padding"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>

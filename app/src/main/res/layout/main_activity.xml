@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@mipmap/pg">
+    android:background="@mipmap/bg1">
 
     <FrameLayout
         android:id="@+id/top"
@@ -19,7 +19,7 @@
     <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="本系统由上海家畅集团提供技术支持"
+        android:text="本系统由上海家畅智能科技有限公司提供技术支持"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

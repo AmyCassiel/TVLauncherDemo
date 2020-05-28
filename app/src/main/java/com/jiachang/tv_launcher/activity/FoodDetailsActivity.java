@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
 
+import java.util.ArrayList;
+
 import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,11 +23,15 @@ import butterknife.ButterKnife;
  * @description
  */
 public class FoodDetailsActivity extends Activity implements View.OnClickListener {
-
+    private ArrayList arrayList = new ArrayList();
     @BindView(R.id.food_img)
     ImageView foodImg;
-    @BindView(R.id.foodName)
-    TextView foodName;
+//    @BindView(R.id.foodName)
+//    TextView foodName;
+//    @BindView(R.id.foodPrice)
+//    TextView foodPrice;
+//    @BindView(R.id.foodMaterial)
+    TextView foodMaterial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +40,9 @@ public class FoodDetailsActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.dining_fooddetail_activity);
         ButterKnife.bind(this);
 
+        arrayList = getIntent().getStringArrayListExtra("deliveryType");
 
-        Intent intent = getIntent();
-        int image = intent.getIntExtra("image", 0);
-        String text = intent.getStringExtra("text");
-
-        foodImg.setImageResource(image);
-        foodName.setText(text);
-
-        foodImg.setOnClickListener(this);
+//        foodImg.setOnClickListener(this);
     }
 
     @Override

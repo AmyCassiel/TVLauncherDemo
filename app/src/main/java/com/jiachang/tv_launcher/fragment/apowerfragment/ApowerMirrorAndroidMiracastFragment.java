@@ -1,4 +1,4 @@
-package com.jiachang.tv_launcher.fragment;
+package com.jiachang.tv_launcher.fragment.apowerfragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,20 +19,22 @@ import butterknife.Unbinder;
  * @date 2020-04-11
  * @description
  */
-public class ApowerMirrorIOSFragment extends Fragment {
+public class ApowerMirrorAndroidMiracastFragment extends Fragment {
     private Unbinder mUb;
     private Context mContext;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.apower_mirror_ios_fragment, container, false);
+        View view = inflater.inflate(R.layout.apower_mirror_android_miracast_fragment, container, false);
         mUb = ButterKnife.bind(this, view);
         mContext = getActivity();
         return view;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
     }
+
+
 }

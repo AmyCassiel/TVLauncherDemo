@@ -19,7 +19,7 @@ import android.widget.ImageView;
 /**
  * @author Mickey.Ma
  * @date 2020-04-08
- * @description
+ * @description 食物详情页的图片展示
  */
 public class MyImageView extends ImageView {
 
@@ -53,11 +53,9 @@ public class MyImageView extends ImageView {
 
     /**
      * 绘制圆角矩形图片
-     * @author caizhiming
      */
     @Override
     protected void onDraw(Canvas canvas) {
-
         Drawable drawable = getDrawable();
         if (null != drawable) {
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();

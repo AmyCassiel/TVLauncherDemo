@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:lineSpacingExtra="15dp"
                 android:padding="@dimen/text_padding"
-                android:text="1. 将AirScreen设备和Android手机连接到同一WiFi网络下。"
+                android:text="1. 将电视机盒子和手机连接到同一WiFi网络下。"
                 android:textColor="@color/black"
                 android:textSize="@dimen/hotel_text" />
 
@@ -53,7 +53,7 @@
                 android:layout_gravity="center"
                 android:lineSpacingExtra="15dp"
                 android:padding="35px"
-                android:text="2. 打开Android设备的“AllConnect”应用，在WLAN网络中的设备列表中，点按目标设备AS-TS3Mini[AirPlay]准备投射媒体内容。"
+                android:text="2. 打开手机中看视频的软件（例如：爱奇艺，腾讯视频等），点击播放您想看的视频，横屏显示后找到投屏按钮并点击"
                 android:textColor="@color/black"
                 android:textSize="@dimen/hotel_text" />
 
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/text_padding"
-                    android:text="3. 选择您希望在AirScreen设备上看到的媒体内容。"
+                    android:text="3. 在设备列表中，点按目标名字叫“AS-TX3Mini[DMR]”的设备，准备投射视频内容。"
                     android:textColor="@color/black"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>

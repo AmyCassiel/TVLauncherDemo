@@ -18,6 +18,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -48,7 +49,7 @@ public class HttpUtils {
 
     private static String HTTP_TAG = "HttpUtil";
 
-    // 网络连接判断
+    /**网络连接判断*/
     public static boolean netWorkCheck(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
@@ -249,6 +250,61 @@ public class HttpUtils {
             }
         }
         return p.getProperty(key);
+    }
+
+    public static String httpPut(String urlStr) throws Exception {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("PUT");
+        conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+        int code = conn.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        Log.e("code=" ,""+ conn.getResponseCode());
+        StringBuffer buf = new StringBuffer();
+        String inputLine = in.readLine();
+        while (inputLine != null) {
+            buf.append(inputLine).append("\r\n");
+            inputLine = in.readLine();
+        }
+        in.close();
+        //
+        return (buf.toString().trim()) != null ? (buf.toString().trim()) : (code + "");
+    }
+
+    public static JSONObject httpPost(String urlStr) throws Exception {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+        StringBuffer buf = new StringBuffer();
+        String inputLine = in.readLine();
+        while (inputLine != null) {
+            buf.append(inputLine).append("\r\n");
+            inputLine = in.readLine();
+        }
+        in.close();
+        //
+        return new JSONObject(buf.toString().trim());
+    }
+
+    public static String httpPostApplication(String urlStr) throws Exception {
+        URL url = new URL(urlStr);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+        StringBuffer buf = new StringBuffer();
+        String inputLine = in.readLine();
+        while (inputLine != null) {
+            buf.append(inputLine).append("\r\n");
+            inputLine = in.readLine();
+        }
+        in.close();
+        //
+        return buf.toString().trim();
     }
 
     /**

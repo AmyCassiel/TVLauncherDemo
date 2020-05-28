@@ -5,7 +5,44 @@
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/btn_width">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/wifi_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100px"
+        android:text="WIFI账号：jiachang_2.4G"
+        android:textColor="@color/white"
+        android:textSize="25px"
+        app:layout_constraintBottom_toBottomOf="@id/wifi_password"
+        app:layout_constraintEnd_toStartOf="@id/wifi_password"
+        />
+
+    <TextView
+        android:id="@+id/wifi_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码：4007569888"
+        android:textColor="@color/white"
+        android:textSize="25px"
+        android:layout_marginBottom="20px"
+        android:layout_marginEnd="100px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/breakfast_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100px"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="早餐供应时间：6:00-9:00 (二楼餐厅)"
+        android:textColor="@color/white"
+        android:textSize="25px"
+        app:layout_constraintBottom_toBottomOf="@id/wifi_password"
+        app:layout_constraintStart_toEndOf="@id/wifi_password" />
+    <!--<LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="@dimen/bottom_width"
         android:layout_height="@dimen/bottom_height"
@@ -17,6 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,5 +122,5 @@
                 style="@style/BottomLayoutTextStyle"
                 android:text="@string/home" />
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

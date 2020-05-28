@@ -137,7 +137,7 @@
         android:layout_alignBottom="@id/view"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="20px"
-        android:background="@color/Transparent"
+        android:background="@color/transparent"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:visibility="visible"

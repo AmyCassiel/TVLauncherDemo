@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hotel_head_item"
+    android:layout_width="50px"
+    android:layout_height="30px"
+    android:background="@drawable/about_bg_sidebar_selector"
+    android:gravity="center"
+    android:padding="20dp"
+    android:textColor="@color/white"
+    android:textSize="25px" />

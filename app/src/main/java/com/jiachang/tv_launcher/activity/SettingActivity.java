@@ -2,6 +2,7 @@ package com.jiachang.tv_launcher.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jiachang.tv_launcher.BuildConfig;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.QRCodeUtil;
@@ -64,12 +66,9 @@ public class SettingActivity extends Activity {
 
     }
 
+    /**隐藏虚拟按键，并且全屏*/
     protected void hideBottomMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -108,8 +107,15 @@ public class SettingActivity extends Activity {
                 String username = ed_account.getText().toString();
                 String mypwd = ed_pwd.getText().toString();
                 if (username.equals("admin") && mypwd.equals("jiachang888")) {
-                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(intent);*/
+                    PackageManager packageManager = getPackageManager();
+                    String packageName = "com.android.tv.settings";//要打开应用的包名,以微信为例
+                    Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName);
+                    if (launchIntentForPackage != null)
+                        startActivity(launchIntentForPackage);
+                    else
+                        Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(SettingActivity.this,"用户名或密码错误",Toast.LENGTH_LONG).show();

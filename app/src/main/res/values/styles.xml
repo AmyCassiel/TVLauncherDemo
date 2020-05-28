@@ -62,7 +62,7 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@color/gray_bg</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:visibility">gone</item>
+<!--        <item name="android:visibility">gone</item>-->
     </style>
 
     <!--主界面底部的Image-->
@@ -170,10 +170,16 @@
         <item name="android:scaleType">fitXY</item>
     </style>
     <!--食物分类页面中的文字-->
+    <style name="DLboderTextStyle">
+        <item name="android:layout_width">200px</item>
+        <item name="android:layout_height">80px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/main_bottom_bg</item>
+    </style>
     <style name="DLTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dining_text_size</item>
@@ -183,27 +189,35 @@
     <style name="AboutTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:clipChildren">false</item>
-        <item name="android:clipToPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:textSize">25px</item>
+        <item name="android:layout_margin">25px</item>
+    </style>
+
+    <style name="AboutSCol">
+        <item name="android:alpha">0.8</item>
+        <item name="android:fillViewport">true</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
-        <item name="android:textSize">30px</item>
-        <item name="android:layout_margin">25px</item>
-        <item name="android:background">@drawable/about_bg_sidebar_selector</item>
+        <item name="android:background">@drawable/about_bg_context</item>
+        <item name="android:layout_marginEnd">20px</item>
+        <item name="android:layout_marginStart">20px</item>
+        <item name="android:layout_marginBottom">30px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
     <!--AboutService的正文Layout-->
     <style name="AboutContextLL">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginStart">@dimen/btm_margin_bottom</item>
-        <item name="android:layout_marginTop">50px</item>
-        <item name="android:background">@drawable/about_bg_context</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+<!--        <item name="android:background">@drawable/about_bg_context</item>-->
         <item name="android:orientation">vertical</item>
         <item name="android:alpha">0.7</item>
         <item name="android:gravity">center</item>
-        <item name="android:visibility">gone</item>
     </style>
 
     <!--AboutService的正文标题-->

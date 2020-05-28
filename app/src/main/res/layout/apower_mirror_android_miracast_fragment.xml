@@ -30,7 +30,7 @@
                     android:singleLine="false"
                     android:layout_margin="20px"
                     android:textColor="@color/black"
-                    android:text="声明：由于每个手机的兼容性不同，不能保证所有\n手机的Miracast都能正常使用!"
+                    android:text="声明：由于每个手机的兼容性不同，不能保证所有\n手机的Miracast协议都能正常使用!"
                     android:padding="@dimen/text_padding"
                     android:textSize="@dimen/hotel_text" />
 
@@ -49,7 +49,7 @@
                     android:lineSpacingExtra="15dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
-                    android:text="1. 打开Android设备的“设置”应用。（在您的发送设备上）"
+                    android:text="1. 打开手机的“设置”应用。"
                     android:padding="@dimen/text_padding"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -107,7 +107,7 @@
                     android:singleLine="false"
                     android:lineSpacingExtra="15dp"
                     android:textColor="@color/black"
-                    android:text="3. 在WLAN网络中的投射设备列表中，点按目标设备AS-TS3Mini[AirPlay]，投射屏幕内容。"
+                    android:text="3. 在WLAN网络中的投射设备列表中，点按目标设备名叫例如：AS-TS3Mini[AirPlay]，投射屏幕内容。"
                     android:padding="@dimen/text_padding"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>

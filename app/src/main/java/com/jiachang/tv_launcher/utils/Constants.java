@@ -6,6 +6,8 @@ package com.jiachang.tv_launcher.utils;
  * @description
  */
 public class Constants {
+    public static String hostUrl = "https://jczh.jiachang8.com/reservation";
+    public static String localhostUrl = "http://192.168.0.243:8383/reservation";
     public static String MAC = "";
     public static String API_KEY = "l7in2sysjxkwjolf";
     public static String hotelName = "";
@@ -15,8 +17,27 @@ public class Constants {
     public static String wifiName = "";
     public static String wifiPassword = "";
     public static String breakfastTime = "";
-    public static String lunchTime = "";
-    public static String dinnerTime = "";
     public static String tel = "";
     public static String img = "";
+    public static String wifi = "";
+    public static String hotelPolicys = "";
+    public static String business = "";
+
+    public static String needName = "";
+    public static String needImage = "";
+
+    public static String sTypeName = "";
+    public static int sTypeId = 0;
+    public static String sDetailsName = "";
+    public static String sDetailsImage ="";
+    public static String sFacilitiesName = "";
+    public static String sFacilitiesTime = "";
+    public static long start2 = 0;
+    public static long end2 = 0;
+    public static long start5 = 0;
+    public static long end5 = 0;
+    public static long start6 = 0;
+    public static long end6 = 0;
+    public static long start7 = 0;
+    public static long end7 = 0;
 }

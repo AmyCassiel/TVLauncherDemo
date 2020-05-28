@@ -1,154 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clipChildren="false"
-    android:clipToPadding="false"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg4">
-
-    <ImageView
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true" />
-
+    android:background="@mipmap/bg_service"
+    android:orientation="vertical">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="35px"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
         android:gravity="center"
-        android:orientation="vertical">
-
+        android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:background="@drawable/bg_btn_gray"
-            android:orientation="vertical">
-
+            android:layout_width="250px"
+            android:gravity="center"
+            android:layout_gravity="start"
+            android:layout_marginStart="20px"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/service_logo"/>
             <TextView
-                android:id="@+id/intro_hotel"
-                style="@style/AboutTextView"
-                android:text="酒店介绍" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-            <TextView
-                android:id="@+id/intro_control"
-                style="@style/AboutTextView"
-                android:text="使用客控" />
+        </LinearLayout>
 
+        <TextView
+            android:id="@+id/time1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="20px"
+            android:gravity="end|center"
+            android:layout_marginEnd="20px"
+            android:textStyle="bold"
+            android:text="15:00"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:layout_marginEnd="30px">
             <TextView
-                android:id="@+id/intro_need"
-                style="@style/AboutTextView"
-                android:text="使用客需" />
-
+                android:id="@+id/day1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020年5月27日"
+                android:layout_marginEnd="10px"
+                android:textSize="20px"
+                android:textStyle="bold"/>
             <TextView
-                android:id="@+id/intro_wifi"
-                style="@style/AboutTextView"
-                android:text="wifi密码" />
-
-            <TextView
-                android:id="@+id/intro_request"
-                style="@style/AboutTextView"
-                android:text="服务反馈" />
+                android:id="@+id/weather_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20px"
+                android:text="多云"/>
         </LinearLayout>
 
     </LinearLayout>
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"
         android:orientation="horizontal">
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/introduce_hotel"
-            style="@style/AboutContextLL"
-            android:visibility="visible">
-
-            <TextView
-                style="@style/AboutContextTopicLL"
-                android:text="@string/hotel_introduce_tittle" />
-
-            <TextView
-                android:id="@+id/introduce_hotel_txt"
-                style="@style/AboutContextContextLL"
-                android:text="@string/hotel_introduce_text" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/introduce_control"
-            style="@style/AboutContextLL">
-
-            <TextView
-                style="@style/AboutContextTopicLL"
-                android:text="@string/function_introduce_tittle" />
-
-            <TextView
-                android:id="@+id/introduce_control_txt"
-                style="@style/AboutContextContextLL"
-                android:text="@string/function_introduce_text" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/introduce_need"
-            style="@style/AboutContextLL">
-
-            <TextView
-                style="@style/AboutContextTopicLL"
-                android:text="@string/need_introduce_tittle" />
-
-            <TextView
-                android:id="@+id/introduce_need_txt"
-                style="@style/AboutContextContextLL"
-                android:text="@string/need_introduce_text" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/introduce_wifi"
-            style="@style/AboutContextLL">
-
-            <TextView
-                style="@style/AboutContextTopicLL"
-                android:text="@string/wifi_introduce_tittle" />
-
-            <TextView
-                android:id="@+id/introce_wifi"
-                style="@style/AboutContextContextLL"
-                android:text="@string/wifi_introduce_text" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/introduce_request"
-            style="@style/AboutContextLL">
-
-            <TextView
-                style="@style/AboutContextTopicLL"
-                android:text="@string/about_tittle" />
-
-            <TextView
-                style="@style/AboutContextContextLL"
-                android:text="@string/about_text" />
-
-            <ImageView
-                android:layout_width="@dimen/weixin_layout"
-                android:layout_height="@dimen/weixin_layout"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/btn_height"
-                android:layout_marginTop="@dimen/image_margin"
-                android:layout_marginEnd="@dimen/btn_height"
-                android:layout_marginBottom="45px"
-                android:src="@mipmap/weixin" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:layout_marginStart="20px"
+            android:layout_marginBottom="30px"
+            android:background="@drawable/about_bg_context">
+            <ListView
+                android:id="@+id/select_listview"
+                android:layout_width="200px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50px"
+                android:listSelector="@drawable/solid" />
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/head_fragment"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+    </LinearLayout>
 
 
-    </com.zhy.autolayout.AutoLinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
