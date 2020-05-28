@@ -13,7 +13,7 @@
         android:layout_width="@dimen/top_log"
         android:layout_height="@dimen/top_log"
         android:layout_marginStart="@dimen/marginStart"
-        android:background="@mipmap/com_logo"
+        android:src="@mipmap/com_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,6 +54,7 @@
                 android:layout_width="@dimen/btn_menu"
                 android:layout_height="@dimen/btn_menu"
                 android:layout_marginStart="@dimen/margin"
+                android:src="@mipmap/weather_unknown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

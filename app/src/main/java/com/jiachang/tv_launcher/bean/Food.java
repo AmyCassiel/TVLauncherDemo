@@ -1,5 +1,7 @@
 package com.jiachang.tv_launcher.bean;
 
+import android.graphics.Bitmap;
+
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
@@ -7,18 +9,30 @@ package com.jiachang.tv_launcher.bean;
  */
 public class Food {
         private String name;
-        private int imageId;
+        private String price;
+        private String supplyTime;
+        private Bitmap image;
 
-        public Food(String name, int imageId){
+        public Food(String name,String price,String supplyTime, Bitmap image){
             this.name = name;
-            this.imageId = imageId;
+            this.price = price;
+            this.supplyTime = supplyTime;
+            this.image = image;
         }
 
         public String getName() {
             return name;
         }
 
-        public int getImageId() {
-            return imageId;
+        public String getPrice(){
+            return price;
+        }
+
+        public String getSupplyTime(){
+            return supplyTime;
+        }
+
+        public Bitmap getImageId() {
+            return image;
         }
 }

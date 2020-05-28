@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        style="@style/AboutSCol">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/introduce_hotel"
+                style="@style/AboutContextLL">
+
+                <TextView
+                    style="@style/AboutContextTopicLL"
+                    android:text="@string/hotel_introduce_tittle" />
+
+                <TextView
+                    android:id="@+id/introduce_hotel_txt"
+                    style="@style/AboutContextContextLL"
+                    android:text="@string/hotel_introduce_text" />
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

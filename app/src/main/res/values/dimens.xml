@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--top栏-->
-    <dimen name="top_log">80px</dimen>
+    <dimen name="top_log">100px</dimen>
     <dimen name="text_size_time">50px</dimen>
     <dimen name="text_size_weather">25px</dimen>
     <dimen name="top_weather_tv">100px</dimen>
@@ -75,5 +75,5 @@
 
     <!--TextView文本显示 IP地址，有线网设定-->
     <dimen name="common_radius_of_shape">12px</dimen>
-
+    <dimen name="common_radius_of_shape1">10px</dimen>
 </resources>

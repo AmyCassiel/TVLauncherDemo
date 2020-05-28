@@ -38,6 +38,11 @@
     <!--获取本机的权限设置-->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
+    <supports-screens android:smallScreens="false"
+        android:normalScreens="false"
+        android:largeScreens="true"
+        android:xlargeScreens="true"/>
+
     <application
         android:name="com.jiachang.tv_launcher.SampleApplication"
         android:allowBackup="true"
@@ -116,6 +121,8 @@
             android:launchMode="singleTask"
             android:name="com.jiachang.tv_launcher.activity.HotelServiceActivity"
             android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation"
+            android:theme="@style/Theme.Leanback"
             android:windowSoftInputMode="adjustPan"/>
 
 <!--        更改设置页-->
@@ -149,5 +156,6 @@
             android:value="1080"/>
 
     </application>
+
 
 </manifest>

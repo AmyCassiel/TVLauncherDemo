@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
  * @date 2020-04-18
  * @description
  */
-public class getWifiFragment extends DialogFragment {
+public class ContentFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

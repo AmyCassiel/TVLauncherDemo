@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
@@ -12,8 +14,11 @@ import com.jiachang.tv_launcher.bean.Food;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 import com.zhy.autolayout.AutoRelativeLayout;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -35,8 +40,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         ImageView foodImage;
         @BindView(R.id.food_name)
         TextView foodName;
+        @BindView(R.id.food_price)
+        TextView foodPrice;
+        @BindView(R.id.food_material)
+        TextView foodMaterial;
         @BindView(R.id.food_card)
-        AutoRelativeLayout foodCard;
+        RelativeLayout foodCard;
 
         public ViewHolder (View view) {
             super(view);
@@ -50,6 +59,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
     }
 
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dining_food_item,parent,false);
@@ -62,11 +72,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         holder.foodCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                /*if (hasFocus) {
                     ViewUtils.focusStatus(v);
                 } else {
                     ViewUtils.normalStatus(v);
-                }
+                }*/
             }
         });
 
@@ -88,8 +98,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Food food = mFoodList.get(position);
-        holder.foodImage.setImageResource(food.getImageId());
+        holder.foodImage.setImageBitmap(food.getImageId());
         holder.foodName.setText(food.getName());
+        holder.foodPrice.setText(food.getPrice());
+        holder.foodMaterial.setText(food.getSupplyTime());
     }
 
     @Override
@@ -103,7 +115,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
         this.recyclerView=recyclerView;
     }
 

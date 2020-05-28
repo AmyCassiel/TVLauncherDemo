@@ -1,4 +1,4 @@
-package com.jiachang.tv_launcher.fragment;
+package com.jiachang.tv_launcher.fragment.apowerfragment;
 
 import android.content.Context;
 import android.os.Bundle;

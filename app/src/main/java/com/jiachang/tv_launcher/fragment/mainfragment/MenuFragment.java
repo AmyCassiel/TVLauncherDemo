@@ -1,4 +1,4 @@
-package com.jiachang.tv_launcher.fragment;
+package com.jiachang.tv_launcher.fragment.mainfragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -197,10 +197,16 @@ public class MenuFragment extends Fragment{
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_music:
+                    aboutItem.setVisibility(View.GONE);
+                    multimediaItem.setVisibility(View.GONE);
+                    break;
+                case R.id.menu_apower_mirror:
+                    aboutItem.setVisibility(View.GONE);
                     multimediaItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_dining:
                     aboutItem.setVisibility(View.GONE);
+                    multimediaItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_service:
                     multimediaItem.setVisibility(View.GONE);

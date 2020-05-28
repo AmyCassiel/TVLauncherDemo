@@ -1,15 +1,17 @@
-package com.jiachang.tv_launcher.fragment;
+package com.jiachang.tv_launcher.fragment.mainfragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -20,6 +22,13 @@ import butterknife.Unbinder;
  */
 public class BottomFragment extends Fragment {
     private Unbinder mUnbinder;
+
+    @BindView(R.id.wifi_id)
+    TextView wifiId;
+    @BindView(R.id.wifi_password)
+    TextView wifiPassword;
+    @BindView(R.id.breakfast_time)
+    TextView breakfastTime;
 
     @Nullable
     @Override
