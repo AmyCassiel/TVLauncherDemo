@@ -19,12 +19,14 @@
                 style="@style/AboutContextLL">
 
                 <TextView
+                    android:layout_marginTop="50px"
                     style="@style/AboutContextTopicLL"
                     android:text="@string/hotel_introduce_tittle" />
 
                 <TextView
                     android:id="@+id/introduce_hotel_txt"
                     style="@style/AboutContextContextLL"
+                    android:layout_marginBottom="200px"
                     android:text="@string/hotel_introduce_text" />
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>

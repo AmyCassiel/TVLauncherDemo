@@ -34,6 +34,12 @@ public abstract class ViewUtils {
         view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
     }
 
+    public static void sView(View view, boolean hasFocus) {
+        view.setFocusable(true);
+        float scale = hasFocus ? 1.05f : 1.0f;
+        view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
+    }
+
     /**
      * item获得焦点时调用
      *

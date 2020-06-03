@@ -78,10 +78,10 @@ public class TopbarFragment extends Fragment {
             switch (msg.what) {
                 case 1:
                     weatherTxt.setText(temperature + "℃" + "\n" + "\n" + text);
-                    if (code >= 0){
+                    if (code >= 0) {
                         weatherIcon(code);
-                    }else {
-                        mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_unknown));
+                    } else {
+                        mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_unknown));
                     }
                     break;
                 case 2:
@@ -101,7 +101,7 @@ public class TopbarFragment extends Fragment {
         hotelName = mActivity.getApplicationContext()
                 .getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).getString("hotelName", "");
         img = mActivity.getApplicationContext()
-                .getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).getString("image","");
+                .getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).getString("image", "");
         return topLayout;
     }
 
@@ -114,8 +114,6 @@ public class TopbarFragment extends Fragment {
                 getWeather(IPUtils.getPubIp());
             }
         }.start();
-
-        Log.d("TopbarFragment", "hotelName = " + hotelName);
         if (netWorkCheck(mActivity)) { //機器がネットワークに接続されているかどうかを判断する
             //网络已连接
             if (hotelName != null && !hotelName.isEmpty()) {
@@ -141,14 +139,15 @@ public class TopbarFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity= (Activity) context;
+        mActivity = (Activity) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mActivity= null;
+        mActivity = null;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -158,13 +157,10 @@ public class TopbarFragment extends Fragment {
     private void getTime() {
         Calendar calendar = Calendar.getInstance();//取得当前时间的星期
         int week = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.i("weekday", "" + week);
         long sysTime = System.currentTimeMillis();//获取系统时间
         if (sysTime != 0) {
             CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
-            Log.i("sysTimeStr", "" + sysTimeStr);
             CharSequence sysDayStr = DateFormat.format("yyyy/MM/dd", sysTime);
-            Log.i("sysDayStr", "" + sysDayStr);
             if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
                 time.setText(sysTimeStr);
                 monthDay.setText(sysDayStr);
@@ -204,10 +200,12 @@ public class TopbarFragment extends Fragment {
                             Log.i("temperature", temperature);
                             text = jos.getString("text");
                             Log.i("text", text);
-                            code = Integer.parseInt(jos.getString("code"));
-                            Log.i("code", "" + code);
-                            if (temperature != null&& temperature.length() > 0
+                            if (temperature != null && temperature.length() > 0
                                     && text != null && text.length() > 0) {
+                                mActivity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+                                        .edit().putString("weatherTxt", text);
+                                code = Integer.parseInt(jos.getString("code"));
+                                Log.i("code", "" + code);
                                 Message msg = new Message();
                                 msg.what = 1;
                                 msg.obj = temperature;//传对象，还有arg1、arg2……
@@ -254,15 +252,15 @@ public class TopbarFragment extends Fragment {
         public void run() {
             do {
                 try {
-                        Thread.sleep(3600000);
-                        getWeather(IPUtils.getPubIp());
+                    Thread.sleep(3600000);
+                    getWeather(IPUtils.getPubIp());
                         /*Message msg = new Message();
                         msg.what = 1;  //消息(一个整型值)
                         mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler*/
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }while (true);
+            } while (true);
         }
     }
 
@@ -279,71 +277,71 @@ public class TopbarFragment extends Fragment {
                     break;
                 case 1:
                 case 3:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_clear));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_clear));
                     break;
                 case 4:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_cloudy));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_cloudy));
                     break;
                 case 5:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_partly_cloudy));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_partly_cloudy));
                     break;
                 case 6:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_partly_cloudy_night));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_partly_cloudy_night));
                     break;
                 case 7:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_mostly_cloudy));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_mostly_cloudy));
                     break;
                 case 8:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_mostly_cloudy_night));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_mostly_cloudy_night));
                     break;
                 case 9:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_overcast));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_overcast));
                     break;
                 case 10:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_shower));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_shower));
                     break;
                 case 11:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_thundershower));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_thundershower));
                     break;
                 case 12:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_thundershower_with_hail));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_thundershower_with_hail));
                     break;
                 case 13:
                 case 19:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_light_rain));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_light_rain));
                     break;
                 case 14:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_moderaterain));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_moderaterain));
                     break;
                 case 15:
                 case 16:
                 case 17:
                 case 18:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_heavy_rain));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_heavy_rain));
                     break;
                 case 20:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_sleet));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_sleet));
                     break;
                 case 21:
                 case 22:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_light_snow));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_light_snow));
                     break;
                 case 23:
                 case 24:
                 case 25:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_moderate_snow));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_moderate_snow));
                     break;
                 case 26:
                 case 27:
                 case 28:
                 case 29:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_dusty));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_dusty));
                     break;
                 case 30:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_foggy));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_foggy));
                     break;
                 case 31:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_haze));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_haze));
                     break;
                 case 32:
                 case 33:
@@ -351,10 +349,10 @@ public class TopbarFragment extends Fragment {
                 case 35:
                 case 36:
                 case 37:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_windy));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_windy));
                     break;
                 case 99:
-                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity,R.mipmap.weather_unknown));
+                    mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_unknown));
                     break;
                 default:
             }

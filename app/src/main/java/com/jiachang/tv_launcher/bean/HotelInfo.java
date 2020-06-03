@@ -56,6 +56,7 @@ public class HotelInfo {
         private String score;
         private String userId;
         private String price;
+        private String logo;
         private String roomCount;
         private String wifi;
         private List<ServiceConfsBean> serviceConfs;
@@ -147,6 +148,14 @@ public class HotelInfo {
 
         public void setHotelFacilities(List<HotelFacilitiesBean> hotelFacilities) {
             this.hotelFacilities = hotelFacilities;
+        }
+
+        public String getLogo() {
+            return logo;
+        }
+
+        public void setLogo(String logo) {
+            this.logo = logo;
         }
 
         public static class ServiceConfsBean {
@@ -350,6 +359,14 @@ public class HotelInfo {
 
             public void setHotelFacilitiesType(HotelFacilitiesTypeBean hotelFacilitiesType) {
                 this.hotelFacilitiesType = hotelFacilitiesType;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
             }
 
             public static class HotelFacilitiesTypeBean {
