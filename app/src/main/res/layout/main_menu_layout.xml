@@ -105,6 +105,7 @@
                 android:src="@mipmap/menutv" />
 
             <TextView
+                android:id="@+id/txt_tv"
                 style="@style/MenuTextStyle"
                 android:text="@string/menu_multimedia" />
         </com.zhy.autolayout.AutoLinearLayout>
@@ -123,6 +124,7 @@
                 android:src="@mipmap/menu_music" />
 
             <TextView
+                android:id="@+id/txt_music"
                 style="@style/MenuTextStyle"
                 android:text="@string/menu_music" />
         </com.zhy.autolayout.AutoLinearLayout>
@@ -140,6 +142,7 @@
                 android:src="@mipmap/menu_apower_mirror" />
 
             <TextView
+                android:id="@+id/text_apower_mirror"
                 style="@style/MenuTextStyle"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_apower_mirror" />
@@ -160,6 +163,7 @@
                 android:transitionName="image_dining" />
 
             <TextView
+                android:id="@+id/text_dining"
                 style="@style/MenuTextStyle"
                 android:text="@string/menu_dining" />
         </com.zhy.autolayout.AutoLinearLayout>
@@ -177,6 +181,7 @@
                 android:src="@mipmap/menuhotel" />
 
             <TextView
+                android:id="@+id/text_hotel_service"
                 style="@style/MenuTextStyle"
                 android:text="@string/menu_service" />
         </com.zhy.autolayout.AutoLinearLayout>

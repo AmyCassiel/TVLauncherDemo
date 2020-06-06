@@ -73,8 +73,7 @@ public class DiningActivity extends Activity {
 
     @OnFocusChange({R.id.dining_main_all, R.id.dining_cake_all, R.id.dining_drink_all, R.id.dining_fruit_all, R.id.dining_iceCream_all, R.id.dining_welcome_all})
     public void onViewFocusChange(View view, boolean isFocus) {
-        float scale = isFocus ? 1.05f : 1.0f;
-        ViewCompat.animate(view).scaleX(scale).scaleY(scale).translationZ(1).setInterpolator(new AccelerateInterpolator()).setDuration(200);
+        ViewUtils.sView(view,isFocus);
         /*if (isFocus){
             Drawable drawable = ContextCompat.getDrawable(mContext,R.drawable.item_background);
             view.setBackground(drawable);

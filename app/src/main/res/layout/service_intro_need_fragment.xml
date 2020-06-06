@@ -9,66 +9,96 @@
     android:layout_marginEnd="20px"
     android:layout_marginBottom="30px"
     android:focusableInTouchMode="false"
-    android:orientation="horizontal">
-
-    <ListView
-        android:id="@+id/horizon_listview"
-        android:layout_width="150px"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dip"
-        android:background="@drawable/half_gray"
-        android:descendantFocusability="blocksDescendants"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
-
-    <RelativeLayout
-        android:id="@+id/recycler_goods"
+    android:orientation="vertical">
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:visibility="gone">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/content_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dip"
-            android:focusable="false"
-            android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
-    </RelativeLayout>
+        android:textSize="15px"
+        android:gravity="end"
+        android:layout_marginEnd="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginBottom="10px"
+        android:text="*&#8201;按上下键进行设备列表滚动，按左键返回主列表"/>
 
     <LinearLayout
-        android:id="@+id/time_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone">
+        android:orientation="horizontal">
+        <ListView
+            android:id="@+id/horizon_listview"
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:cacheColorHint="#00000000"
+            android:splitMotionEvents="false"
+            android:background="@drawable/half_gray"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:listSelector="@mipmap/item_bg" />
+
+        <RelativeLayout
+            android:id="@+id/recycler_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/content_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20px"
+                android:layout_marginEnd="20px"
+                android:focusable="false"
+                android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:background="@drawable/white_radius"
+            android:id="@+id/time_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="服务供应时间"
-                android:textSize="35px"
-                android:textColor="@color/black"/>
+            <LinearLayout
+                android:layout_width="500px"
+                android:layout_height="250px"
+                android:layout_marginBottom="75px"
+                android:background="@drawable/gray_layout_bg"
+                android:gravity="center"
+                android:alpha="0.8"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/time_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="35px"
-                android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15px"
+                    android:text="服务供应时间"
+                    android:textSize="25px"
+                    android:textColor="@color/gray_white"/>
 
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="00:00 - 00:00"
+                    android:textSize="40px"
+                    android:textColor="@color/gray_white"/>
+                <TextView
+                    android:id="@+id/t_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15px"
+                    android:textSize="20px"
+                    android:textColor="@color/gray_white"/>
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
+
 
 </LinearLayout>

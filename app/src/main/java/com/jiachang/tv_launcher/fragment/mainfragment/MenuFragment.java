@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -76,7 +77,7 @@ public class MenuFragment extends Fragment{
         layoutParams.height = height;
 
         ViewGroup.MarginLayoutParams layoutParams1 = (ViewGroup.MarginLayoutParams) menuItemLayout.getLayoutParams();
-        layoutParams1.bottomMargin = 95;
+        layoutParams1.bottomMargin = 100;
         menuItemLayout.setLayoutParams(layoutParams1);
 
         return menuLayout;

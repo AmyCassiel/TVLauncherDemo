@@ -15,7 +15,6 @@
         <FrameLayout
             android:id="@+id/apowermirror_ios"
             style="@style/ApowerMirrorFLStyle"
-            android:layout_margin="20px"
             android:background="@drawable/apower_mirror_bg_focus"
             android:nextFocusLeft="@id/apowermirror_android"
             android:nextFocusRight="@id/apowermirror_android">
@@ -26,7 +25,6 @@
         <FrameLayout
             android:id="@+id/apowermirror_android"
             style="@style/ApowerMirrorFLStyle"
-            android:layout_margin="20px"
             android:background="@drawable/apower_mirror_bg_focus"
             android:nextFocusLeft="@id/apowermirror_ios"
             android:nextFocusRight="@id/apowermirror_ios">
@@ -35,50 +33,20 @@
                 android:text="Android(安卓系统)"/>
         </FrameLayout>
     </com.zhy.autolayout.AutoLinearLayout>
-    <!--<LinearLayout
-        android:id="@+id/apower_mirror_android"
-        android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="visible">
-        <FrameLayout
-            android:id="@+id/apower_mirror_android_miracast"
-            style="@style/ApowerMirrorFLStyle"
-            android:background="@drawable/apower_mirror_solid_bg_focus">
-            <TextView
-                android:textColor = "@color/darkgray"
-                style="@style/ApowerMirrorTVStyle"
-                android:text="Miracast协议"/>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/apower_mirror_android_dlna"
-            style="@style/ApowerMirrorFLStyle"
-            android:background="@drawable/apower_mirror_solid_bg_focus">
-            <TextView
-                style="@style/ApowerMirrorTVStyle"
-                android:textColor = "@color/darkgray"
-                android:text="DLNA协议"/>
-        </FrameLayout>
-    </LinearLayout>-->
-    <!--<FrameLayout
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ios"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/android_miracast"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/android_dlna"/>-->
+        android:id="@+id/android"/>
 
-    <ScrollView
+    <!--<ScrollView
         android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -98,5 +66,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/ios1"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
 </LinearLayout>

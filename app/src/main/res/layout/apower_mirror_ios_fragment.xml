@@ -12,95 +12,137 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:alpha="0.7"
+            android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <com.zhy.autolayout.AutoLinearLayout
-                android:id="@+id/step1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50px"
-                android:alpha="0.7"
-                android:orientation="vertical"
-                android:padding="@dimen/text_size_time">
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <com.jiachang.tv_launcher.view.MyImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/help_ios1_tv"
+                    android:layout_width="500px"
+                    android:layout_height="300px"
+                    android:layout_marginTop="50px"
+                    android:gravity="center"
                     android:padding="@dimen/text_padding"
+                    android:layout_marginBottom="20px"
+                    android:src="@mipmap/help_android_dlna1"
                     android:textSize="75px" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:lineSpacingExtra="15dp"
-                    android:singleLine="false"
-                    android:textColor="@color/black"
-                    android:text="1. 将苹果手机和电视机盒子连接到同一WIFI网络。"
+                    android:layout_marginTop="10px"
                     android:padding="@dimen/text_padding"
+                    android:text="1. 将电视机盒子和手机连接到同一WiFi网络下。"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
 
-
             <com.zhy.autolayout.AutoLinearLayout
-                android:id="@+id/step2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:layout_marginTop="50px"
-                android:orientation="vertical"
-                android:padding="@dimen/text_size_time">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <com.jiachang.tv_launcher.view.MyImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/help_ios2"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_marginTop="50px"
+                    android:layout_marginBottom="20px"
+                    android:gravity="center"
                     android:padding="@dimen/text_padding"
+                    android:src="@mipmap/help_android_dlna2"
                     android:textSize="75px" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:lineSpacingExtra="15dp"
-                    android:singleLine="false"
+                    android:layout_marginTop="10px"
+                    android:padding="@dimen/text_padding"
+                    android:text="2.打开手机中的视频软件（如：爱奇艺）。"
                     android:textColor="@color/black"
-                    android:text="2. 在您的苹果手机上，从屏幕底部向上轻扫以打开“控制中心”，轻点“AirPlay”。"
-                    android:padding="35px"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="35px">
+
             <com.zhy.autolayout.AutoLinearLayout
-                android:id="@+id/step3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:alpha="0.7"
-                android:layout_marginTop="50px"
-                android:orientation="vertical"
-                android:padding="@dimen/text_size_time">
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <com.jiachang.tv_launcher.view.MyImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/help_ios3"
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_marginBottom="20px"
+                    android:gravity="center"
                     android:padding="@dimen/text_padding"
+                    android:src="@mipmap/help_android_dlna3"
                     android:textSize="75px" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:singleLine="false"
                     android:lineSpacingExtra="15dp"
-                    android:textColor="@color/black"
-                    android:text="3. 轻点您要投屏的视频，到设备名称名叫（例如）AS-TS3Mini[AirPlay]上进行投屏。"
                     android:padding="@dimen/text_padding"
+                    android:layout_marginTop="10px"
+                    android:text="3. 在手机视频软件中打开想要观看的视频，\n右上角找到投屏按钮并点击。"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/hotel_text" />
             </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:layout_width="300px"
+                    android:layout_height="300px"
+                    android:layout_marginBottom="20px"
+                    android:gravity="center"
+                    android:padding="@dimen/text_padding"
+                    android:src="@mipmap/help_android_dlna4"
+                    android:textSize="75px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="15dp"
+                    android:layout_marginTop="10px"
+                    android:padding="@dimen/text_padding"
+                    android:text="4. 在设备列表中，点按目标名字叫\n“AS-TX3Mini[DMR]”的设备，准备投射视频内容。"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/hotel_text" />
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
     </ScrollView>
 </LinearLayout>
