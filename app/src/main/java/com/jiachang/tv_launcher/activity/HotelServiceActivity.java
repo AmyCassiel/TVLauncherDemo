@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,41 +11,30 @@ import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.adapter.HorizontalListViewAdapter;
 import com.jiachang.tv_launcher.adapter.ServiceLeftAdapter;
-import com.jiachang.tv_launcher.adapter.ServiceTypeAdapter;
-import com.jiachang.tv_launcher.bean.ServiceType;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.HeadFragment;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.HotelIntroControlFragment;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.HotelIntroFragment;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.HotelIntroNeedFragment;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.HotelIntroRequestFragment;
-import com.jiachang.tv_launcher.fragment.mainfragment.TopbarFragment;
-import com.jiachang.tv_launcher.utils.ImageUtil;
-import com.jiachang.tv_launcher.view.HorListView;
-import com.jiachang.tv_launcher.view.HorizontalListView;
+import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
+import com.jiachang.tv_launcher.fragment.hotelservicefragment.ControlFragment;
+import com.jiachang.tv_launcher.fragment.hotelservicefragment.IntroHotelFragment;
+import com.jiachang.tv_launcher.fragment.hotelservicefragment.FacilityFragment;
+import com.jiachang.tv_launcher.fragment.hotelservicefragment.RequestFragment;
+import com.jiachang.tv_launcher.utils.HttpUtils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,17 +43,24 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnFocusChange;
-import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import static android.widget.Toast.*;
 import static com.jiachang.tv_launcher.utils.Constants.breakfastTime;
 import static com.jiachang.tv_launcher.utils.Constants.business;
+import static com.jiachang.tv_launcher.utils.Constants.endTime1;
+import static com.jiachang.tv_launcher.utils.Constants.endTime3;
+import static com.jiachang.tv_launcher.utils.Constants.endTime4;
 import static com.jiachang.tv_launcher.utils.Constants.hotelIntroduction;
 import static com.jiachang.tv_launcher.utils.Constants.hotelPolicys;
+import static com.jiachang.tv_launcher.utils.Constants.startTime1;
+import static com.jiachang.tv_launcher.utils.Constants.startTime3;
+import static com.jiachang.tv_launcher.utils.Constants.startTime4;
 import static com.jiachang.tv_launcher.utils.Constants.usageMonitoring;
 import static com.jiachang.tv_launcher.utils.Constants.userNeeds;
 import static com.jiachang.tv_launcher.utils.Constants.wifiName;
@@ -79,6 +74,8 @@ import static com.jiachang.tv_launcher.utils.Constants.wifiPassword;
 public class HotelServiceActivity extends FragmentActivity {
     private static final String TAG = "HotelServiceActivity";
 
+    @BindView(R.id.listview_background)
+    LinearLayout lvBackground;
     @BindView(R.id.select_listview)
     ListView leftListView;
     @BindView(R.id.head_fragment)
@@ -91,21 +88,25 @@ public class HotelServiceActivity extends FragmentActivity {
     TextView weatherText;
 
     //记录滑动的ListView 滑动的位置
-    private String[] sTypeNames, sFsNames0, sFsTimes0;
+    private String[] sFsNames0, sFsTimes0,sFsImgs0,sFsLocals0;
+    private String[] sTypeNames;
     private String[] sDetailsNames0,sDetailsNames2,sDetailsNames3;
     private String[] sDetailsImage0,sDetailsImage2,sDetailsImage3;
     private long start2,end2,start5,end5,start6,end6,start7,end7;
+
     private ServiceLeftAdapter leftAdapter;
     private Context context;
     private String[] mStrings = {"酒店介绍", "酒店设施", "使用客控", "使用客需", "服务反馈"};
     private Fragment currentFragment;
-    private HotelIntroFragment hIF = new HotelIntroFragment();
-    private HeadFragment hF = new HeadFragment();
-    private HotelIntroControlFragment hICF = new HotelIntroControlFragment();
-    private HotelIntroNeedFragment hINF = new HotelIntroNeedFragment();
-    private HotelIntroRequestFragment hIRF = new HotelIntroRequestFragment();
+    private IntroHotelFragment hIF = new IntroHotelFragment();
+    private NeedFragment hNF = new NeedFragment();
+    private ControlFragment hCF = new ControlFragment();
+    private FacilityFragment hFF = new FacilityFragment();
+    private RequestFragment hRF = new RequestFragment();
 
     private boolean isSelect = false;
+    //记录滑动的ListView 滑动的位置
+    private int scrollPosition = -1;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -139,208 +140,17 @@ public class HotelServiceActivity extends FragmentActivity {
 
         leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
         leftListView.setAdapter(leftAdapter);
+        leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        String weatherTxt =getApplicationContext().getSharedPreferences("hotel", Context.MODE_PRIVATE)
+                .getString("weatherTxt", "");
+        Log.e(TAG,"weatherTxt:"+weatherTxt);
+
+        if (!weatherTxt.isEmpty()){
+            weatherText.setText(weatherTxt);
+        }
 
         initView();
-
-
-    }
-
-    private void initView() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        FragmentManager fM = getSupportFragmentManager();
-        FragmentTransaction fT = fM.beginTransaction();
-
-        if (bundle.getBoolean("about_item_1")) {
-            currentFragment = hIF;
-            if (hIF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).show(hIF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hIF).show(hIF);
-            }
-            fT.commitAllowingStateLoss();
-//            listcontrol();
-        } else if (bundle.getBoolean("about_item_2")) {
-            currentFragment = hINF;
-            if (hINF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).show(hINF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).replace(R.id.head_fragment, hINF).show(hINF);
-            }
-            fT.commitAllowingStateLoss();
-//            listcontrol();
-        } else if (bundle.getBoolean("about_item_3")) {
-            currentFragment = hICF;
-            if (hICF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).show(hICF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hICF).show(hICF);
-            }
-            fT.commitAllowingStateLoss();
-//            listcontrol();
-        } else if (bundle.getBoolean("about_item_4")) {
-            onBundle();
-            currentFragment = hF;
-            if (hF.isAdded()) {
-                fT.hide(currentFragment).hide(hIF).hide(hIRF).hide(hINF).show(hF);
-            } else {
-                fT.hide(currentFragment).hide(hIF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hF).show(hF);
-            }
-            fT.commitAllowingStateLoss();
-//            listcontrol();
-        } else if (bundle.getBoolean("about_item_5")) {
-            currentFragment = hIRF;
-            if (hIRF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).show(hIRF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).replace(R.id.head_fragment, hIRF).show(hIRF);
-            }
-            fT.commitAllowingStateLoss();
-            if (hIRF.isAdded() && !isSelect){
-                listcontrol();
-            }
-        }else if (bundle.getBoolean("main")){
-            listcontrol();
-        }
-    }
-    private void getTime() {
-        Calendar calendar = Calendar.getInstance();//取得当前时间的星期
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.i("weekday", "" + week);
-        long sysTime = System.currentTimeMillis();//获取系统时间
-        if (sysTime != 0) {
-            CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
-            Log.i("sysTimeStr", "" + sysTimeStr);
-            CharSequence sysDayStr = DateFormat.format("yyyy年MM月dd日", sysTime);
-            Log.i("sysDayStr", "" + sysDayStr);
-            if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
-                time1.setText(sysTimeStr);
-                day1.setText(sysDayStr);
-            }
-        } else {
-            Toast.makeText(context, "时间为空", Toast.LENGTH_LONG).show();
-        }
-    }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
-
-        }
-    }
-    class TimeThread extends Thread {
-        @Override
-        public void run() {
-            do {
-                try {
-                    Thread.sleep(60000);
-                    Message msg = new Message();
-                    msg.what = 0;  //消息(一个整型值)
-                    mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } while (true);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        hideBottomMenu();
-    }
-
-    private void listcontrol(){
-        leftListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemSelected(mStrings[position]);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    public void itemSelected(String strings) {
-        FragmentManager fM = getSupportFragmentManager();
-        FragmentTransaction fT = fM.beginTransaction();
-        currentFragment = hIF;
-        if (strings.equals("酒店介绍")) {
-            if (hIF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).show(hIF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hIF).show(hIF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("酒店设施")) {
-            if (hINF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).show(hINF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).replace(R.id.head_fragment, hINF).show(hINF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("使用客控")) {
-            if (hICF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).show(hICF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hICF).show(hICF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("使用客需")) {
-            onBundle();
-            if (hF.isAdded()) {
-                fT.hide(currentFragment).hide(hIF).hide(hIRF).hide(hINF).show(hF);
-            } else {
-                fT.hide(currentFragment).hide(hIF).hide(hIRF).hide(hINF).replace(R.id.head_fragment, hF).show(hF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("服务反馈")) {
-            if (hIRF.isAdded()) {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).show(hIRF);
-            } else {
-                fT.hide(currentFragment).hide(hF).hide(hIF).hide(hINF).replace(R.id.head_fragment, hIRF).show(hIRF);
-            }
-            fT.commitAllowingStateLoss();
-        }
-    }
-
-    private void onBundle(){
-        Bundle bund = new Bundle();
-        bund.putStringArray("title", sTypeNames);
-        bund.putStringArray("detailsNames0", sDetailsNames0);
-        bund.putStringArray("sDetailsImage0", sDetailsImage0);
-        bund.putStringArray("detailsNames2", sDetailsNames2);
-        bund.putStringArray("sDetailsImage2", sDetailsImage2);
-        bund.putStringArray("detailsNames3", sDetailsNames3);
-        bund.putStringArray("sDetailsImage3", sDetailsImage3);
-        bund.putLong("start2",start2);
-        bund.putLong("end2",end2);
-        bund.putLong("start5",start5);
-        bund.putLong("end5",end5);
-        bund.putLong("start6",start6);
-        bund.putLong("end6",end6);
-        bund.putLong("start7",start7);
-        bund.putLong("end7",end7);
-        bund.putStringArray("sFsNames0", sFsNames0);
-        bund.putStringArray("sFsTimes0", sFsTimes0);
-        hF.setArguments(bund);  //数据传递到fragment中
-    }
-
-    protected void hideBottomMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            //for new api versions.
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
     }
 
     public void isFirstIn() {
@@ -354,11 +164,21 @@ public class HotelServiceActivity extends FragmentActivity {
         sDetailsImage3 = getSharedPreference("sDetailsImage4");
         sFsNames0 = getSharedPreference("sFsNames0");
         sFsTimes0 = getSharedPreference("sFsTimes0");
+        sFsImgs0 = getSharedPreference("sFsImgs0");
+        sFsLocals0 = getSharedPreference("sFsLocals0");
+
+        startTime1 = getSharedPreference("startTime1");
+        endTime1 = getSharedPreference("endTime1");
+        startTime3 = getSharedPreference("startTime3");
+        endTime3 = getSharedPreference("endTime3");
+        startTime4 = getSharedPreference("startTime4");
+        endTime4 = getSharedPreference("endTime4");
 
         start2 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getLong("start2", 0);
         end2 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getLong("end2", 0);
+
         start5 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getLong("start5", 0);
         end5 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
@@ -386,10 +206,222 @@ public class HotelServiceActivity extends FragmentActivity {
         userNeeds = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("userNeeds", "");
         wifiName = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("wifiName", "");
-        wifiPassword = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("wifiPassword", "");
+                .getString("wifi", "");
 
+    }
+
+    private void initView() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        FragmentManager fM = getSupportFragmentManager();
+        FragmentTransaction fT = fM.beginTransaction();
+
+        if (bundle.getBoolean("about_item_1")) {
+            currentFragment = hIF;
+            if (hIF.isAdded()) {
+                fT.hide(currentFragment).show(hIF);
+            } else {
+                fT.hide(currentFragment).replace(R.id.head_fragment, hIF).show(hIF);
+            }
+            fT.commitAllowingStateLoss();
+            lvBackground.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_2")) {
+            Bundle bundle1 = new Bundle();
+            onBundleFac(bundle1);
+            bundle1.putString("isFirst","true");
+            hFF.setArguments(bundle1);
+            currentFragment = hFF;
+            if (hFF.isAdded()) {
+                fT.hide(currentFragment).show(hFF);
+            } else {
+                fT.hide(currentFragment).replace(R.id.head_fragment, hFF).show(hFF);
+            }
+            fT.commitAllowingStateLoss();
+            lvBackground.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_3")) {
+            Bundle bundl = new Bundle();
+            bundl.putString("isFirst","true");
+            hFF.setArguments(bundl);
+            currentFragment = hCF;
+            if (hCF.isAdded()) {
+                fT.hide(currentFragment).show(hCF);
+            } else {
+                fT.hide(currentFragment).replace(R.id.head_fragment, hCF).show(hCF);
+            }
+            fT.commitAllowingStateLoss();
+            lvBackground.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_4")) {
+            Bundle bund = new Bundle();
+            onBundleNeed(bund);
+            bund.putString("isFirst","true");
+            hNF.setArguments(bund);
+            currentFragment = hNF;
+            if (hNF.isAdded()) {
+                fT.hide(currentFragment).show(hNF);
+            } else {
+                fT.hide(currentFragment).replace(R.id.head_fragment, hNF).show(hNF);
+            }
+            fT.commitAllowingStateLoss();
+            lvBackground.setVisibility(View.GONE);
+        } else if (bundle.getBoolean("about_item_5")) {
+            currentFragment = hRF;
+            if (hRF.isAdded()) {
+                fT.hide(currentFragment).show(hRF);
+            } else {
+                fT.hide(currentFragment).replace(R.id.head_fragment, hRF).show(hRF);
+            }
+            fT.commitAllowingStateLoss();
+            lvBackground.setVisibility(View.GONE);
+            leftListView.clearFocus();
+        }else if (bundle.getBoolean("main")){
+            leftListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    itemSelected(mStrings[position]);
+                    leftAdapter.setSelectItem(position);
+                    /*ListView mRight= hNF.getView().findViewById(R.id.horizon_listview);
+                    mRight.setSelection(position);*/
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+    }
+
+    public void itemSelected(String strings) {
+        FragmentManager fM = getSupportFragmentManager();
+        FragmentTransaction fT = fM.beginTransaction();
+        currentFragment = hIF;
+        if (strings.equals("酒店介绍")) {
+            if (hIF.isAdded()) {
+                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).show(hIF);
+            } else {
+                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hIF).show(hIF);
+            }
+            fT.commitAllowingStateLoss();
+        } else if (strings.equals("酒店设施")) {
+            Bundle bundle1 = new Bundle();
+            onBundleFac(bundle1);
+            hFF.setArguments(bundle1);
+            if (hFF.isAdded()) {
+                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hFF);
+            } else {
+                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hFF).show(hFF);
+            }
+            fT.commitAllowingStateLoss();
+        } else if (strings.equals("使用客控")) {
+            if (hCF.isAdded()) {
+                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).show(hCF);
+            } else {
+                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hCF).show(hCF);
+            }
+            fT.commitAllowingStateLoss();
+        } else if (strings.equals("使用客需")) {
+            Bundle bund = new Bundle();
+            onBundleNeed(bund);
+            hNF.setArguments(bund);
+            if (hNF.isAdded()) {
+                fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).show(hNF);
+            } else {
+                fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hNF).show(hNF);
+            }
+            fT.commitAllowingStateLoss();
+        } else if (strings.equals("服务反馈")) {
+            if (hRF.isAdded()) {
+                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hRF);
+            } else {
+                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hRF).show(hRF);
+            }
+            fT.commitAllowingStateLoss();
+        }
+    }
+
+    private void getTime() {
+        Calendar calendar = Calendar.getInstance();//取得当前时间的星期
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        long sysTime = System.currentTimeMillis();//获取系统时间
+        if (sysTime != 0) {
+            CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
+            CharSequence sysDayStr = DateFormat.format("yyyy年MM月dd日", sysTime);
+            if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
+                time1.setText(sysTimeStr);
+                day1.setText(sysDayStr);
+            }
+        } else {
+            Toast.makeText(context, "时间为空", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    class TimeThread extends Thread {
+        @Override
+        public void run() {
+            do {
+                try {
+                    Thread.sleep(60000);
+                    Message msg = new Message();
+                    msg.what = 0;  //消息(一个整型值)
+                    mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } while (true);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideBottomMenu();
+    }
+
+    private void onBundleFac(Bundle bund){
+        bund.putStringArray("sFsNames0",sFsNames0);
+        bund.putStringArray("sFsTimes0",sFsTimes0);
+        bund.putStringArray("sFsImgs0",sFsImgs0);
+        bund.putStringArray("sFsLocals0",sFsLocals0);
+    }
+    private void onBundleNeed(Bundle bund){
+        bund.putStringArray("title", sTypeNames);
+        bund.putStringArray("detailsNames0", sDetailsNames0);
+        bund.putStringArray("sDetailsImage0", sDetailsImage0);
+        bund.putStringArray("detailsNames2", sDetailsNames2);
+        bund.putStringArray("sDetailsImage2", sDetailsImage2);
+        bund.putStringArray("detailsNames3", sDetailsNames3);
+        bund.putStringArray("sDetailsImage3", sDetailsImage3);
+        bund.putLong("start2",start2);
+        bund.putLong("end2",end2);
+        bund.putLong("start5",start5);
+        bund.putLong("end5",end5);
+        bund.putLong("start6",start6);
+        bund.putLong("end6",end6);
+        bund.putLong("start7",start7);
+        bund.putLong("end7",end7);
+        bund.putStringArray("sFsNames0", sFsNames0);
+        bund.putStringArray("sFsTimes0", sFsTimes0);
+        bund.putStringArray("startTime1",startTime1);
+        bund.putStringArray("startTime1",endTime1);
+        bund.putStringArray("startTime3",startTime3);
+        bund.putStringArray("endTime3",endTime3);
+        bund.putStringArray("startTime4",startTime4);
+        bund.putStringArray("endTime4",endTime4);
+
+    }
+
+    protected void hideBottomMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
+            View v = getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
     public String[] getSharedPreference(String key) {
@@ -414,21 +446,6 @@ public class HotelServiceActivity extends FragmentActivity {
             default:
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-
-
-    private static class OnPopRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-        @Override
-        public void onScrollStateChanged(@NotNull RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-
-        @Override
-        public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-
-        }
     }
 
     @Override

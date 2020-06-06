@@ -77,8 +77,7 @@
             <ImageButton
                 android:id="@+id/add_car"
                 android:layout_width="70px"
-                android:layout_height="70px"
-                android:background="@mipmap/shopping_car" />
+                android:layout_height="70px" />
         </LinearLayout>
 
     </LinearLayout>

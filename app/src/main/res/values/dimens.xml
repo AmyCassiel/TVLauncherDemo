@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--top栏-->
-    <dimen name="top_log">100px</dimen>
+    <dimen name="top_log">80px</dimen>
     <dimen name="text_size_time">50px</dimen>
     <dimen name="text_size_weather">25px</dimen>
     <dimen name="top_weather_tv">100px</dimen>
@@ -52,11 +52,13 @@
     <dimen name="hotel_layout_width">700px</dimen>
     <dimen name="function_layout_width">500px</dimen>
     <dimen name="weixin_layout_width">500px</dimen>
-    <dimen name="weixin_layout">300px</dimen>
+    <dimen name="weixin_layout">400px</dimen>
     <dimen name="hotel_tittle_text">65px</dimen>
     <dimen name="hotel_text">37px</dimen>
+    <dimen name="hotel_text1">37px</dimen>
     <dimen name="text_padding">5px</dimen>
     <dimen name="image_hw">100px</dimen>
+    <dimen name="btn_height1">35px</dimen>
 
     <!--按钮-->
     <dimen name="btn_width">180px</dimen>

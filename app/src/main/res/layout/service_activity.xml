@@ -2,27 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_service"
+    android:background="@mipmap/bg_service1"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:gravity="center"
         android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_width="250px"
-            android:gravity="center"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginStart="20px"
-            android:layout_height="match_parent">
+            android:layout_marginStart="30px"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/service_logo"/>
+                android:layout_gravity="center"
+                android:src="@mipmap/jiachanglogo" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
@@ -30,32 +35,35 @@
             android:id="@+id/time1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="20px"
-            android:gravity="end|center"
             android:layout_marginEnd="20px"
-            android:textStyle="bold"
-            android:text="15:00"/>
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:text="08:00"
+            android:textSize="20px"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="30px"
             android:layout_weight="1"
-            android:gravity="end|center"
-            android:layout_marginEnd="30px">
+            android:gravity="end|center">
+
             <TextView
                 android:id="@+id/day1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2020年5月27日"
                 android:layout_marginEnd="10px"
+                android:text="1970年01月01日"
                 android:textSize="20px"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/weather_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20px"
-                android:text="多云"/>
+                android:text="晴"
+                android:textSize="20px" />
         </LinearLayout>
 
     </LinearLayout>
@@ -63,27 +71,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginStart="30px"
+        android:layout_marginEnd="30px">
+
         <LinearLayout
+            android:id="@+id/listview_background"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:alpha="0.8"
-            android:layout_marginStart="20px"
             android:layout_marginBottom="30px"
             android:background="@drawable/about_bg_context">
+
             <ListView
                 android:id="@+id/select_listview"
                 android:layout_width="200px"
                 android:layout_height="match_parent"
                 android:layout_marginTop="50px"
-                android:listSelector="@drawable/solid" />
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:listSelector="@mipmap/list_item_back" />
         </LinearLayout>
+
         <FrameLayout
             android:id="@+id/head_fragment"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true" />
     </LinearLayout>
 
 

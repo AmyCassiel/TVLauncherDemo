@@ -1,10 +1,13 @@
 package com.jiachang.tv_launcher.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
@@ -18,7 +21,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
     private String[] mTitles;
     private Context mContext;
     private LayoutInflater mInflater;
-    private int selectIndex = -1;
+    private int selectIndex;
 
     public HorizontalListViewAdapter(Context activity, String[] titles) {
         this.mContext = activity;
@@ -47,29 +50,26 @@ public class HorizontalListViewAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.horizontal_list_item, null);
-            holder.mTitle=(TextView)convertView.findViewById(R.id.hotel_head_item);
+            holder.mTitle = convertView.findViewById(R.id.hotel_head_item);
+            Typeface face = Typeface.createFromAsset(mContext.getAssets(),"fonts/sourcehansanscn_extralight.otf");
+            holder.mTitle.setTypeface(face);
             convertView.setTag(holder);
         }else{
             holder=(ViewHolder)convertView.getTag();
         }
-
         holder.mTitle.setText(mTitles[position]);
         return convertView;
 
     }
 
+
     private static class ViewHolder {
         private TextView mTitle ;
+        private ListView listView;
     }
 
-
-    public int getCountForSection(int section) {
-        return section;
-    }
-
-
-    public void setSelectIndex(int i){
-        selectIndex = i;
+    public void setmTitles(String[] mTitles) {
+        this.mTitles = mTitles;
     }
 
     public interface OnItemClickListener {

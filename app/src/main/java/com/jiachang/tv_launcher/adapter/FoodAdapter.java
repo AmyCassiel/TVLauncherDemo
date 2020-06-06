@@ -72,11 +72,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         holder.foodCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                /*if (hasFocus) {
+                if (hasFocus) {
                     ViewUtils.focusStatus(v);
                 } else {
                     ViewUtils.normalStatus(v);
-                }*/
+                }
             }
         });
 

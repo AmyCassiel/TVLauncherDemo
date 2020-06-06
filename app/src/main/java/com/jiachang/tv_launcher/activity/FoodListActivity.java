@@ -2,6 +2,7 @@ package com.jiachang.tv_launcher.activity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.adapter.FoodAdapter;
@@ -45,6 +47,7 @@ public class FoodListActivity extends Activity implements FoodAdapter.onItemClic
     private String foodPath;
     private ImageView imageView;
     private ArrayList arrayList = new ArrayList();
+    private Context context = this;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -99,12 +102,12 @@ public class FoodListActivity extends Activity implements FoodAdapter.onItemClic
                     foodPrice = dataJson.getString("price");
                     StartTime = dataJson.getLong("supplyStartTime");
                     EndTime = dataJson.getLong("supplyEndTime");
-                    Log.d("FoodListActivity.class","supplyStartTime ="+StartTime+", supplyEndTime ="+EndTime);
+                    Log.d("FoodListActivity","supplyStartTime ="+StartTime+", supplyEndTime ="+EndTime);
                 }
                 Bitmap bitmap = ImageUtil.returnBitmap(foodPath);
                 CharSequence sTimeStr = DateFormat.format("HH:mm", StartTime);
                 CharSequence eTimeStr = DateFormat.format("HH:mm", EndTime);
-                Log.e("","sTimeStr = "+sTimeStr);
+                Log.d("","sTimeStr = "+sTimeStr);
                 long sysTime = System.currentTimeMillis();
                 CharSequence nowTimeStr = DateFormat.format("HH:mm", sysTime);
                 try {
@@ -112,13 +115,12 @@ public class FoodListActivity extends Activity implements FoodAdapter.onItemClic
                     long start = simpleDateFormat.parse((String) sTimeStr).getTime();
                     long end = simpleDateFormat.parse((String) eTimeStr).getTime();
                     long now = simpleDateFormat.parse((String) nowTimeStr).getTime();
-                    Log.d("","start = "+start);
-                    Log.d("","end = "+end);
-                    Log.d("","now = "+now);
                     if (start <= now && end >= now) { //使用时间戳做判断
                         Food duck = new Food(foodName, "¥" + foodPrice,
                                 "\n供应时间段：" + sTimeStr + "-" + eTimeStr, bitmap);
                         foodList.add(duck);
+                    }else {
+                        Toast.makeText(context,"抱歉，当前时间不在部分食物的供应时间段内",Toast.LENGTH_LONG).show();
                     }
                 } catch (ParseException p) {
                     p.printStackTrace();

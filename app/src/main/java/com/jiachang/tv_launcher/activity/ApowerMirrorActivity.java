@@ -4,14 +4,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.fragment.apowerfragment.ApowerMirrorAndroidDLNAFragment;
-import com.jiachang.tv_launcher.fragment.apowerfragment.ApowerMirrorAndroidMiracastFragment;
-import com.jiachang.tv_launcher.fragment.apowerfragment.ApowerMirrorIOSFragment;
+import com.jiachang.tv_launcher.fragment.apowerfragment.AndroidFragment;
+import com.jiachang.tv_launcher.fragment.apowerfragment.IOSFragment;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,28 +28,25 @@ public class ApowerMirrorActivity extends FragmentActivity {
     FrameLayout aMiOS;
     @BindView(R.id.apowermirror_android)
     FrameLayout aMa;
-    @BindView(R.id.scroll_view)
+    /*@BindView(R.id.scroll_view)
     ScrollView scrollView;
     @BindView(R.id.ios_img)
     ImageView iosImg;
-    /*@BindView(R.id.apower_mirror_android)
+    @BindView(R.id.apower_mirror_android)
     LinearLayout aMA;
     @BindView(R.id.apower_mirror_android_miracast)
     FrameLayout aMAM;
     @BindView(R.id.apower_mirror_android_dlna)
     FrameLayout aMAD;*/
-    /*@BindView(R.id.ios)
+    @BindView(R.id.ios)
     FrameLayout ios;
-    @BindView(R.id.android_miracast)
-    FrameLayout aM;
-    @BindView(R.id.android_dlna)
-    FrameLayout aD;*/
+    @BindView(R.id.android)
+    FrameLayout aD;
 
     private FragmentManager fM;
     private FragmentTransaction fT;
-    private ApowerMirrorIOSFragment aIOSfragment;
-    private ApowerMirrorAndroidMiracastFragment amamf;
-    private ApowerMirrorAndroidDLNAFragment amadf;
+    private IOSFragment iosf;
+    private AndroidFragment af;
     private Fragment currentFragment;
 
     @Override
@@ -63,37 +56,38 @@ public class ApowerMirrorActivity extends FragmentActivity {
         setContentView(R.layout.apower_mirror_main_activity);
 
         ButterKnife.bind(this);
-
-        /*fM = getSupportFragmentManager();
-        fT = fM.beginTransaction();
-        aIOSfragment=new ApowerMirrorIOSFragment();
-        amamf = new ApowerMirrorAndroidMiracastFragment();
-        amadf = new ApowerMirrorAndroidDLNAFragment();
-        fT.replace(R.id.ios,aIOSfragment);
-        fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fT.hide(amamf).hide(amadf);
-        fT.commitAllowingStateLoss();
-        currentFragment = aIOSfragment;*/
+        iosf=new IOSFragment();
+        af = new AndroidFragment();
     }
 
     @OnFocusChange({R.id.apowermirror_ios, R.id.apowermirror_android})
     void onViewFocusChange(View v,boolean isFocus){
         if (isFocus){
+            fM = getSupportFragmentManager();
+            fT = fM.beginTransaction();
             switch (v.getId()){
                 case R.id.apowermirror_ios:
-                    iosImg.setVisibility(View.VISIBLE);
-                    scrollView.setVisibility(View.GONE);
+                    if (!iosf.isAdded()) {
+                        fT.hide(af).add(R.id.ios, iosf).show(iosf);
+                    } else {
+                        fT.hide(af).replace(R.id.ios,iosf).show(iosf);
+                    }
+                    fT.commitAllowingStateLoss();
                     break;
                 case R.id.apowermirror_android:
-                    iosImg.setVisibility(View.GONE);
-                    scrollView.setVisibility(View.VISIBLE);
+                    if (!af.isAdded()) {
+                        fT.hide(iosf).add(R.id.ios, af).show(af);
+                    } else {
+                        fT.hide(iosf).replace(R.id.ios,af).show(af);
+                    }
+                    fT.commitAllowingStateLoss();
                     break;
                 default:
             }
         }
     }
 
-    /*private void showFragment(Fragment fg) {
+    private void showFragment(Fragment fg) {
         fM = getSupportFragmentManager();
         fT = fM.beginTransaction();
         //如果之前没有添加过
@@ -106,7 +100,7 @@ public class ApowerMirrorActivity extends FragmentActivity {
         }
         fT.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fT.commitAllowingStateLoss();
-    }*/
+    }
 
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏

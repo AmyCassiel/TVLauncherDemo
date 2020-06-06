@@ -2,6 +2,7 @@ package com.jiachang.tv_launcher.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,6 @@ public class ServiceLeftAdapter extends ArrayAdapter {
 
     public void setSelectItem(int selectItem) {
         this.selectItem = selectItem;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -66,6 +66,8 @@ public class ServiceLeftAdapter extends ArrayAdapter {
             holder= (ViewHolder) convertView.getTag();
         }
 
+        Typeface face = Typeface.createFromAsset(mContext.getAssets(),"fonts/sim.ttf");
+        holder.mText.setTypeface(face);
         holder.mText.setText(data[position]);
         return convertView;
     }
@@ -76,7 +78,7 @@ public class ServiceLeftAdapter extends ArrayAdapter {
         TextView mText;
 
         ViewHolder(View itemView) {
-            mText= (TextView) itemView.findViewById(R.id.text1);
+            mText= itemView.findViewById(R.id.text1);
         }
     }
 }
