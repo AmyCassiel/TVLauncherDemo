@@ -2,8 +2,6 @@ package com.jiachang.tv_launcher.fragment.mainfragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +13,12 @@ import com.jiachang.tv_launcher.activity.MainActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.jiachang.tv_launcher.utils.Constants.hotelName;
-import static com.jiachang.tv_launcher.utils.Constants.sFacilityLocation;
+import static com.jiachang.tv_launcher.utils.Constant.sFacilityLocation;
 
 /**
  * @author Mickey.Ma

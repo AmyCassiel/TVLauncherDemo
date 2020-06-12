@@ -52,14 +52,15 @@ public class IPUtils {
                     try {
                         org.json.JSONObject jsonObject = new org.json.JSONObject(json);
                         cname = jsonObject.optString("cname");
-                        System.out.println(cname);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 } else {
-                    Log.e("提示", "IP接口异常，无法获取IP地址！");
+                    LogUtils.e("提示", "IP接口异常，无法获取IP地址！");
                 }
+            }else {
+                LogUtils.e("提示", "IP接口异常，无法获取IP地址！");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -75,11 +76,9 @@ public class IPUtils {
         String mac = null;
         try {
             Enumeration localEnumeration = NetworkInterface.getNetworkInterfaces();
-            Log.d("localEnumeration = ", "" + localEnumeration);
             while (localEnumeration.hasMoreElements()) {
                 NetworkInterface localNetworkInterface = (NetworkInterface) localEnumeration.nextElement();
                 String interfaceName = localNetworkInterface.getDisplayName();
-                Log.d("interfaceName = ", interfaceName);
                 if (interfaceName == null) {
                     continue;
                 }
@@ -88,7 +87,7 @@ public class IPUtils {
                     mac = convertToMac(localNetworkInterface.getHardwareAddress());
                     if (mac != null) {
                         mac = "00000AISPVUI00000000" + mac.toUpperCase(Locale.ENGLISH);
-                        Log.d("mac = ", mac);
+                        LogUtils.d("IPUtils.91","mac = "+ mac);
                     }
                     break;
                 }

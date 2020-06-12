@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
@@ -24,7 +24,6 @@ import com.jiachang.tv_launcher.adapter.HorizontalListViewAdapter;
 import com.jiachang.tv_launcher.adapter.ServiceNeedTypeAdapter;
 import com.jiachang.tv_launcher.bean.NeedServiceType;
 import com.jiachang.tv_launcher.utils.ImageUtil;
-import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,29 +33,26 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnFocusChange;
 import butterknife.Unbinder;
 
-import static com.jiachang.tv_launcher.utils.Constants.end2;
-import static com.jiachang.tv_launcher.utils.Constants.end5;
-import static com.jiachang.tv_launcher.utils.Constants.end6;
-import static com.jiachang.tv_launcher.utils.Constants.end7;
-import static com.jiachang.tv_launcher.utils.Constants.endTime1;
-import static com.jiachang.tv_launcher.utils.Constants.endTime3;
-import static com.jiachang.tv_launcher.utils.Constants.endTime4;
-import static com.jiachang.tv_launcher.utils.Constants.start2;
-import static com.jiachang.tv_launcher.utils.Constants.start5;
-import static com.jiachang.tv_launcher.utils.Constants.start6;
-import static com.jiachang.tv_launcher.utils.Constants.start7;
-import static com.jiachang.tv_launcher.utils.Constants.startTime1;
-import static com.jiachang.tv_launcher.utils.Constants.startTime3;
-import static com.jiachang.tv_launcher.utils.Constants.startTime4;
+import static com.jiachang.tv_launcher.utils.Constant.end2;
+import static com.jiachang.tv_launcher.utils.Constant.end5;
+import static com.jiachang.tv_launcher.utils.Constant.end6;
+import static com.jiachang.tv_launcher.utils.Constant.end7;
+import static com.jiachang.tv_launcher.utils.Constant.endTime1;
+import static com.jiachang.tv_launcher.utils.Constant.endTime3;
+import static com.jiachang.tv_launcher.utils.Constant.endTime4;
+import static com.jiachang.tv_launcher.utils.Constant.start2;
+import static com.jiachang.tv_launcher.utils.Constant.start5;
+import static com.jiachang.tv_launcher.utils.Constant.start6;
+import static com.jiachang.tv_launcher.utils.Constant.start7;
+import static com.jiachang.tv_launcher.utils.Constant.startTime1;
+import static com.jiachang.tv_launcher.utils.Constant.startTime3;
+import static com.jiachang.tv_launcher.utils.Constant.startTime4;
 
 /**
  * @author Mickey.Ma
@@ -97,7 +93,7 @@ public class NeedFragment extends Fragment {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    NeedServiceType needST = new NeedServiceType(bitmap0,name0, "供应时间：9:00-10:00","客需语句：我要"+name0);
+                    NeedServiceType needST = new NeedServiceType(bitmap0, name0, "供应时间：9:00-10:00", "客需语句：我要" + name0);
                     service.add(needST);
                     break;
                 default:
@@ -166,92 +162,104 @@ public class NeedFragment extends Fragment {
     }
 
     private void initUI(String[] title) {
-        hListViewAdapter = new HorizontalListViewAdapter(mActivity, title);
-        horizontalListView.setAdapter(hListViewAdapter);
-        horizontalListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (!title.equals("")) {
+            horizontalListView.setVisibility(View.VISIBLE);
+            contentReVi.setVisibility(View.VISIBLE);
+            hListViewAdapter = new HorizontalListViewAdapter(mActivity, title);
+            horizontalListView.setAdapter(hListViewAdapter);
+            horizontalListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-            }
+                }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (scrollPosition != firstVisibleItem) {
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (scrollPosition != firstVisibleItem) {
 //                    adapter.setSelectItem(firstVisibleItem);
 //                    mLeft.setSelectionFromTop(firstVisibleItem, 40);
-                    scrollPosition = firstVisibleItem;
-                }
-            }
-        });
-        horizontalListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adapter = new ServiceNeedTypeAdapter(mActivity, service);
-                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-                contentReVi.setLayoutManager(layoutManager);
-                contentReVi.setAdapter(adapter);
-                contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
-                if (titles[position].equals("补充服务")) {
-                    adapter.setDataList(service);
-                    recyclerGoods.setVisibility(View.VISIBLE);
-                    timeShow.setVisibility(View.GONE);
-                    contentReVi.setLayoutManager(layoutManager);
-                    contentReVi.setAdapter(adapter);
-                    contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
-                    if (startTime1 != null && endTime1 != null) {
-                        initGoods(detailsNames0, servicePath0, startTime1, endTime1);
-                    }else {
-                        initGoods(detailsNames0,servicePath0,null,null);
+                        scrollPosition = firstVisibleItem;
                     }
-                } else if (titles[position].equals("客房清洁")) {
-                    adapter.setDataList(service);
-                    supplyTime(start2, end2);
-                    Txt.setText("请对我说：我想要客房清洁");
-                } else if (title[position].equals("送餐服务")) {
-                    adapter.setDataList(service);
-                    recyclerGoods.setVisibility(View.VISIBLE);
-                    timeShow.setVisibility(View.GONE);
-                    contentReVi.setLayoutManager(layoutManager);
-                    contentReVi.setAdapter(adapter);
-                    contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
-                    initGoods(detailsNames2, servicePath2, startTime3, endTime3);
-                } else if (title[position].equals("保障服务")) {
-                    adapter.setDataList(service);
-                    recyclerGoods.setVisibility(View.VISIBLE);
-                    timeShow.setVisibility(View.GONE);
-                    contentReVi.setLayoutManager(layoutManager);
-                    contentReVi.setAdapter(adapter);
-                    contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
-                    initGoods(detailsNames3, servicePath3, startTime4, endTime4);
-                } else if (title[position].equals("退房服务")) {
-                    adapter.setDataList(service);
-                    supplyTime(start5, end5);
-                    Txt.setText("请对我说：我想要退房服务");
-                } else if (title[position].equals("续住服务")) {
-                    adapter.setDataList(service);
-                    supplyTime(start6, end6);
-                    Txt.setText("请对我说：我想要续住服务");
-                } else if (title[position].equals("洗衣服务")) {
-                    adapter.setDataList(service);
-                    supplyTime(start7, end7);
-                    Txt.setText("请对我说：我要洗衣服务");
                 }
-            }
+            });
+            horizontalListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    adapter = new ServiceNeedTypeAdapter(mActivity, service);
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+                    contentReVi.setLayoutManager(layoutManager);
+                    contentReVi.setAdapter(adapter);
+                    contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
+                    if (titles[position].equals("补充服务")) {
+                        adapter.setDataList(service);
+                        recyclerGoods.setVisibility(View.VISIBLE);
+                        timeShow.setVisibility(View.GONE);
+                        contentReVi.setLayoutManager(layoutManager);
+                        contentReVi.setAdapter(adapter);
+                        contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
+                        if (startTime1 != null && endTime1 != null) {
+                            initGoods(detailsNames0, servicePath0, startTime1, endTime1);
+                        } else {
+                            initGoods(detailsNames0, servicePath0, null, null);
+                        }
+                    } else if (titles[position].equals("客房清洁")) {
+                        adapter.setDataList(service);
+                        supplyTime(start2, end2);
+                        Txt.setText("请对我说：我想要客房清洁");
+                    } else if (title[position].equals("送餐服务")) {
+                        adapter.setDataList(service);
+                        recyclerGoods.setVisibility(View.VISIBLE);
+                        timeShow.setVisibility(View.GONE);
+                        contentReVi.setLayoutManager(layoutManager);
+                        contentReVi.setAdapter(adapter);
+                        contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
+                        initGoods(detailsNames2, servicePath2, startTime3, endTime3);
+                    } else if (title[position].equals("保障服务")) {
+                        adapter.setDataList(service);
+                        recyclerGoods.setVisibility(View.VISIBLE);
+                        timeShow.setVisibility(View.GONE);
+                        contentReVi.setLayoutManager(layoutManager);
+                        contentReVi.setAdapter(adapter);
+                        contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
+                        initGoods(detailsNames3, servicePath3, startTime4, endTime4);
+                    } else if (title[position].equals("退房服务")) {
+                        adapter.setDataList(service);
+                        supplyTime(start5, end5);
+                        Txt.setText("请对我说：我想要退房服务");
+                    } else if (title[position].equals("续住服务")) {
+                        adapter.setDataList(service);
+                        supplyTime(start6, end6);
+                        Txt.setText("请对我说：我想要续住服务");
+                    } else if (title[position].equals("洗衣服务")) {
+                        adapter.setDataList(service);
+                        supplyTime(start7, end7);
+                        Txt.setText("请对我说：我要洗衣服务");
+                    }
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+                }
+            });
+        } else {
+            horizontalListView.setVisibility(View.GONE);
+            contentReVi.setVisibility(View.GONE);
+            Toast.makeText(getContext().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void supplyTime(long startTime, long endTime) {
-        CharSequence sTimeStr = DateFormat.format("HH:mm", startTime);
-        CharSequence eTimeStr = DateFormat.format("HH:mm", endTime);
-        recyclerGoods.setVisibility(View.GONE);
-        timeShow.setVisibility(View.VISIBLE);
-        textView.setText(sTimeStr + "-" + eTimeStr);
-
+        if (startTime != 0 && endTime != 0) {
+            CharSequence sTimeStr = DateFormat.format("HH:mm", startTime);
+            CharSequence eTimeStr = DateFormat.format("HH:mm", endTime);
+            recyclerGoods.setVisibility(View.GONE);
+            timeShow.setVisibility(View.VISIBLE);
+            textView.setText(sTimeStr + "-" + eTimeStr);
+        } else {
+            timeShow.setVisibility(View.GONE);
+            Toast.makeText(mActivity.getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
+        }
     }
 
     public String[] getSharedPreference(String key) {
@@ -272,12 +280,15 @@ public class NeedFragment extends Fragment {
                     long end = Long.parseLong(endTime[i]);
                     CharSequence sTimeStr = DateFormat.format("HH:mm", start);
                     CharSequence eTimeStr = DateFormat.format("HH:mm", end);
-                    NeedServiceType needST = new NeedServiceType(bitmap1,name1, "供应时间："+sTimeStr+"-"+eTimeStr,"例如：我想要"+name1);
+                    NeedServiceType needST = new NeedServiceType(bitmap1, name1, "供应时间：" + sTimeStr + "-" + eTimeStr, "例如：我想要" + name1);
                     service.add(needST);
                 } else {
-                    NeedServiceType needST = new NeedServiceType(bitmap1,name1, "全天供应","例如：我想要"+name1);
+                    NeedServiceType needST = new NeedServiceType(bitmap1, name1, "全天供应", "例如：我想要" + name1);
                     service.add(needST);
                 }
+            } else {
+                contentReVi.setVisibility(View.GONE);
+                Toast.makeText(getContext().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
             }
 
         }

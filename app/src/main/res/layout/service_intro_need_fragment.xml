@@ -48,8 +48,8 @@
                 android:id="@+id/content_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20px"
-                android:layout_marginEnd="20px"
+                android:layout_marginStart="30px"
+                android:layout_marginEnd="30px"
                 android:focusable="false"
                 android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
         </RelativeLayout>
@@ -63,8 +63,8 @@
 
             <LinearLayout
                 android:layout_width="500px"
-                android:layout_height="250px"
-                android:layout_marginBottom="75px"
+                android:layout_height="200px"
+                android:layout_marginBottom="50px"
                 android:background="@drawable/gray_layout_bg"
                 android:gravity="center"
                 android:alpha="0.8"
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="00:00 - 00:00"
-                    android:textSize="40px"
+                    android:textSize="50px"
                     android:textColor="@color/gray_white"/>
                 <TextView
                     android:id="@+id/t_txt"
@@ -97,8 +97,5 @@
                     android:textColor="@color/gray_white"/>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
-
 </LinearLayout>

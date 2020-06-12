@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
@@ -16,6 +18,7 @@ import com.jiachang.tv_launcher.adapter.SControlTypeAdapter1;
 import com.jiachang.tv_launcher.bean.Controltype;
 import com.jiachang.tv_launcher.bean.Controltype1;
 import com.jiachang.tv_launcher.utils.HttpUtils;
+import com.jiachang.tv_launcher.utils.LogUtils;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -53,6 +56,12 @@ public class ControlFragment extends Fragment {
     RecyclerView introduceControl;
     @BindView(R.id.contentrecyclerview1)
     RecyclerView introduceControl1;
+    @BindView(R.id.myroom0)
+    LinearLayout myRoom0;
+    @BindView(R.id.myroom1)
+    LinearLayout myRoom1;
+    @BindView(R.id.myroom2)
+    LinearLayout myRoom2;
 
     private List<Controltype> service = new ArrayList<>();
     private List<Controltype1> service1 = new ArrayList<>();
@@ -92,8 +101,11 @@ public class ControlFragment extends Fragment {
         map.put("rs", "getDevListJson");
         try {
             String request = HttpUtils.mPost(url, map);
-            Log.d("tag", "request = " + request);
-            if (!request.equals("")) {
+            LogUtils.d("ControlFragment.95", "request = " + request);
+            if (!request.isEmpty()) {
+                myRoom0.setVisibility(View.VISIBLE);
+                myRoom1.setVisibility(View.VISIBLE);
+                myRoom2.setVisibility(View.VISIBLE);
                 Map responseMap = (Map) JSONObject.parse(request, Feature.OrderedField);
                 Map pageMap = (Map) responseMap.get("page");
                 Set set = pageMap.keySet();
@@ -163,6 +175,11 @@ public class ControlFragment extends Fragment {
                     }
                 }
 
+            }else {
+                myRoom0.setVisibility(View.GONE);
+                myRoom1.setVisibility(View.GONE);
+                myRoom2.setVisibility(View.GONE);
+                Toast.makeText(getContext(),"抱歉，酒店暂时不提供该服务",Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             e.printStackTrace();

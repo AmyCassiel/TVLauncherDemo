@@ -1,12 +1,15 @@
 package com.jiachang.tv_launcher.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Environment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,27 +17,42 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jiachang.tv_launcher.BuildConfig;
+import com.aispeech.upload.util.LogUtil;
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.fragment.ContentFragment;
+import com.jiachang.tv_launcher.service.UploadCashService;
+import com.jiachang.tv_launcher.utils.CommonUtil;
+import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.IPUtils;
+import com.jiachang.tv_launcher.utils.LogUtils;
 import com.jiachang.tv_launcher.utils.QRCodeUtil;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
 
+import java.io.File;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 
-import static com.jiachang.tv_launcher.utils.Constants.MAC;
+import static com.jiachang.tv_launcher.utils.Constant.MAC;
 
 /**
  * @author Mickey.Ma
  * @date 2020-03-31
  * @description
  */
-public class SettingActivity extends Activity {
+public class SettingActivity extends FragmentActivity {
+    private static final String TAG = "SettingActivity";
+    private Context context;
     @BindView(R.id.et_account)
     EditText ed_account;
     @BindView(R.id.et_pwd)
@@ -61,12 +79,14 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         hideBottomMenu();
         setContentView(R.layout.service_setting_activity);
+        context = this;
         ButterKnife.bind(this);
         getMac();
-
     }
 
-    /**隐藏虚拟按键，并且全屏*/
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
     protected void hideBottomMenu() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //for new api versions.
@@ -80,21 +100,24 @@ public class SettingActivity extends Activity {
 
     /**
      * 获取mac地址（适配所有Android版本）
+     *
      * @return
      */
-    private String getMac(){
-        String mac = IPUtils.getLocalEthernetMacAddress();
-        Log.d("mac",MAC);
-        img.setImageBitmap(QRCodeUtil.createQRCode(MAC));
+    private String getMac() {
+        LogUtils.d(TAG+".108","mac = "+ MAC);
+        if (!MAC.isEmpty()){
+            img.setImageBitmap(QRCodeUtil.createQRCode(MAC));
+        }
         return MAC;
     }
 
-    @OnFocusChange({R.id.et_account,R.id.et_pwd,R.id.tv_confirm,R.id.tv_cancle,R.id.set_setting})
-    public void onViewFocusChange(View view, boolean isfocus){
+    @OnFocusChange({R.id.et_account, R.id.et_pwd, R.id.tv_confirm, R.id.tv_cancle, R.id.set_setting})
+    public void onViewFocusChange(View view, boolean isfocus) {
     }
-    @OnClick({R.id.tv_confirm,R.id.set_setting, R.id.tv_cancle})
-    void setOnViewClick(View v){
-        switch (v.getId()){
+
+    @OnClick({R.id.tv_confirm, R.id.set_setting, R.id.tv_cancle})
+    void setOnViewClick(View v) {
+        switch (v.getId()) {
             case R.id.set_setting:
                 img.setVisibility(View.GONE);
                 set_setting.setVisibility(View.GONE);
@@ -112,13 +135,15 @@ public class SettingActivity extends Activity {
                     PackageManager packageManager = getPackageManager();
                     String packageName = "com.android.tv.settings";//要打开应用的包名,以微信为例
                     Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(packageName);
-                    if (launchIntentForPackage != null)
+                    if (launchIntentForPackage != null) {
                         startActivity(launchIntentForPackage);
-                    else
+                    } else {
                         Toast.makeText(this, "未安装该应用", Toast.LENGTH_SHORT).show();
+                    }
+
                     finish();
                 } else {
-                    Toast.makeText(SettingActivity.this,"用户名或密码错误",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingActivity.this, "密码错误，请重新输入", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.tv_cancle:
@@ -133,6 +158,19 @@ public class SettingActivity extends Activity {
                 break;
             default:
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_MENU: //菜单键
+                FragmentManager fM = getSupportFragmentManager();
+                ContentFragment dialogFragment = new ContentFragment();
+                dialogFragment.show(fM,"");
+                break;
+            default:
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

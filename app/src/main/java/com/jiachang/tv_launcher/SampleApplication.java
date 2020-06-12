@@ -2,25 +2,14 @@ package com.jiachang.tv_launcher;
 
 import android.app.AlarmManager;
 import android.app.Application;
-import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
-
 import com.tencent.bugly.Bugly;
-import com.tencent.tinker.loader.app.TinkerApplication;
-import com.tencent.tinker.loader.shareutil.ShareConstants;
-
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import androidx.annotation.RequiresApi;
-
-import static com.tencent.bugly.Bugly.applicationContext;
 
 /**
  * @author Mickey.Ma
@@ -53,4 +42,5 @@ public class SampleApplication extends Application {
         config.locale = Locale.SIMPLIFIED_CHINESE;
         getResources().updateConfiguration(config,metrics);
     }
+
 }

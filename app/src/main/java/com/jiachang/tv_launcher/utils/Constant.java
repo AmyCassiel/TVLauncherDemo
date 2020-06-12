@@ -1,11 +1,17 @@
 package com.jiachang.tv_launcher.utils;
 
+import android.content.Context;
+import android.os.Environment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author Mickey.Ma
  * @date 2020-04-21
  * @description
  */
-public class Constants {
+public class Constant {
     public static String hostUrl = "https://jczh.jiachang8.com/reservation";
     public static String localhostUrl = "http://192.168.0.243:8383/reservation";
     public static String MAC = "";
@@ -50,4 +56,13 @@ public class Constants {
     public static String[] startTime4 = null;
     public static String[] endTime4 = null;
 
+    public static final String CASHUPLOAD = hostUrl+"/notify/logUpload";
+
+    public static String LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory().getPath() + "/tv_launcher/log";
+    public static String LOG_FILE_Name = "log.txt";
+    public static String LOG_FILE_PATH = LOG_PATH_SDCARD_DIR +"/"+LOG_FILE_Name;
+    private Context context;
+    public Constant(Context context) {
+        this.context = context;
+    }
 }

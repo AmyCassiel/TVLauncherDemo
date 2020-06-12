@@ -51,7 +51,7 @@ public abstract class ViewUtils {
         }
         if (Build.VERSION.SDK_INT >= 21) {
             //抬高Z轴
-            ViewCompat.animate(itemView).scaleX(1.10f).scaleY(1.10f).translationZ(1).start();
+            ViewCompat.animate(itemView).scaleX(1.05f).scaleY(1.05f).translationZ(1).start();
         } else {
             ViewCompat.animate(itemView).scaleX(1.10f).scaleY(1.10f).start();
             ViewGroup parent = (ViewGroup) itemView.getParent();

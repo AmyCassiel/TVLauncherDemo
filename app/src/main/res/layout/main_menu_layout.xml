@@ -23,7 +23,8 @@
         <LinearLayout
             android:id="@+id/spinner_multimedia_item"
             style="@style/MenuItemAutoLinearLayout"
-            android:layout_marginEnd="1000px">
+            android:layout_marginEnd="1000px"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/multimedia_item_1"
