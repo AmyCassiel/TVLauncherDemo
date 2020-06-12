@@ -77,7 +77,7 @@ public class MenuFragment extends Fragment{
         layoutParams.height = height;
 
         ViewGroup.MarginLayoutParams layoutParams1 = (ViewGroup.MarginLayoutParams) menuItemLayout.getLayoutParams();
-        layoutParams1.bottomMargin = 95;
+        layoutParams1.bottomMargin = 100;
         menuItemLayout.setLayoutParams(layoutParams1);
 
         return menuLayout;

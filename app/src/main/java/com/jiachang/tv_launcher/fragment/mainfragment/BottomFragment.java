@@ -21,7 +21,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+<<<<<<< HEAD
 import static com.jiachang.tv_launcher.utils.Constants.hotelName;
+=======
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
 import static com.jiachang.tv_launcher.utils.Constants.sFacilityLocation;
 
 /**
@@ -53,12 +56,18 @@ public class BottomFragment extends Fragment {
                 .getString("breakfastTime", "");
         sFacilityLocation = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("local", "");
+<<<<<<< HEAD
         if (!wifiID.isEmpty() && !breakTime.isEmpty() && !sFacilityLocation.isEmpty()){
             wifiId.setText(wifiID);
             breakfastTime.setText("早餐供应时间：" +breakTime+"("+sFacilityLocation+")");
         }else {
             wifiId.setText("");
             breakfastTime.setText("");
+=======
+        if (wifiID != null && breakfastTime != null && sFacilityLocation != null){
+            wifiId.setText(wifiID);
+            breakfastTime.setText("早餐供应时间：" +breakTime+"("+sFacilityLocation+")");
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
         }
         return bottomlayout;
     }

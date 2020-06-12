@@ -118,6 +118,7 @@ public class NeedFragment extends Fragment {
             li.getItemsCanFocus();
             li.getId();
             li.setNextFocusRightId(R.id.horizon_listview);
+            li.setSelection(0);
         }
 
         Bundle bundle = this.getArguments();//得到从Activity传来的数据

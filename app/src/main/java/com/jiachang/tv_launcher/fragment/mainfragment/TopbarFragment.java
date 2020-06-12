@@ -252,7 +252,11 @@ public class TopbarFragment extends Fragment {
         public void run() {
             do {
                 try {
+<<<<<<< HEAD
                     Thread.sleep(84600000);
+=======
+                    Thread.sleep(3600000);
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
                     getWeather(IPUtils.getPubIp());
                         /*Message msg = new Message();
                         msg.what = 1;  //消息(一个整型值)
