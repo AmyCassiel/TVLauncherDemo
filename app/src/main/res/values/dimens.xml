@@ -37,7 +37,7 @@
     <dimen name="image_height">350px</dimen>
     <dimen name="text_height">150px</dimen>
     <dimen name="image_margin">35px</dimen>
-    <dimen name="icon_layout_height">130px</dimen>
+    <dimen name="icon_layout_height">100px</dimen>
     <dimen name="icon_margin">20px</dimen>
     <dimen name="dining_text_size">35px</dimen>
 

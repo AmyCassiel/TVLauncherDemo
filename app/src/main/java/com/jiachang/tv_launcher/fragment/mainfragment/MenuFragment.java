@@ -77,7 +77,7 @@ public class MenuFragment extends Fragment{
         layoutParams.height = height;
 
         ViewGroup.MarginLayoutParams layoutParams1 = (ViewGroup.MarginLayoutParams) menuItemLayout.getLayoutParams();
-        layoutParams1.bottomMargin = 100;
+        layoutParams1.bottomMargin = 95;
         menuItemLayout.setLayoutParams(layoutParams1);
 
         return menuLayout;
@@ -88,21 +88,22 @@ public class MenuFragment extends Fragment{
             R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     void imageClick( View v) {
         switch (v.getId()){
-            case R.id.multimedia_item_1:
-                intent = pm.getLaunchIntentForPackage("com.qiyivideo.sibichi");
-                if (intent != null) {
-                    mContext.startActivity(intent);
-                } else {
-                    Toast.makeText(mContext, "暂时不提供该服务！", Toast.LENGTH_SHORT).show();
-                }
-                break;
             case R.id.menu_tv:
-            case R.id.multimedia_item_2:
+            case R.id.multimedia_item_1:
                 intent = pm.getLaunchIntentForPackage("com.dianshijia.newlive");   //这个方法直接返回 访问特定包名下activity或service etc.的入口的intent， 省去设置componentName的参数
                 if (intent != null) {
                     mContext.startActivity(intent);
                 } else {
                     Toast.makeText(mContext, "你还没有安装“电视家”这个软件哦！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case R.id.multimedia_item_2:
+                intent = pm.getLaunchIntentForPackage("com.qiyivideo.sibichi");
+                if (intent != null) {
+                    mContext.startActivity(intent);
+                } else {
+                    Toast.makeText(mContext, "暂时不提供该服务！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.menu_music:

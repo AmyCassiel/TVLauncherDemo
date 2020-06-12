@@ -25,7 +25,7 @@ public class AndroidFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.apower_mirror_android_dlna_fragment, container, false);
+        View view = inflater.inflate(R.layout.apower_mirror_android_fragment, container, false);
         mUb = ButterKnife.bind(this, view);
         mContext = getActivity();
         return view;

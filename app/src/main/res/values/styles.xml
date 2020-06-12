@@ -45,10 +45,10 @@
     <style name="MenuItemTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">28px</item>
+        <item name="android:textSize">25px</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_margin">8px</item>
+        <item name="android:layout_margin">10px</item>
         <item name="android:clipChildren">false</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:focusable">true</item>

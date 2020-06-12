@@ -4,7 +4,6 @@
     android:id="@+id/food_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="20px"
     android:background="@drawable/white_radius"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -20,7 +19,7 @@
 
         <ImageView
             android:id="@+id/food_image"
-            android:layout_width="250px"
+            android:layout_width="240px"
             android:layout_height="200px"
             android:layout_gravity="center"
             android:focusable="true"
@@ -30,7 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.8"
-            android:layout_marginTop="5px"
+            android:layout_marginStart="5px"
+            android:layout_marginEnd="7px"
+            android:layout_marginTop="7px"
             android:focusable="true"
             android:orientation="horizontal">
 
@@ -39,7 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="@dimen/text_padding"
                 android:textColor="@color/black"
                 android:textSize="20px" />
 
@@ -48,8 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:padding="@dimen/text_padding"
                 android:textColor="@color/red"
                 android:textSize="25px" />
         </LinearLayout>
@@ -59,9 +57,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_weight="1"
-            android:layout_marginBottom="15px"
-            android:padding="@dimen/text_padding"
+            android:layout_marginStart="7px"
+            android:layout_marginEnd="7px"
+            android:layout_marginBottom="7px"
             android:textColor="@color/golden" />
     </LinearLayout>
 </RelativeLayout>

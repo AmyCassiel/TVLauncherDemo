@@ -110,8 +110,13 @@ public class FacilityFragment extends Fragment {
             name0 = detailsNames[i];
             supplyTime = detailsTime[i];
             local = detailsLocal[i];
-            FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
-            service.add(duck);
+            if(!name0.isEmpty()){
+                fconRV.setVisibility(View.VISIBLE);
+                FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
+                service.add(duck);
+            }else {
+                fconRV.setVisibility(View.GONE);
+            }
         }
     }
 
