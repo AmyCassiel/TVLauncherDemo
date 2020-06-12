@@ -47,6 +47,11 @@
         android:largeScreens="true"
         android:xlargeScreens="true"/>
 
+    <supports-screens android:smallScreens="false"
+        android:normalScreens="false"
+        android:largeScreens="true"
+        android:xlargeScreens="true"/>
+
     <application
         android:name="com.jiachang.tv_launcher.SampleApplication"
         android:allowBackup="true"

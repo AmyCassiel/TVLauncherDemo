@@ -4,7 +4,15 @@
     android:id="@+id/service_type_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+<<<<<<< HEAD
     android:layout_marginStart="10px"
+=======
+<<<<<<< HEAD
+    android:layout_marginStart="10px"
+=======
+    android:layout_marginStart="20px"
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     android:background="@drawable/white_radius"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -39,6 +47,13 @@
                 android:id="@+id/service_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+                android:padding="@dimen/text_padding"
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:textColor="@color/black"
                 android:textSize="20px" />
 
@@ -46,6 +61,13 @@
                 android:id="@+id/service_supply_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+                android:padding="@dimen/text_padding"
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:textColor="@color/red"
                 android:textSize="15px" />
         </LinearLayout>

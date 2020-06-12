@@ -20,6 +20,10 @@
                 style="@style/AboutContextLL">
 
                 <TextView
+<<<<<<< HEAD
+=======
+                    android:layout_marginTop="50px"
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                     style="@style/AboutContextTopicLL"
                     android:text="@string/hotel_introduce_tittle" />
 

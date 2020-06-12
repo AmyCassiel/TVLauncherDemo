@@ -3,9 +3,15 @@ package com.jiachang.tv_launcher.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+<<<<<<< HEAD
+=======
+import android.util.ArrayMap;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -16,21 +22,48 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
+<<<<<<< HEAD
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.LogUtils;
+=======
+import com.jiachang.tv_launcher.anim.ActivityAnimationHelper;
+import com.jiachang.tv_launcher.utils.HttpUtils;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import androidx.annotation.Nullable;
+<<<<<<< HEAD
+=======
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 
+<<<<<<< HEAD
 import static com.jiachang.tv_launcher.utils.Constant.MAC;
 import static com.jiachang.tv_launcher.utils.Constant.hostUrl;
+=======
+import static com.jiachang.tv_launcher.utils.Constants.MAC;
+import static com.jiachang.tv_launcher.utils.Constants.hostUrl;
+import static com.jiachang.tv_launcher.utils.Constants.needImage;
+import static com.jiachang.tv_launcher.utils.Constants.needName;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 /**
  * @author Mickey.Ma
@@ -167,12 +200,21 @@ public class DiningActivity extends Activity {
                     map.put("cuid", MAC);
                     map.put("deliveryType", id);
                     String request = HttpUtils.mPost(url2, map);
+<<<<<<< HEAD
                     LogUtils.d("","request="+request);
                     JSONObject json = JSONObject.parseObject(request);
                     LogUtils.d("request", request);
                     int code = json.getIntValue("code");
                     if (code == 0) {
                         LogUtils.w(TAG, "请求成功");
+=======
+                    Log.e("","request="+request);
+                    JSONObject json = JSONObject.parseObject(request);
+                    Log.d("request", request);
+                    int code = json.getIntValue("code");
+                    if (code == 0) {
+                        Log.d(TAG, "请求成功");
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                         Intent intent = new Intent();
                         JSONArray array = json.getJSONArray("serviceDetails");
                         intent.putExtra("foodlist",array);

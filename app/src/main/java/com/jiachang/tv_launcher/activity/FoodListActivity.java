@@ -146,6 +146,10 @@ public class FoodListActivity extends Activity implements FoodAdapter.onItemClic
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         //在recyclerView的move事件情况下，拦截调，只让它响应五向键和左右箭头移动
+<<<<<<< HEAD
+=======
+        Log.i("FoodListActivity.this", "CustomRecycleView.dispatchTouchEvent.");
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         return ev.getAction() == MotionEvent.ACTION_MOVE || super.dispatchTouchEvent(ev);
     }
     @Override

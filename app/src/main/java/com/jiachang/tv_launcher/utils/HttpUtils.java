@@ -5,8 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+<<<<<<< HEAD
 import com.jiachang.tv_launcher.bean.FormFile;
 
+=======
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,16 +28,23 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+<<<<<<< HEAD
 import java.io.File;
+=======
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+<<<<<<< HEAD
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.Socket;
+=======
+import java.net.HttpURLConnection;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -339,6 +349,10 @@ public class HttpUtils {
                 params.add(new BasicNameValuePair(key, value.toString()));
             }
         }
+<<<<<<< HEAD
+=======
+        System.out.println(params);
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         UrlEncodedFormEntity uefEntity;
         String resData = null;
         try {
@@ -350,12 +364,22 @@ public class HttpUtils {
                 }
             }
 
+<<<<<<< HEAD
             HttpResponse httpResponse;
             try {
                 httpResponse = httpClient.execute(httpPost);
                 HttpEntity entity = httpResponse.getEntity();
                 resData = EntityUtils.toString(entity);
 
+=======
+            System.out.println("httpPost = " + httpPost);
+            HttpResponse httpResponse;
+            try {
+                httpResponse = httpClient.execute(httpPost);
+                Log.i(HTTP_TAG, "httpResponse = " + httpResponse);
+                HttpEntity entity = httpResponse.getEntity();
+                resData = EntityUtils.toString(entity);
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -426,6 +450,7 @@ public class HttpUtils {
         }
         return result;
     }
+<<<<<<< HEAD
 
     /**
      * 提交文件及参数到服务器
@@ -620,4 +645,6 @@ public class HttpUtils {
         socket.close();
         return true;
     }
+=======
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 }

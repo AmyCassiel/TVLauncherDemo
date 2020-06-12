@@ -52,15 +52,24 @@ public class IPUtils {
                     try {
                         org.json.JSONObject jsonObject = new org.json.JSONObject(json);
                         cname = jsonObject.optString("cname");
+<<<<<<< HEAD
+=======
+                        System.out.println(cname);
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 } else {
+<<<<<<< HEAD
                     LogUtils.e("提示", "IP接口异常，无法获取IP地址！");
                 }
             }else {
                 LogUtils.e("提示", "IP接口异常，无法获取IP地址！");
+=======
+                    Log.e("提示", "IP接口异常，无法获取IP地址！");
+                }
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -76,9 +85,17 @@ public class IPUtils {
         String mac = null;
         try {
             Enumeration localEnumeration = NetworkInterface.getNetworkInterfaces();
+<<<<<<< HEAD
             while (localEnumeration.hasMoreElements()) {
                 NetworkInterface localNetworkInterface = (NetworkInterface) localEnumeration.nextElement();
                 String interfaceName = localNetworkInterface.getDisplayName();
+=======
+            Log.d("localEnumeration = ", "" + localEnumeration);
+            while (localEnumeration.hasMoreElements()) {
+                NetworkInterface localNetworkInterface = (NetworkInterface) localEnumeration.nextElement();
+                String interfaceName = localNetworkInterface.getDisplayName();
+                Log.d("interfaceName = ", interfaceName);
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 if (interfaceName == null) {
                     continue;
                 }
@@ -87,7 +104,11 @@ public class IPUtils {
                     mac = convertToMac(localNetworkInterface.getHardwareAddress());
                     if (mac != null) {
                         mac = "00000AISPVUI00000000" + mac.toUpperCase(Locale.ENGLISH);
+<<<<<<< HEAD
                         LogUtils.d("IPUtils.91","mac = "+ mac);
+=======
+                        Log.d("mac = ", mac);
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                     }
                     break;
                 }

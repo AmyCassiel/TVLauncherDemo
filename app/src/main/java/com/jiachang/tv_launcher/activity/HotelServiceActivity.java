@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.adapter.ServiceLeftAdapter;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
@@ -26,8 +27,19 @@ import com.jiachang.tv_launcher.fragment.hotelservicefragment.ControlFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.IntroHotelFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.FacilityFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.RequestFragment;
+<<<<<<< HEAD
 
 import java.util.Calendar;
+=======
+import com.jiachang.tv_launcher.utils.HttpUtils;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +47,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+<<<<<<< HEAD
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -51,6 +64,31 @@ import static com.jiachang.tv_launcher.utils.Constant.startTime4;
 import static com.jiachang.tv_launcher.utils.Constant.usageMonitoring;
 import static com.jiachang.tv_launcher.utils.Constant.userNeeds;
 import static com.jiachang.tv_launcher.utils.Constant.wifiName;
+=======
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.jiachang.tv_launcher.utils.Constants.breakfastTime;
+import static com.jiachang.tv_launcher.utils.Constants.business;
+import static com.jiachang.tv_launcher.utils.Constants.endTime1;
+import static com.jiachang.tv_launcher.utils.Constants.endTime3;
+import static com.jiachang.tv_launcher.utils.Constants.endTime4;
+import static com.jiachang.tv_launcher.utils.Constants.hotelIntroduction;
+import static com.jiachang.tv_launcher.utils.Constants.hotelPolicys;
+import static com.jiachang.tv_launcher.utils.Constants.startTime1;
+import static com.jiachang.tv_launcher.utils.Constants.startTime3;
+import static com.jiachang.tv_launcher.utils.Constants.startTime4;
+import static com.jiachang.tv_launcher.utils.Constants.usageMonitoring;
+import static com.jiachang.tv_launcher.utils.Constants.userNeeds;
+import static com.jiachang.tv_launcher.utils.Constants.wifiName;
+import static com.jiachang.tv_launcher.utils.Constants.wifiPassword;
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 /**
  * @author Mickey.Ma
@@ -72,6 +110,7 @@ public class HotelServiceActivity extends FragmentActivity {
     TextView day1;
     @BindView(R.id.weather_text)
     TextView weatherText;
+<<<<<<< HEAD
 
     //记录滑动的ListView 滑动的位置
     private String[] sFsNames0, sFsTimes0,sFsImgs0,sFsLocals0;
@@ -80,6 +119,16 @@ public class HotelServiceActivity extends FragmentActivity {
     private String[] sDetailsImage0,sDetailsImage2,sDetailsImage3;
     private long start2,end2,start5,end5,start6,end6,start7,end7;
 
+=======
+
+    //记录滑动的ListView 滑动的位置
+    private String[] sFsNames0, sFsTimes0,sFsImgs0,sFsLocals0;
+    private String[] sTypeNames;
+    private String[] sDetailsNames0,sDetailsNames2,sDetailsNames3;
+    private String[] sDetailsImage0,sDetailsImage2,sDetailsImage3;
+    private long start2,end2,start5,end5,start6,end6,start7,end7;
+
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     private ServiceLeftAdapter leftAdapter;
     private Context context;
     private String[] mStrings = {"酒店介绍", "酒店设施", "使用客控", "使用客需", "服务反馈"};
@@ -120,6 +169,24 @@ public class HotelServiceActivity extends FragmentActivity {
         ButterKnife.bind(this);
         context = this;
         isFirstIn();
+<<<<<<< HEAD
+=======
+
+        getTime();
+        new TimeThread().start();
+
+        leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
+        leftListView.setAdapter(leftAdapter);
+        leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        String weatherTxt =getApplicationContext().getSharedPreferences("hotel", Context.MODE_PRIVATE)
+                .getString("weatherTxt", "");
+        Log.e(TAG,"weatherTxt:"+weatherTxt);
+
+        if (!weatherTxt.isEmpty()){
+            weatherText.setText(weatherTxt);
+        }
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
         getTime();
         new TimeThread().start();

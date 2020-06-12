@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+<<<<<<< HEAD
 import android.widget.Toast;
+=======
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
@@ -111,14 +114,26 @@ public class FacilityFragment extends Fragment {
             name0 = detailsNames[i];
             supplyTime = detailsTime[i];
             local = detailsLocal[i];
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             if(!name0.isEmpty()){
                 fconRV.setVisibility(View.VISIBLE);
                 FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
                 service.add(duck);
             }else {
                 fconRV.setVisibility(View.GONE);
+<<<<<<< HEAD
                 Toast.makeText(getActivity().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
             }
+=======
+            }
+=======
+            FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
+            service.add(duck);
+>>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
+>>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         }
     }
 
