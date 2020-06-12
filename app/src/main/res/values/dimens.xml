@@ -58,15 +58,7 @@
     <dimen name="hotel_text1">37px</dimen>
     <dimen name="text_padding">5px</dimen>
     <dimen name="image_hw">100px</dimen>
-<<<<<<< HEAD
     <dimen name="btn_height1">35px</dimen>
-=======
-<<<<<<< HEAD
-    <dimen name="btn_height1">35px</dimen>
-=======
-    <dimen name="btn_height1">50px</dimen>
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
     <!--按钮-->
     <dimen name="btn_width">180px</dimen>

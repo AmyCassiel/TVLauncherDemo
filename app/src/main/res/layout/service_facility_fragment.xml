@@ -2,18 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:layout_marginStart="30px"
     android:layout_marginEnd="30px"
-=======
-<<<<<<< HEAD
-    android:layout_marginStart="30px"
-    android:layout_marginEnd="30px"
-=======
-    android:layout_marginStart="20px"
-    android:layout_marginEnd="20px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     android:layout_marginBottom="30px"
     android:alpha="0.8"
     android:background="@drawable/bg_btn_gray"
@@ -34,18 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dip"
-<<<<<<< HEAD
         android:layout_marginStart="30px"
         android:layout_marginEnd="30px"
-=======
-<<<<<<< HEAD
-        android:layout_marginStart="30px"
-        android:layout_marginEnd="30px"
-=======
-        android:layout_marginStart="20px"
-        android:layout_marginEnd="20px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         android:focusable="true"
         android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
 </LinearLayout>

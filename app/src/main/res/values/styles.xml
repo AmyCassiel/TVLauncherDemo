@@ -226,14 +226,8 @@
     <style name="AboutContextTopicLL">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
         <item name="android:layout_marginStart">@dimen/btn_height</item>
         <item name="android:layout_marginEnd">@dimen/btn_height</item>
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         <item name="android:padding">@dimen/text_padding</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/hotel_tittle_text</item>

@@ -22,18 +22,8 @@
 
         <ImageView
             android:id="@+id/service_image"
-<<<<<<< HEAD
             android:layout_width="200px"
             android:layout_height="170px"
-=======
-<<<<<<< HEAD
-            android:layout_width="200px"
-            android:layout_height="170px"
-=======
-            android:layout_width="250px"
-            android:layout_height="200px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:layout_gravity="center"
             android:transitionName="image_dining" />
 
@@ -41,19 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.8"
-<<<<<<< HEAD
             android:layout_marginStart="5px"
             android:layout_marginEnd="7px"
             android:layout_marginTop="7px"
-=======
-<<<<<<< HEAD
-            android:layout_marginStart="5px"
-            android:layout_marginEnd="7px"
-            android:layout_marginTop="7px"
-=======
-            android:layout_marginTop="5px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:orientation="horizontal">
 
             <TextView
@@ -61,13 +41,6 @@
                 android:layout_width="120px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-                android:padding="@dimen/text_padding"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:textColor="@color/black"
                 android:textSize="20px" />
 
@@ -77,13 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-                android:padding="@dimen/text_padding"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:textColor="@color/red"
                 android:textSize="15px" />
         </LinearLayout>
@@ -94,20 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_weight="1"
-<<<<<<< HEAD
             android:layout_marginStart="7px"
             android:layout_marginEnd="7px"
             android:layout_marginBottom="7px"
-=======
-<<<<<<< HEAD
-            android:layout_marginStart="7px"
-            android:layout_marginEnd="7px"
-            android:layout_marginBottom="7px"
-=======
-            android:layout_marginBottom="15px"
-            android:padding="@dimen/text_padding"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:textColor="@color/golden" />
     </LinearLayout>
 </RelativeLayout>

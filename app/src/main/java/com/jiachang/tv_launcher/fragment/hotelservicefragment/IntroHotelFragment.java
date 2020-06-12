@@ -6,11 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
-=======
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
@@ -23,24 +18,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-<<<<<<< HEAD
 import static com.jiachang.tv_launcher.utils.Constant.breakfastTime;
 import static com.jiachang.tv_launcher.utils.Constant.business;
 import static com.jiachang.tv_launcher.utils.Constant.hotelIntroduction;
 import static com.jiachang.tv_launcher.utils.Constant.hotelName;
 import static com.jiachang.tv_launcher.utils.Constant.tel;
 import static com.jiachang.tv_launcher.utils.Constant.wifiName;
-=======
-import static com.jiachang.tv_launcher.utils.Constants.breakfastTime;
-import static com.jiachang.tv_launcher.utils.Constants.business;
-import static com.jiachang.tv_launcher.utils.Constants.hotelIntroduction;
-import static com.jiachang.tv_launcher.utils.Constants.hotelName;
-import static com.jiachang.tv_launcher.utils.Constants.hotelPolicys;
-import static com.jiachang.tv_launcher.utils.Constants.tel;
-import static com.jiachang.tv_launcher.utils.Constants.usageMonitoring;
-import static com.jiachang.tv_launcher.utils.Constants.userNeeds;
-import static com.jiachang.tv_launcher.utils.Constants.wifiName;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import static com.jiachang.tv_launcher.utils.HttpUtils.netWorkCheck;
 
 /**

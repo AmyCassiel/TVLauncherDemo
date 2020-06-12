@@ -68,11 +68,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-<<<<<<< HEAD
     implementation 'com.zhy:okhttputils:2.6.2'
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
     //解析
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.62'

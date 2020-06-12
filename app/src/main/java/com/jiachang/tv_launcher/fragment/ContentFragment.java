@@ -2,7 +2,6 @@ package com.jiachang.tv_launcher.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-<<<<<<< HEAD
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,30 +17,19 @@ import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.LogUtils;
 
 import java.io.File;
-=======
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import com.jiachang.tv_launcher.R;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-<<<<<<< HEAD
 import static com.jiachang.tv_launcher.utils.Constant.MAC;
 
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 /**
  * @author Mickey.Ma
  * @date 2020-04-18
  * @description
  */
 public class ContentFragment extends DialogFragment {
-<<<<<<< HEAD
     private SettingActivity activity;
     @NonNull
     @Override
@@ -68,15 +56,6 @@ public class ContentFragment extends DialogFragment {
                 Toast.makeText(activity.getApplicationContext(), "您已取消日志上传", Toast.LENGTH_LONG).show();
             }
         });
-=======
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.service_wifipassword_layout, null);
-        builder.setView(view).setNegativeButton("确定",null);
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         return builder.create();
     }
 }

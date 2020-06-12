@@ -18,10 +18,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/myroom0"
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50px"
@@ -42,10 +39,7 @@
 
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/myroom1"
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -75,10 +69,7 @@
         </RelativeLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/myroom2"
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

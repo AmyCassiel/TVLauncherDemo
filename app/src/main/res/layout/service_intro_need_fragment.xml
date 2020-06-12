@@ -48,18 +48,8 @@
                 android:id="@+id/content_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
                 android:layout_marginStart="30px"
                 android:layout_marginEnd="30px"
-=======
-<<<<<<< HEAD
-                android:layout_marginStart="30px"
-                android:layout_marginEnd="30px"
-=======
-                android:layout_marginStart="20px"
-                android:layout_marginEnd="20px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:focusable="false"
                 android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
         </RelativeLayout>
@@ -69,28 +59,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-            android:layout_marginBottom="100px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="500px"
-<<<<<<< HEAD
                 android:layout_height="200px"
                 android:layout_marginBottom="50px"
-=======
-<<<<<<< HEAD
-                android:layout_height="200px"
-                android:layout_marginBottom="50px"
-=======
-                android:layout_height="250px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 android:background="@drawable/gray_layout_bg"
                 android:gravity="center"
                 android:alpha="0.8"
@@ -111,15 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="00:00 - 00:00"
-<<<<<<< HEAD
                     android:textSize="50px"
-=======
-<<<<<<< HEAD
-                    android:textSize="50px"
-=======
-                    android:textSize="40px"
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                     android:textColor="@color/gray_white"/>
                 <TextView
                     android:id="@+id/t_txt"
@@ -131,15 +97,5 @@
                     android:textColor="@color/gray_white"/>
             </LinearLayout>
         </LinearLayout>
-<<<<<<< HEAD
     </LinearLayout>
-=======
-
-    </LinearLayout>
-<<<<<<< HEAD
-=======
-
-
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 </LinearLayout>

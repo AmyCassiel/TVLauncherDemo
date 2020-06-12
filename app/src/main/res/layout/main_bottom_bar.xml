@@ -11,10 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20px"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         android:layout_marginEnd="20px"
         android:layout_marginStart="20px"
         android:orientation="horizontal"
@@ -50,19 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20px"
-<<<<<<< HEAD
-=======
-=======
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         android:orientation="horizontal"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent">
         <TextView
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
             android:id="@+id/addr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,40 +90,6 @@
             android:typeface="monospace"
             android:textSize="18px" />
     </LinearLayout>-->
-
-<<<<<<< HEAD
-=======
-=======
-            android:id="@+id/wifi_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:textSize="25px"
-            android:typeface="monospace" />
-
-        <TextView
-            android:id="@+id/wifi_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="25px"
-            android:layout_marginBottom="20px" />
-
-        <TextView
-            android:id="@+id/breakfast_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="75px"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:typeface="monospace"
-            android:textSize="25px" />
-    </LinearLayout>
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     <!--<LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="@dimen/bottom_width"

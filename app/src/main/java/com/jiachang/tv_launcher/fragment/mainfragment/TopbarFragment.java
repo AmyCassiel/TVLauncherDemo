@@ -1,17 +1,11 @@
 package com.jiachang.tv_launcher.fragment.mainfragment;
 
-<<<<<<< HEAD
-=======
 import android.app.Activity;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-<<<<<<< HEAD
 import android.os.Looper;
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -25,15 +19,10 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
-<<<<<<< HEAD
 import com.jiachang.tv_launcher.activity.MainActivity;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.ImageUtil;
 import com.jiachang.tv_launcher.utils.LogUtils;
-=======
-import com.jiachang.tv_launcher.utils.IPUtils;
-import com.jiachang.tv_launcher.utils.ImageUtil;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,15 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-<<<<<<< HEAD
 import static com.jiachang.tv_launcher.utils.Constant.API_KEY;
 import static com.jiachang.tv_launcher.utils.Constant.hotelName;
 import static com.jiachang.tv_launcher.utils.Constant.img;
-=======
-import static com.jiachang.tv_launcher.utils.Constants.API_KEY;
-import static com.jiachang.tv_launcher.utils.Constants.hotelName;
-import static com.jiachang.tv_launcher.utils.Constants.img;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 import static com.jiachang.tv_launcher.utils.HttpUtils.netWorkCheck;
 
 /**
@@ -83,12 +66,8 @@ public class TopbarFragment extends Fragment {
     ImageView hotelIcon;
 
     private Unbinder mUb;
-<<<<<<< HEAD
     private String TAG = "TopbarFragment";
     protected MainActivity mActivity;
-=======
-    protected Activity mActivity;
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
 
     /**
      * 天气的温度
@@ -107,10 +86,7 @@ public class TopbarFragment extends Fragment {
                         weatherIcon(code);
                     } else {
                         mImageView.setImageDrawable(ContextCompat.getDrawable(mActivity, R.mipmap.weather_unknown));
-<<<<<<< HEAD
                         Toast.makeText(mActivity.getApplication(), "请求数据失败,请检查网络", Toast.LENGTH_LONG).show();
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                     }
                     break;
                 case 2:
@@ -126,10 +102,7 @@ public class TopbarFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View topLayout = inflater.inflate(R.layout.main_top_bar, container, false);
         mUb = ButterKnife.bind(this, topLayout);
-<<<<<<< HEAD
         mActivity = (MainActivity) getActivity();
-=======
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         initView();
         hotelName = mActivity.getApplicationContext()
                 .getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).getString("hotelName", "");
@@ -140,7 +113,6 @@ public class TopbarFragment extends Fragment {
 
     private void initView() {
         getTime();
-<<<<<<< HEAD
         new Thread() {
             @Override
             public void run() {
@@ -148,15 +120,6 @@ public class TopbarFragment extends Fragment {
             }
         }.start();
 
-=======
-
-        new Thread() {
-            @Override
-            public void run() {
-                getWeather(IPUtils.getPubIp());
-            }
-        }.start();
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         if (netWorkCheck(mActivity)) { //機器がネットワークに接続されているかどうかを判断する
             //网络已连接
             if (hotelName != null && !hotelName.isEmpty()) {
@@ -169,40 +132,18 @@ public class TopbarFragment extends Fragment {
             // ネットワーク未接続
             if (hotelName != null && !hotelName.isEmpty()) {
                 welcome.setText("欢迎入住" + hotelName);
-<<<<<<< HEAD
                 if (img != null && !img.isEmpty()) {
                     hotelIcon.setImageBitmap(ImageUtil.returnBitmap(img));
                 }
             }
             Toast.makeText(mActivity.getApplication(), "网络连接失败,请检查网络", Toast.LENGTH_LONG).show();
-=======
-                if (img !=
-                        null && !hotelName.isEmpty()) {
-                    hotelIcon.setImageBitmap(ImageUtil.returnBitmap(img));
-                }
-            }
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         }
         new WeatherThread().start(); //启动天气的线程
         new TimeThread().start(); //启动时间的线程
     }
 
-    @Override
-<<<<<<< HEAD
-=======
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (Activity) context;
-    }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mActivity = null;
-    }
-
-    @Override
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     public void onResume() {
         super.onResume();
         getTime();
@@ -218,7 +159,6 @@ public class TopbarFragment extends Fragment {
             if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
                 time.setText(sysTimeStr);
                 monthDay.setText(sysDayStr);
-<<<<<<< HEAD
             } else {
                 LogUtils.e("TopbarFragment.161", "sysTimeStr = " + sysTimeStr + "; sysDayStr=" + sysDayStr);
                 Looper.prepare();
@@ -229,23 +169,14 @@ public class TopbarFragment extends Fragment {
             Looper.prepare();
             Toast.makeText(mActivity.getApplication(), "时间为空", Toast.LENGTH_LONG).show();
             Looper.loop();
-=======
-            }
-        } else {
-            Toast.makeText(mActivity, "时间为空", Toast.LENGTH_LONG).show();
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         }
     }
 
     /**
      * 获取天气
      */
-<<<<<<< HEAD
     private void getWeather1(String city) {
         LogUtils.i("TopbarFragment.177","city = "+city);
-=======
-    private void getWeather(String city) {
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
         String url = "https://api.seniverse.com/v3/weather/now.json?key=" + API_KEY + "&location=" + city + "&language=zh-Hans&unit=c";
         //异步加载
         new AsyncTask<String, Void, Void>() {
@@ -261,36 +192,17 @@ public class TopbarFragment extends Fragment {
                     while ((line = bufferedReader.readLine()) != null) {
                         JSONObject json = JSONObject.parseObject(line);
                         String result = json.getString("results");
-<<<<<<< HEAD
                         LogUtils.i("TopbarFragment.193","result = "+ result);
-=======
-                        Log.i("result", result);
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                         JSONArray array = json.getJSONArray("results");
                         for (int i = 0; i < array.size(); i++) {
                             JSONObject jo = array.getJSONObject(i);
                             String now = jo.getString("now");
-<<<<<<< HEAD
                             LogUtils.i("TopbarFragment.198","now = "+ now);
                             if (!now.isEmpty()) {
                                 JSONObject jos = jo.getJSONObject("now");
                                 temperature = jos.getString("temperature");
                                 text = jos.getString("text");
                                 code = Integer.parseInt(jos.getString("code"));
-=======
-                            Log.i("now", now);
-                            JSONObject jos = jo.getJSONObject("now");
-                            temperature = jos.getString("temperature");
-                            Log.i("temperature", temperature);
-                            text = jos.getString("text");
-                            Log.i("text", text);
-                            if (temperature != null && temperature.length() > 0
-                                    && text != null && text.length() > 0) {
-                                mActivity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                                        .edit().putString("weatherTxt", text);
-                                code = Integer.parseInt(jos.getString("code"));
-                                Log.i("code", "" + code);
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                                 Message msg = new Message();
                                 msg.what = 1;
                                 msg.obj = temperature;//传对象，还有arg1、arg2……
@@ -303,17 +215,12 @@ public class TopbarFragment extends Fragment {
                     bufferedReader.close();
                     isr.close();
                     is.close();
-<<<<<<< HEAD
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     Looper.prepare();
                     Toast.makeText(mActivity, "请求失败,请检查网络", Toast.LENGTH_LONG).show();
                     Looper.loop();
-=======
 
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -321,7 +228,6 @@ public class TopbarFragment extends Fragment {
             }
             //使用api的数据接口
         }.execute(url);
-<<<<<<< HEAD
     }
 
     /**
@@ -331,7 +237,7 @@ public class TopbarFragment extends Fragment {
         new Thread() {
             @Override
             public void run() {
-                Log.d(TAG, "city = " + city);
+                LogUtils.d(TAG, "city = " + city);
                 String url1 = "https://api.seniverse.com/v3/weather/now.json?key=" + API_KEY + "&location=" + city + "&language=zh-Hans&unit=c";
                 try {
                     URL url = new URL(url1);
@@ -344,15 +250,13 @@ public class TopbarFragment extends Fragment {
 //                        while (line != null) {
                         JSONObject json = JSONObject.parseObject(line);
                         String result = json.getString("results");
-                        Log.i(TAG, result);
+                        LogUtils.i(TAG, result);
                         JSONArray array = json.getJSONArray("results");
                         for (int i = 0; i < array.size(); i++) {
                             JSONObject jo = array.getJSONObject(i);
                             String now = jo.getString("now");
-                            Log.i(TAG, "now = " + now);
                             JSONObject jos = jo.getJSONObject("now");
                             temperature = jos.getString("temperature");
-                            Log.i(TAG, "temperature = " + temperature);
                             text = jos.getString("text");
                             Log.i(TAG, "text=" + text);
                             if (temperature != null && temperature.length() > 0
@@ -392,9 +296,6 @@ public class TopbarFragment extends Fragment {
                 }
             }
         }.start();
-=======
-
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
     }
 
     class TimeThread extends Thread {
@@ -418,20 +319,9 @@ public class TopbarFragment extends Fragment {
         public void run() {
             do {
                 try {
-<<<<<<< HEAD
                     Thread.sleep(84600000);
                     getWeather1(IPUtils.getPubIp());
-=======
-<<<<<<< HEAD
-                    Thread.sleep(84600000);
-=======
-                    Thread.sleep(3600000);
->>>>>>> a85785c65a3223194db5ec8ca027ea58a13eb455
                     getWeather(IPUtils.getPubIp());
-                        /*Message msg = new Message();
-                        msg.what = 1;  //消息(一个整型值)
-                        mHandler.sendMessage(msg);// 每隔1秒发送一个msg给mHandler*/
->>>>>>> 3f9ea9146edea3d1a681c668f38913b73a6b461e
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
