@@ -1,14 +1,18 @@
 package com.jiachang.tv_launcher.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -89,6 +93,28 @@ public class ImageUtil {
         }
 
         return bitmap;
+    }
+
+    /**
+     * 字符串转drawable*/
+    public static Drawable ImageOperations(Context ctx, String url, String saveFilename) {
+        try {
+            InputStream is = (InputStream)fetch(url);
+            Drawable d = Drawable.createFromStream(is, saveFilename);
+            return d;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Object fetch(String address) throws MalformedURLException, IOException {
+        URL url = new URL(address);
+        Object content = url.getContent();
+        return content;
     }
 
     /**

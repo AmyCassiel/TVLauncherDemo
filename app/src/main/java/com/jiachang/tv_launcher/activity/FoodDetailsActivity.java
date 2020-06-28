@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
- * @description
+ * @description  食物详情页
  */
 public class FoodDetailsActivity extends Activity implements View.OnClickListener {
     private ArrayList arrayList = new ArrayList();

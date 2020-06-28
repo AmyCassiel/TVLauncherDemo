@@ -25,12 +25,13 @@
             android:textSize="23px"
             android:typeface="monospace" />
 
-        <!--<TextView
+        <TextView
             android:id="@+id/wifi_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="15px"
             android:textColor="@color/white"
-            android:textSize="25px" />-->
+            android:textSize="25px" />
 
         <TextView
             android:id="@+id/breakfast_time"

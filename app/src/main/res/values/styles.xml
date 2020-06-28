@@ -209,17 +209,18 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!--AboutService的正文Layout-->
     <style name="AboutContextLL">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginStart">@dimen/btm_margin_bottom</item>
         <item name="android:layout_marginEnd">@dimen/btm_margin_bottom</item>
         <item name="android:layout_alignParentBottom">true</item>
-<!--        <item name="android:background">@drawable/about_bg_context</item>-->
+        <!--        <item name="android:background">@drawable/about_bg_context</item>-->
         <item name="android:orientation">vertical</item>
+        <item name="android:visibility">gone</item>
         <item name="android:alpha">0.7</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">50px</item>
+        <item name="android:gravity">center_horizontal</item>
     </style>
 
     <!--AboutService的正文标题-->

@@ -11,21 +11,42 @@
     android:focusableInTouchMode="false"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/intro_facility"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:layout_margin="10px"
-        android:textSize="15px"
-        android:text="*&#8201;按上下键进行设备列表滚动，按左键返回主列表"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fcontent_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dip"
-        android:layout_marginStart="30px"
-        android:layout_marginEnd="30px"
-        android:focusable="true"
-        android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10px"
+            android:gravity="end"
+            android:text="*&#8201;按上下键进行设备列表滚动，按左键返回主列表"
+            android:textSize="15px" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fcontent_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30px"
+            android:layout_marginTop="30dip"
+            android:layout_marginEnd="30px"
+            android:focusable="true"
+            android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
+    </LinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/introduce_facility"
+        style="@style/AboutContextLL">
+
+        <TextView
+            style="@style/AboutContextTopicLL"
+            android:text="酒店设施介绍" />
+
+        <TextView
+            style="@style/AboutContextContextLL"
+            android:text="例如：\n 早餐开放时间：6:00-9:30" />
+    </com.zhy.autolayout.AutoLinearLayout>
 </LinearLayout>

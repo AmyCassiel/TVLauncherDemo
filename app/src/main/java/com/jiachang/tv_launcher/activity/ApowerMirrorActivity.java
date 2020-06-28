@@ -21,7 +21,7 @@ import butterknife.OnFocusChange;
 /**
  * @author Mickey.Ma
  * @date 2020-04-03
- * @description
+ * @description  投屏主界面
  */
 public class ApowerMirrorActivity extends FragmentActivity {
     @BindView(R.id.apowermirror_ios)
@@ -87,6 +87,7 @@ public class ApowerMirrorActivity extends FragmentActivity {
         }
     }
 
+    /**通过hide和show替换来显示fragment*/
     private void showFragment(Fragment fg) {
         fM = getSupportFragmentManager();
         fT = fM.beginTransaction();
@@ -102,12 +103,12 @@ public class ApowerMirrorActivity extends FragmentActivity {
         fT.commitAllowingStateLoss();
     }
 
+    /**隐藏虚拟按键，并且全屏*/
     protected void hideBottomMenu() {
-        //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             View v = getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

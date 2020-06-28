@@ -22,26 +22,28 @@
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25px"
+        android:lineSpacingExtra="10dp"
         android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="30px"
-        android:layout_marginStart="25px"
-        android:lineSpacingExtra="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/hotel_icon"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/room_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25px"
+        android:lineSpacingExtra="10dp"
         android:text="房间号：8888"
         android:textColor="@color/white"
         android:textSize="30px"
-        android:layout_marginStart="25px"
-        android:lineSpacingExtra="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/welcome"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/weather_width"
         android:layout_height="wrap_content"
@@ -54,8 +56,8 @@
             android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginEnd="10px"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/img"
             app:layout_constraintTop_toTopOf="parent">
@@ -87,8 +89,8 @@
             android:id="@+id/img"
             android:layout_width="@dimen/wire_width"
             android:layout_height="@dimen/btn_height"
-            android:background="#fff"
             android:layout_marginEnd="15px"
+            android:background="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/time_day"
             app:layout_constraintTop_toTopOf="parent" />
@@ -107,10 +109,10 @@
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/default_time"
                 android:textColor="@color/white"
                 android:textSize="50px"
-                android:text="@string/default_time"
-                android:layout_gravity="center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/weather_icon"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -119,11 +121,11 @@
                 android:id="@+id/day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin"
+                android:text="@string/default_day"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_weather"
-                android:text="@string/default_day"
-                android:layout_gravity="center_horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

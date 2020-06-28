@@ -35,7 +35,7 @@ import static com.jiachang.tv_launcher.utils.Constant.hostUrl;
 /**
  * @author Mickey.Ma
  * @date 2020-04-09
- * @description
+ * @description 餐品分类主界面
  */
 public class DiningActivity extends Activity {
     private Context mContext;

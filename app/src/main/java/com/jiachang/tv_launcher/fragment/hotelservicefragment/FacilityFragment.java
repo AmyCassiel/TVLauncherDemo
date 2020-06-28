@@ -7,6 +7,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
@@ -14,6 +16,7 @@ import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.jiachang.tv_launcher.adapter.SFacTypeAdapter;
 import com.jiachang.tv_launcher.bean.FacType;
 import com.jiachang.tv_launcher.utils.ImageUtil;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +42,11 @@ public class FacilityFragment extends Fragment {
 
     @BindView(R.id.fcontent_recycler_view)
     RecyclerView fconRV;
+    @BindView(R.id.intro_facility)
+    LinearLayout introlFacility;
+    @BindView(R.id.introduce_facility)
+    AutoLinearLayout introduceFacility;
+
 
     private List<FacType> service = new ArrayList<>();
     private Unbinder mUnbinder;
@@ -104,11 +112,13 @@ public class FacilityFragment extends Fragment {
             supplyTime = detailsTime[i];
             local = detailsLocal[i];
             if(!name0.isEmpty()){
-                fconRV.setVisibility(View.VISIBLE);
+                introlFacility.setVisibility(View.VISIBLE);
+                introduceFacility.setVisibility(View.GONE);
                 FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
                 service.add(duck);
             }else {
-                fconRV.setVisibility(View.GONE);
+                introlFacility.setVisibility(View.GONE);
+                introduceFacility.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
             }
         }

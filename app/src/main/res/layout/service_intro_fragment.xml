@@ -17,6 +17,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/introduce_hotel"
                 android:layout_marginTop="50px"
+                android:visibility="visible"
                 style="@style/AboutContextLL">
 
                 <TextView

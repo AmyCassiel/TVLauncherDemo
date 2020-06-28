@@ -18,6 +18,7 @@ import com.jiachang.tv_launcher.bean.Controltype;
 import com.jiachang.tv_launcher.bean.Controltype1;
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.LogUtils;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +41,7 @@ import butterknife.Unbinder;
 /**
  * @author Mickey.Ma
  * @date 2020-05-18
- * @description
+ * @description  客控界面，显示数据
  */
 public class ControlFragment extends Fragment {
     private Unbinder mUnbinder;
@@ -58,6 +59,10 @@ public class ControlFragment extends Fragment {
     LinearLayout myRoom1;
     @BindView(R.id.myroom2)
     LinearLayout myRoom2;
+    @BindView(R.id.intro_control)
+    LinearLayout introControl;
+    @BindView(R.id.introduce_control)
+    AutoLinearLayout introduceControlJIA;
 
     private List<Controltype> service = new ArrayList<>();
     private List<Controltype1> service1 = new ArrayList<>();
@@ -75,7 +80,7 @@ public class ControlFragment extends Fragment {
         introduceControl1.setAdapter(adapter1);
 
         adapter = new SControlTypeAdapter(mActivity,service);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(8, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL);
         introduceControl.setLayoutManager(layoutManager);
         introduceControl.setAdapter(adapter);
         /*Bundle bundle = this.getArguments();
@@ -87,7 +92,9 @@ public class ControlFragment extends Fragment {
             }
         }*/
 
-        getData();
+//        getData();
+        introControl.setVisibility(View.GONE);
+        introduceControlJIA.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -99,81 +106,94 @@ public class ControlFragment extends Fragment {
             String request = HttpUtils.mPost(url, map);
             LogUtils.d("ControlFragment.95", "request = " + request);
             if (!request.isEmpty()) {
-                myRoom0.setVisibility(View.VISIBLE);
-                myRoom1.setVisibility(View.VISIBLE);
-                myRoom2.setVisibility(View.VISIBLE);
-                Map responseMap = (Map) JSONObject.parse(request, Feature.OrderedField);
-                Map pageMap = (Map) responseMap.get("page");
-                Set set = pageMap.keySet();
-                Iterator iterator = set.iterator();
-                while (iterator.hasNext()) {
-                    String key = iterator.next().toString();
-                    Map map1 = (Map) pageMap.get(key);
-                    Map attrMap = (Map) map1.get("attr");
-                    String type = attrMap.get("SYSNAME").toString();
-                    if (type.equals("cl1")){
-                        String name = attrMap.get("NAME").toString();
-                        int value =  (int)map1.get("value");
-                        if (value != 0){
-                            Controltype controltype = new Controltype(name,"状态：打开" ,R.mipmap.cl_1);
-                            service.add(controltype);
-                        }else {
-                            Controltype controltype = new Controltype(name, "状态：关闭",R.mipmap.cl);
-                            service.add(controltype);
+                if (!request.contains("logout")){
+                    introControl.setVisibility(View.VISIBLE);
+                    introduceControlJIA.setVisibility(View.GONE);
+                    myRoom0.setVisibility(View.VISIBLE);
+                    myRoom1.setVisibility(View.VISIBLE);
+                    myRoom2.setVisibility(View.VISIBLE);
+                    Map responseMap = (Map) JSONObject.parse(request, Feature.OrderedField);
+                    Map pageMap = (Map) responseMap.get("page");
+                    Set set = pageMap.keySet();
+                    Iterator iterator = set.iterator();
+                    while (iterator.hasNext()) {
+                        String key = iterator.next().toString();
+                        Map map1 = (Map) pageMap.get(key);
+                        Map attrMap = (Map) map1.get("attr");
+                        String type = attrMap.get("SYSNAME").toString();
+                        if (type.equals("cl1")) {
+                            String name = attrMap.get("NAME").toString();
+                            int value = (int) map1.get("value");
+                            if (value != 0) {
+                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.cl_1);
+                                service.add(controltype);
+                            } else {
+                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.cl);
+                                service.add(controltype);
+                            }
+                        }
+                        if (type.equals("kg")) {
+                            String name = attrMap.get("NAME").toString();
+                            int value = (int) map1.get("value");
+                            if (value != 0) {
+                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
+                                service.add(controltype);
+                            } else {
+                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
+                                service.add(controltype);
+                            }
+                        }
+                        if (type.equals("color")) {
+                            String name = attrMap.get("NAME").toString();
+                            Map value = (Map) map1.get("value");
+                            int m = (int) value.get("m");
+                            if (m != -1) {
+                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
+                                service.add(controltype);
+                            } else {
+                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
+                                service.add(controltype);
+                            }
+                        }
+                        if (type.equals("qj")) {
+                            String name = attrMap.get("NAME").toString();
+                            Map value = (Map) map1.get("value");
+                            boolean ISGROUP = (boolean) value.get("ISGROUP");
+                            if (ISGROUP) {
+                                Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
+                                service1.add(controltype1);
+                            } else {
+                                Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
+                                service1.add(controltype1);
+                            }
+                        }
+                        if (type.equals("kt")) {
+                            String name = attrMap.get("NAME").toString();
+                            Map value = (Map) map1.get("value");
+                            String open = value.get("open").toString();
+                            if (open.equals("0")) {
+                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.kt_1);
+                                service.add(controltype);
+                            } else {
+                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.kt);
+                                service.add(controltype);
+                            }
                         }
                     }
-                    if (type.equals("kg")){
-                        String name = attrMap.get("NAME").toString();
-                        int value =  (int)map1.get("value");
-                        if (value != 0){
-                            Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
-                            service.add(controltype);
-                        }else {
-                            Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
-                            service.add(controltype);
-                        }
-                    }
-                    if (type.equals("color")){
-                        String name = attrMap.get("NAME").toString();
-                        Map value = (Map) map1.get("value");
-                        int m = (int) value.get("m");
-                        if (m != -1){
-                            Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
-                            service.add(controltype);
-                        }else {
-                            Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
-                            service.add(controltype);
-                        }
-                    }
-                    if (type.equals("qj")){
-                        String name = attrMap.get("NAME").toString();
-                        Map value = (Map) map1.get("value");
-                        boolean ISGROUP = (boolean) value.get("ISGROUP");
-                        if (ISGROUP){
-                            Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
-                            service1.add(controltype1);
-                        }else {
-                            Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
-                            service1.add(controltype1);
-                        }
-                    }
-                    if (type.equals("kt")){
-                        String name = attrMap.get("NAME").toString();
-                        Map value = (Map) map1.get("value");
-                        String open =  value.get("open").toString();
-                        if (open.equals("0") ){
-                            Controltype controltype = new Controltype(name,"状态：打开", R.mipmap.kt_1);
-                            service.add(controltype);
-                        }else {
-                            Controltype controltype = new Controltype(name, "状态：关闭",R.mipmap.kt);
-                            service.add(controltype);
-                        }
-                    }
+                }else {
+                    Toast.makeText(getContext(),"您的网关离线了，请检查网关！",Toast.LENGTH_LONG).show();
+                    myRoom0.setVisibility(View.GONE);
+                    myRoom1.setVisibility(View.GONE);
+                    myRoom2.setVisibility(View.GONE);
+                    introControl.setVisibility(View.GONE);
+                    introduceControlJIA.setVisibility(View.VISIBLE);
                 }
             }else {
                 myRoom0.setVisibility(View.GONE);
                 myRoom1.setVisibility(View.GONE);
                 myRoom2.setVisibility(View.GONE);
+                introControl.setVisibility(View.GONE);
+                introduceControlJIA.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(),"抱歉，酒店暂时不提供该服务",Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {

@@ -23,6 +23,7 @@ import com.jiachang.tv_launcher.adapter.HorizontalListViewAdapter;
 import com.jiachang.tv_launcher.adapter.ServiceNeedTypeAdapter;
 import com.jiachang.tv_launcher.bean.NeedServiceType;
 import com.jiachang.tv_launcher.utils.ImageUtil;
+import com.zhy.autolayout.AutoLinearLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -85,6 +86,10 @@ public class NeedFragment extends Fragment {
     TextView textView;
     @BindView(R.id.t_txt)
     TextView Txt;
+    @BindView(R.id.intro_need)
+    LinearLayout introControl;
+    @BindView(R.id.introduce_need)
+    AutoLinearLayout introduceControl;
 
     private Handler handler = new Handler() {
         @Override
@@ -147,8 +152,14 @@ public class NeedFragment extends Fragment {
             if (isFirst != null) {
                 horizontalListView.requestFocus();
             }
+            introControl.setVisibility(View.VISIBLE);
+            introduceControl.setVisibility(View.GONE);
+            initUI(titles);
+        }else {
+            introControl.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.VISIBLE);
         }
-        initUI(titles);
+
         return view;
     }
 
@@ -162,6 +173,8 @@ public class NeedFragment extends Fragment {
 
     private void initUI(String[] title) {
         if (!title.equals("")) {
+            introControl.setVisibility(View.VISIBLE);
+            introduceControl.setVisibility(View.GONE);
             horizontalListView.setVisibility(View.VISIBLE);
             contentReVi.setVisibility(View.VISIBLE);
             hListViewAdapter = new HorizontalListViewAdapter(mActivity, title);

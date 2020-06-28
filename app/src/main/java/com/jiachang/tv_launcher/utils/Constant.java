@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * @author Mickey.Ma
  * @date 2020-04-21
- * @description
+ * @description  软件总体所需的参数
  */
 public class Constant {
     public static String hostUrl = "https://jczh.jiachang8.com/reservation";
@@ -24,6 +24,7 @@ public class Constant {
     public static String wifiPassword = "";
     public static String breakfastTime = "";
     public static String sFacilityLocation = "";
+    public static String sFacilityLocation1 = "";
     public static String tel = "";
     public static String img = "";
     public static String wifi = "";

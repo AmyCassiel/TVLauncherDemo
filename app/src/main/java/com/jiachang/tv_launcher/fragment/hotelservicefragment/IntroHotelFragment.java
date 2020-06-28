@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.utils.Constant;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import androidx.annotation.NonNull;
@@ -68,13 +69,13 @@ public class IntroHotelFragment extends Fragment {
             //网络已连接
             if (hotelName != null && !hotelName.isEmpty()) {
                 introHotelTxt.setText("\u3000\u3000" + hotelIntroduction + "\n\u3000\u3000周围商圈有：" + business  + "\n\u3000\u3000早餐供应时间：" + breakfastTime
-                        + "\n\u3000\u3000" + wifiName + "\n\u3000\u3000前台电话：" + tel);
+                        + "\n\u3000\u3000WIFI：" + wifiName+"\u3000\u3000密码："+ Constant.wifiPassword + "\n\u3000\u3000前台电话：" + tel);
             }
         } else {
             // 网络未连接
             if (hotelName != null && !hotelName.isEmpty()) {
                 introHotelTxt.setText("\u3000\u3000" + hotelIntroduction + "\n\u3000\u3000周围商圈有：" + business + "\n\u3000\u3000早餐供应时间：" + breakfastTime
-                        + "\n\u3000\u3000WIFI：" + wifiName + "\n\u3000\u3000前台电话：" + tel);
+                        + "\n\u3000\u3000WIFI：" + wifiName+"\u3000\u3000密码："+ Constant.wifiPassword + "\n\u3000\u3000前台电话：" + tel);
             }
         }
 

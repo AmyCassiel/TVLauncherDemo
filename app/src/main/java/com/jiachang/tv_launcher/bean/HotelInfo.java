@@ -5,10 +5,12 @@ import java.util.List;
 /**
  * @author Mickey.Ma
  * @date 2020-05-16
- * @description
+ * @description  获取酒店信息的实体类
  */
 public class HotelInfo {
     private int code;
+    private int errno;
+    private String errmsg;
     private HotelDbBean hotelDb;
 
     public int getCode() {
@@ -25,6 +27,22 @@ public class HotelInfo {
 
     public void setHotelDb(HotelDbBean hotelDb) {
         this.hotelDb = hotelDb;
+    }
+
+    public int getErrno() {
+        return errno;
+    }
+
+    public void setErrno(int errno) {
+        this.errno = errno;
+    }
+
+    public String getErrmsg() {
+        return errmsg;
+    }
+
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 
     public static class HotelDbBean {
@@ -59,6 +77,7 @@ public class HotelInfo {
         private String logo;
         private String roomCount;
         private String wifi;
+        private String password;
         private List<ServiceConfsBean> serviceConfs;
         private List<HotelFacilitiesBean> hotelFacilities;
 
@@ -156,6 +175,14 @@ public class HotelInfo {
 
         public void setLogo(String logo) {
             this.logo = logo;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
         }
 
         public static class ServiceConfsBean {

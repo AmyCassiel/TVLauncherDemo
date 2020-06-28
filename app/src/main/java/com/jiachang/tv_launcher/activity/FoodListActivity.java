@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
- * @description
+ * @description 食物列表界面
  */
 public class FoodListActivity extends Activity implements FoodAdapter.onItemClickListener {
     private List<Food> foodList = new ArrayList<>();

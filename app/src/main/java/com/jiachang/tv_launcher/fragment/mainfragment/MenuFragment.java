@@ -47,10 +47,9 @@ public class MenuFragment extends Fragment{
     @BindView(R.id.menu_music)
     AutoLinearLayout menuMusic;
     @BindView(R.id.lin)
+
     LinearLayout menuItemLayout;
 
-    @BindView(R.id.spinner_multimedia_item)
-    LinearLayout multimediaItem;
     @BindView(R.id.spinner_about_item)
     LinearLayout aboutItem;
 
@@ -83,22 +82,11 @@ public class MenuFragment extends Fragment{
         return menuLayout;
     }
 
-    @OnClick({R.id.multimedia_item_1,R.id.multimedia_item_2,
-            R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.about_item_4,R.id.about_item_5,
+    @OnClick({R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.about_item_4,R.id.about_item_5,
             R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     void imageClick( View v) {
         switch (v.getId()){
             case R.id.menu_tv:
-            case R.id.multimedia_item_1:
-                intent = pm.getLaunchIntentForPackage("com.dianshijia.newlive");   //这个方法直接返回 访问特定包名下activity或service etc.的入口的intent， 省去设置componentName的参数
-                if (intent != null) {
-                    mContext.startActivity(intent);
-                } else {
-                    Toast.makeText(mContext, "你还没有安装“电视家”这个软件哦！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-
-            case R.id.multimedia_item_2:
                 intent = pm.getLaunchIntentForPackage("com.qiyivideo.sibichi");
                 if (intent != null) {
                     mContext.startActivity(intent);
@@ -115,17 +103,7 @@ public class MenuFragment extends Fragment{
                     if (intent != null) {
                         mContext.startActivity(intent);
                     } else {
-                        intent = pm.getLaunchIntentForPackage("com.kugou.android");
-                        if (intent != null) {
-                            mContext.startActivity(intent);
-                        } else {
-                            intent = pm.getLaunchIntentForPackage("cn.kuwo.player");
-                            if (intent != null) {
-                                mContext.startActivity(intent);
-                            } else {
-                                Toast.makeText(mContext, "抱歉，您还没有安装音乐软件！", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                        Toast.makeText(mContext, "抱歉，您还没有安装音乐软件！", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -186,32 +164,26 @@ public class MenuFragment extends Fragment{
         }
     }
 
-    @OnFocusChange({R.id.txtV,R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
+    @OnFocusChange({R.id.tv,R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     public void onViewFocusChange(View view, boolean isFocus){
         if(isFocus){
             switch (view.getId()){
-                case R.id.txtV:
-                    multimediaItem.setVisibility(View.GONE);
+                case R.id.tv:
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_tv:
-                    multimediaItem.setVisibility(View.VISIBLE);
                     aboutItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_music:
                     aboutItem.setVisibility(View.GONE);
-                    multimediaItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_apower_mirror:
                     aboutItem.setVisibility(View.GONE);
-                    multimediaItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_dining:
                     aboutItem.setVisibility(View.GONE);
-                    multimediaItem.setVisibility(View.GONE);
                     break;
                 case R.id.menu_service:
-                    multimediaItem.setVisibility(View.GONE);
                     aboutItem.setVisibility(View.VISIBLE);
                     break;
                 default:

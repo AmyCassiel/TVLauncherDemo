@@ -55,7 +55,7 @@ import static com.jiachang.tv_launcher.utils.Constant.wifiName;
 /**
  * @author Mickey.Ma
  * @date 2020-03-28
- * @description
+ * @description  服务主界面
  */
 public class HotelServiceActivity extends FragmentActivity {
     private static final String TAG = "HotelServiceActivity";
@@ -122,27 +122,18 @@ public class HotelServiceActivity extends FragmentActivity {
         getTime();
         new TimeThread().start();
 
+        /*最左侧listView*/
         leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
         leftListView.setAdapter(leftAdapter);
         leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-        String weatherTxt =getApplicationContext().getSharedPreferences("hotel", Context.MODE_PRIVATE)
-                .getString("weatherTxt", "");
-        Log.e(TAG,"weatherTxt:"+weatherTxt);
-
-        if (!weatherTxt.isEmpty()){
-            weatherText.setText(weatherTxt);
-        }
 
         getTime();
         new TimeThread().start();
 
-        leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
-        leftListView.setAdapter(leftAdapter);
-        leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         initView();
     }
 
+    /**获取缓存的所有所需参数*/
     public void isFirstIn() {
         sTypeNames = getSharedPreference("sTypeNames");
         sDetailsNames0 = getSharedPreference("sDetailsNames1");
@@ -206,6 +197,7 @@ public class HotelServiceActivity extends FragmentActivity {
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
 
+        /*主界面进入服务界面显示的布局*/
         if (bundle.getBoolean("about_item_1")) {
             currentFragment = hIF;
             if (hIF.isAdded()) {
@@ -280,6 +272,7 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
+    /**服务界面的最左边item控制右边fragment的显示*/
     public void itemSelected(String strings) {
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
@@ -328,9 +321,9 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
+    /**获取时间并在头部显示*/
     private void getTime() {
         Calendar calendar = Calendar.getInstance();//取得当前时间的星期
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
         long sysTime = System.currentTimeMillis();//获取系统时间
         if (sysTime != 0) {
             CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
@@ -344,6 +337,7 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
+    /**开启时间线程，刷新时间*/
     class TimeThread extends Thread {
         @Override
         public void run() {
@@ -366,12 +360,15 @@ public class HotelServiceActivity extends FragmentActivity {
         hideBottomMenu();
     }
 
+    /**获取酒店设施的参数*/
     private void onBundleFac(Bundle bund){
         bund.putStringArray("sFsNames0",sFsNames0);
         bund.putStringArray("sFsTimes0",sFsTimes0);
         bund.putStringArray("sFsImgs0",sFsImgs0);
         bund.putStringArray("sFsLocals0",sFsLocals0);
     }
+
+    /**绑定酒店客需参数*/
     private void onBundleNeed(Bundle bund){
         bund.putStringArray("title", sTypeNames);
         bund.putStringArray("detailsNames0", sDetailsNames0);
@@ -398,9 +395,9 @@ public class HotelServiceActivity extends FragmentActivity {
         bund.putStringArray("endTime4",endTime4);
 
     }
-
+    /**隐藏虚拟按键，并且全屏*/
     protected void hideBottomMenu() {
-        //隐藏虚拟按键，并且全屏
+
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
             View v = getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
@@ -414,6 +411,7 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
+    /**读取缓存*/
     public String[] getSharedPreference(String key) {
         String regularEx = "#";
         SharedPreferences sp = context.getSharedPreferences("hotel", Context.MODE_PRIVATE);

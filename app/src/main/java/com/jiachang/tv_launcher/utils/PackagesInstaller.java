@@ -18,8 +18,8 @@ public class PackagesInstaller {
         mContext = context;
     }
     /*静默卸载*/
-    public static void uninstallSlient() {
-        String cmd = "pm uninstall " + "com.dianshijia.newlive";
+    public static void uninstallSlient(String packageName) {
+        String cmd = "pm uninstall " + packageName;
         Process process = null;
         DataOutputStream os = null;
         BufferedReader successResult = null;
@@ -70,6 +70,6 @@ public class PackagesInstaller {
         }
         //显示结果
 //        Toast.makeText(mContext,"成功消息：" + successMsg.toString() +"\n" + "错误消息: " + errorMsg.toString(),Toast.LENGTH_LONG).show();
-        Log.e("", "成功：" + successMsg + "\n" + "错误：" + errorMsg);
+        LogUtils.d("", "成功：" + successMsg + "\n" + "错误：" + errorMsg);
     }
 }

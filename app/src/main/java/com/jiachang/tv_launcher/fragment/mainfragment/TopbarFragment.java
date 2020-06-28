@@ -2,6 +2,7 @@ package com.jiachang.tv_launcher.fragment.mainfragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.MainActivity;
+import com.jiachang.tv_launcher.utils.Constant;
+import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.ImageUtil;
 import com.jiachang.tv_launcher.utils.LogUtils;
@@ -32,6 +35,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +67,8 @@ public class TopbarFragment extends Fragment {
     ImageView mImageView;
     @BindView(R.id.welcome)
     TextView welcome;
+    @BindView(R.id.room_number)
+    TextView roomNum;
     @BindView(R.id.hotel_icon)
     ImageView hotelIcon;
 
@@ -74,6 +81,7 @@ public class TopbarFragment extends Fragment {
      */
     private String temperature, text;
     private int code;
+    private String roomNub;
 
 
     private Handler mHandler = new Handler() {
@@ -117,6 +125,31 @@ public class TopbarFragment extends Fragment {
             @Override
             public void run() {
                 getWeather1(IPUtils.getPubIp());
+            }
+        }.start();
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                String url = Constant.hostUrl+"/api/hic/cuid/roomNum";
+                Constant.MAC = IPUtils.getLocalEthernetMacAddress();
+                Map map = new LinkedHashMap();
+                map.put("cuid", Constant.MAC);
+                try {
+                    String req = HttpUtils.mPost(url, map);
+                    if (!req.equals("") && !req.isEmpty()) {
+                        JSONObject json = JSONObject.parseObject(req);
+                        int code = json.getIntValue("code");
+                        if (code == 0){
+                            roomNub = json.getString("msg");
+                            roomNum.setText("房间号："+roomNub);
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    LogUtils.e(TAG+"_139",e.getMessage());
+                }
             }
         }.start();
 
