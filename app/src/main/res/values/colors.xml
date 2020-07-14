@@ -13,8 +13,9 @@
     <color name="white">#FFFFFF</color>
     <color name="gray_white">#F5FFFF</color>
     <color name="gray">#dbdbdb</color>
-    <color name="black_gray">#8a8a8a</color>
+    <color name="black_gray">#8a8a8a8a</color>
     <color name="darkgray">#515151</color>
+
     <color name="black">#000</color>
     <color name="red">#FF0000</color>
     <color name="gray_yellow">#FAFF00</color>

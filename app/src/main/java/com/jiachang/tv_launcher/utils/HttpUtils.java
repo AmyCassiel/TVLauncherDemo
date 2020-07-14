@@ -4,8 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.jiachang.tv_launcher.bean.FormFile;
+import com.alibaba.fastjson.JSON;
+import com.jiachang.tv_launcher.bean.FoodItemUploadBean;
+import com.jiachang.tv_launcher.bean.FormFileUploadBean;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -40,8 +43,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static android.provider.Telephony.Mms.Part.CHARSET;
 
@@ -53,6 +63,26 @@ import static android.provider.Telephony.Mms.Part.CHARSET;
 public class HttpUtils {
 
     private static String HTTP_TAG = "HttpUtil";
+
+    public static void sendFood(Context context,String mac, List<FoodItemUploadBean> foodItems){
+        RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(foodItems));
+        ApiRetrofit.initRetrofit(Constant.hostUrl)
+                .sendGoods(mac, body)
+                .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseBody>() {
+                    @Override
+                    public void call(ResponseBody responseBody) {
+                        Toast.makeText(context,"订购成功！",Toast.LENGTH_LONG).show();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Toast.makeText(context,"订购失败，请联系前台！",Toast.LENGTH_LONG).show();
+                        Log.e("FoodListActivity", Objects.requireNonNull(throwable.getMessage()));
+                    }
+                });
+    }
 
     /**网络连接判断*/
     public static boolean netWorkCheck(Context context) {
@@ -512,8 +542,8 @@ public class HttpUtils {
      * @param params 请求参数 key为参数名,value为参数值
      * @param file 上传文件
      */
-    public static boolean post(String path, Map<String, String> params, FormFile file) throws Exception{
-        return post(path, params, new FormFile[]{file});
+    public static boolean post(String path, Map<String, String> params, FormFileUploadBean file) throws Exception{
+        return post(path, params, new FormFileUploadBean[]{file});
     }
 
     /**
@@ -528,12 +558,12 @@ public class HttpUtils {
      * @param params 请求参数 key为参数名,value为参数值
      * @param files 上传文件
      */
-    public static boolean post(String path, Map<String, String> params, FormFile[] files) throws Exception{
+    public static boolean post(String path, Map<String, String> params, FormFileUploadBean[] files) throws Exception{
         final String BOUNDARY = "---------------------------7da2137580612"; //数据分隔线
         final String endline = "--" + BOUNDARY + "--\r\n";//数据结束标志
 
         int fileDataLength = 0;
-        for(FormFile uploadFile : files){//得到文件类型数据的总长度
+        for(FormFileUploadBean uploadFile : files){//得到文件类型数据的总长度
             StringBuilder fileExplain = new StringBuilder();
             fileExplain.append("--");
             fileExplain.append(BOUNDARY);
@@ -584,7 +614,7 @@ public class HttpUtils {
         //把所有文本类型的实体数据发送出来
         outStream.write(textEntity.toString().getBytes());
         //把所有文件类型的实体数据发送出来
-        for(FormFile uploadFile : files){
+        for(FormFileUploadBean uploadFile : files){
             StringBuilder fileEntity = new StringBuilder();
             fileEntity.append("--");
             fileEntity.append(BOUNDARY);

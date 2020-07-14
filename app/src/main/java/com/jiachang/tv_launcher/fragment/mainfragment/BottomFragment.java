@@ -20,8 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.jiachang.tv_launcher.utils.Constant.sFacilityLocation;
-
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
@@ -32,11 +30,11 @@ public class BottomFragment extends Fragment {
     private MainActivity activity;
 
     @BindView(R.id.wifi_id)
-    TextView wifiId;
+    TextView tvName;
     @BindView(R.id.wifi_password)
-    TextView wifiPassword;
+    TextView tvPassword;
     @BindView(R.id.breakfast_time)
-    TextView breakfastTime;
+    TextView tvBreakfastTime;
 
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -45,27 +43,25 @@ public class BottomFragment extends Fragment {
         View bottomlayout = inflater.inflate(R.layout.main_bottom_bar,container,false);
         mUnbinder = ButterKnife.bind(this,bottomlayout);
         activity = (MainActivity) getActivity();
-        String wifiID = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+        Constant.wifiName = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("wifi", "");
-        String wifiPass = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+        Constant.wifiPassword = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("wifipassword", "");
-        String breakTime = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+        Constant.breakfastTime = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("breakfastTime", "");
-        sFacilityLocation = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
+        Constant.sFacilityLocation = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("local", "");
-        Log.d(getTag(),"wifiID = "+wifiID);
-        if (wifiID!=null&& Constant.wifiPassword!=null && breakTime!=null && Constant.sFacilityLocation1 != null){
-            wifiId.setText("wifi："+wifiID);
-            wifiPassword.setText("密码："+Constant.wifiPassword);
-            breakfastTime.setText("早餐供应时间：" +breakTime+"("+Constant.sFacilityLocation1+")");
-        }else if (wifiID!=null && Constant.wifiPassword!=null && breakTime==null && Constant.sFacilityLocation1 == null){
-            wifiId.setText("wifi："+wifiID);
-            wifiPassword.setText("密码："+Constant.wifiPassword);
-            breakfastTime.setText("");
+        if (!Constant.wifiName.isEmpty()&& !Constant.wifiPassword.isEmpty()){
+            tvName.setText("WIFI账号："+Constant.wifiName);
+            tvPassword.setText("密码："+Constant.wifiPassword);
         }else {
-            wifiId.setText("");
-            wifiPassword.setText("");
-            breakfastTime.setText("");
+            tvName.setText("");
+            tvPassword.setText("");
+        }
+        if (!Constant.breakfastTime.isEmpty()&& !Constant.sFacilityLocation.isEmpty()){
+            tvBreakfastTime.setText("早餐供应时间：" +Constant.breakfastTime+"("+Constant.sFacilityLocation+")");
+        }else {
+            tvBreakfastTime.setText("");
         }
         return bottomlayout;
     }

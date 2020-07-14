@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+
+import com.hjq.toast.ToastUtils;
 import com.tencent.bugly.Bugly;
 import java.util.HashMap;
 import java.util.Locale;
@@ -20,9 +22,10 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //初始bugly
         Bugly.init(getApplicationContext(), "7ced2eccf9", false);
-
+        //初始化toast
+        ToastUtils.init(this);
         //设置酒店信息缓存
         dataMap = new HashMap<String, Object>();
         

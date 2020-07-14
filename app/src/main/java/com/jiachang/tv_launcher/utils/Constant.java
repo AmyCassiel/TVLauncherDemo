@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,8 +13,8 @@ import java.util.Date;
  * @description  软件总体所需的参数
  */
 public class Constant {
-    public static String hostUrl = "https://jczh.jiachang8.com/reservation";
-    public static String localhostUrl = "http://192.168.0.243:8383/reservation";
+    public static String hostUrl = "https://jczh.jiachang8.com";
+    public static String localhostUrl = "http://192.168.0.243:8383";
     public static String MAC = "";
     public static String API_KEY = "l7in2sysjxkwjolf";
     public static String hotelName = "";
@@ -24,20 +25,18 @@ public class Constant {
     public static String wifiPassword = "";
     public static String breakfastTime = "";
     public static String sFacilityLocation = "";
-    public static String sFacilityLocation1 = "";
     public static String tel = "";
     public static String img = "";
-    public static String wifi = "";
     public static String hotelPolicys = "";
     public static String business = "";
-
-    public static String needName = "";
-    public static String needImage = "";
+    public static String roomNum="";
+    public static int hotelId = 0;
 
     public static String sTypeName = "";
     public static int sTypeId = 0;
     public static String sDetailsName = "";
     public static String sDetailsImage ="";
+    public static float foodPrice = 0;
     public static String sFacilitiesName = "";
     public static String sFacilitiesImg = "";
     public static String sFacilitiesTime = "";
@@ -57,7 +56,12 @@ public class Constant {
     public static String[] startTime4 = null;
     public static String[] endTime4 = null;
 
-    public static final String CASHUPLOAD = hostUrl+"/notify/logUpload";
+    public static ArrayList<Integer> idArrayList1 = null;
+    public static ArrayList<Integer> idArrayList3 = null;
+    public static ArrayList<Integer> idArrayList4 = null;
+    public static ArrayList<Float> priceArrayList3 = null;
+
+    public static final String CASHUPLOAD = hostUrl+"/reservation/notify/logUpload";
 
     public static String LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory().getPath() + "/tv_launcher/log";
     public static String LOG_FILE_Name = "log.txt";

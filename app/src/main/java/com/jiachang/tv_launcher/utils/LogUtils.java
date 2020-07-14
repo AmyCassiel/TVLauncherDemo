@@ -118,7 +118,6 @@ public class LogUtils {
                 e.printStackTrace();
             }
         }
-
         try {
             FileWriter filerWriter = new FileWriter(file, true);// 后面这个参数代表是不是要接上文件中原来的数据，不进行覆盖
             BufferedWriter bufWriter = new BufferedWriter(filerWriter);

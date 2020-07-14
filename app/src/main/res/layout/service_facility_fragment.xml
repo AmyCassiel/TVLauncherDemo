@@ -34,6 +34,7 @@
             android:layout_marginTop="30dip"
             android:layout_marginEnd="30px"
             android:focusable="true"
+            android:focusableInTouchMode="true"
             android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
     </LinearLayout>
 

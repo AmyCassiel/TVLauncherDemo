@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,12 +20,13 @@ import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.adapter.ServiceLeftAdapter;
+import com.jiachang.tv_launcher.fragment.dialogfragment.UploadGoodsFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.ControlFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.IntroHotelFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.FacilityFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.RequestFragment;
-
+import com.jiachang.tv_launcher.utils.Constant;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -37,7 +37,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import static com.jiachang.tv_launcher.utils.Constant.breakfastTime;
 import static com.jiachang.tv_launcher.utils.Constant.business;
 import static com.jiachang.tv_launcher.utils.Constant.endTime1;
@@ -58,8 +57,6 @@ import static com.jiachang.tv_launcher.utils.Constant.wifiName;
  * @description  服务主界面
  */
 public class HotelServiceActivity extends FragmentActivity {
-    private static final String TAG = "HotelServiceActivity";
-
     @BindView(R.id.listview_background)
     LinearLayout lvBackground;
     @BindView(R.id.select_listview)
@@ -88,10 +85,7 @@ public class HotelServiceActivity extends FragmentActivity {
     private ControlFragment hCF = new ControlFragment();
     private FacilityFragment hFF = new FacilityFragment();
     private RequestFragment hRF = new RequestFragment();
-
-    private boolean isSelect = false;
-    //记录滑动的ListView 滑动的位置
-    private int scrollPosition = -1;
+    private static final String TAG = "HotelServiceActivity";
 
     private Handler mHandler = new Handler() {
         @Override
@@ -117,7 +111,7 @@ public class HotelServiceActivity extends FragmentActivity {
         setContentView(R.layout.service_activity);
 
         ButterKnife.bind(this);
-        context = this;
+        context = HotelServiceActivity.this;
         isFirstIn();
         getTime();
         new TimeThread().start();
@@ -126,6 +120,12 @@ public class HotelServiceActivity extends FragmentActivity {
         leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
         leftListView.setAdapter(leftAdapter);
         leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        //实例化对象
+//        needFragment = new NeedFragment();
+        //绑定监听事件
+//        needFragment.setOnItemClickListener(HotelServiceActivity.this);
+//        needFragment.show(getSupportFragmentManager(), "dialog");
 
         getTime();
         new TimeThread().start();
@@ -139,6 +139,7 @@ public class HotelServiceActivity extends FragmentActivity {
         sDetailsNames0 = getSharedPreference("sDetailsNames1");
         sDetailsNames2 = getSharedPreference("sDetailsNames3");
         sDetailsNames3 = getSharedPreference("sDetailsNames4");
+
 
         sDetailsImage0 = getSharedPreference("sDetailsImage1");
         sDetailsImage2 = getSharedPreference("sDetailsImage3");
@@ -371,6 +372,9 @@ public class HotelServiceActivity extends FragmentActivity {
     /**绑定酒店客需参数*/
     private void onBundleNeed(Bundle bund){
         bund.putStringArray("title", sTypeNames);
+        bund.putIntegerArrayList("detailsId0", Constant.idArrayList1);
+        bund.putIntegerArrayList("detailsId2",Constant.idArrayList3);
+        bund.putIntegerArrayList("detailsId3",Constant.idArrayList4);
         bund.putStringArray("detailsNames0", sDetailsNames0);
         bund.putStringArray("sDetailsImage0", sDetailsImage0);
         bund.putStringArray("detailsNames2", sDetailsNames2);
@@ -385,8 +389,6 @@ public class HotelServiceActivity extends FragmentActivity {
         bund.putLong("end6",end6);
         bund.putLong("start7",start7);
         bund.putLong("end7",end7);
-        bund.putStringArray("sFsNames0", sFsNames0);
-        bund.putStringArray("sFsTimes0", sFsTimes0);
         bund.putStringArray("startTime1",startTime1);
         bund.putStringArray("startTime1",endTime1);
         bund.putStringArray("startTime3",startTime3);
@@ -427,7 +429,7 @@ public class HotelServiceActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_MENU: //菜单键
+            case KeyEvent.KEYCODE_MENU://设置键
                 Intent in = new Intent(HotelServiceActivity.this, SettingActivity.class);
                 startActivity(in);
                 break;
@@ -440,4 +442,5 @@ public class HotelServiceActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

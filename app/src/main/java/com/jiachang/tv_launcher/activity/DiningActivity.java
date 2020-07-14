@@ -16,7 +16,9 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.HttpUtils;
+import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.LogUtils;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 
@@ -29,7 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 
-import static com.jiachang.tv_launcher.utils.Constant.MAC;
 import static com.jiachang.tv_launcher.utils.Constant.hostUrl;
 
 /**
@@ -162,9 +163,9 @@ public class DiningActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    String url2 = hostUrl + "/api/hic/deliveryType/serDetail";
+                    String url2 = hostUrl + "/reservation/api/hic/deliveryType/serDetail";
                     Map<String, Object> map = new HashMap<>();
-                    map.put("cuid", MAC);
+                    map.put("cuid", IPUtils.getLocalEthernetMacAddress());
                     map.put("deliveryType", id);
                     String request = HttpUtils.mPost(url2, map);
                     LogUtils.d("","request="+request);
@@ -176,7 +177,7 @@ public class DiningActivity extends Activity {
                         Intent intent = new Intent();
                         JSONArray array = json.getJSONArray("serviceDetails");
                         intent.putExtra("foodlist",array);
-                        intent.setClass(mContext, FoodListActivity.class);
+                        intent.setClass(mContext, DiningFoodListActivity.class);
                         startActivity(intent);
                     } else {
                         Log.d(TAG, "请求失败");

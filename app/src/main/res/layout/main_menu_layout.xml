@@ -3,20 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <View
         android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@id/lin"
+        app:layout_constraintBottom_toTopOf="parent" />
 
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray_bg"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -123,31 +128,36 @@
             android:id="@+id/spinner_about_item"
             style="@style/MenuItemAutoLinearLayout"
             android:layout_marginStart="1000px">
+
             <TextView
                 android:id="@+id/about_item_1"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
-                android:nextFocusDown="@id/about_item_2"
                 android:nextFocusUp="@id/about_item_1"
+                android:nextFocusDown="@id/about_item_2"
                 android:text="酒店介绍" />
+
             <TextView
                 android:id="@+id/about_item_2"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_3"
                 android:text="酒店设施" />
+
             <TextView
                 android:id="@+id/about_item_3"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_4"
                 android:text="客控服务" />
+
             <TextView
                 android:id="@+id/about_item_4"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
                 android:nextFocusDown="@id/about_item_5"
                 android:text="客需服务" />
+
             <TextView
                 android:id="@+id/about_item_5"
                 style="@style/MenuItemTextStyle"

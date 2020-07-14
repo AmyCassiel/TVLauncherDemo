@@ -27,9 +27,8 @@
         android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="30px"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/hotel_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/hotel_icon" />
 
     <TextView
         android:id="@+id/room_number"
@@ -40,9 +39,8 @@
         android:text="房间号：8888"
         android:textColor="@color/white"
         android:textSize="30px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/welcome"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/hotel_icon"
+        app:layout_constraintStart_toEndOf="@id/hotel_icon" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/weather_width"

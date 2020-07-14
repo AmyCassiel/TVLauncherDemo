@@ -17,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.MainActivity;
+import com.jiachang.tv_launcher.utils.ApiRetrofit;
 import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.IPUtils;
@@ -37,6 +39,7 @@ import java.net.URLConnection;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +48,10 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.ResponseBody;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.jiachang.tv_launcher.utils.Constant.API_KEY;
 import static com.jiachang.tv_launcher.utils.Constant.hotelName;
@@ -128,30 +135,34 @@ public class TopbarFragment extends Fragment {
             }
         }.start();
 
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                String url = Constant.hostUrl+"/api/hic/cuid/roomNum";
-                Constant.MAC = IPUtils.getLocalEthernetMacAddress();
-                Map map = new LinkedHashMap();
-                map.put("cuid", Constant.MAC);
-                try {
-                    String req = HttpUtils.mPost(url, map);
-                    if (!req.equals("") && !req.isEmpty()) {
-                        JSONObject json = JSONObject.parseObject(req);
-                        int code = json.getIntValue("code");
-                        if (code == 0){
-                            roomNub = json.getString("msg");
-                            roomNum.setText("房间号："+roomNub);
+        ApiRetrofit.initRetrofit(Constant.hostUrl)
+                .getRoomNum(Constant.MAC)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseBody>() {
+                    @Override
+                    public void call(ResponseBody responseBody) {
+                        try {
+                            JSONObject ja = JSON.parseObject(responseBody.string());
+                            String msg = ja.getString("msg");
+                            if (msg.equals("未知异常，请联系管理员")){
+                                roomNum.setText("");
+                            }else {
+                                Constant.roomNum = msg;
+                                roomNum.setText("房间号：" + Constant.roomNum);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    LogUtils.e(TAG+"_139",e.getMessage());
-                }
-            }
-        }.start();
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e("TopbarFragment: 请求房间号失败", Objects.requireNonNull(throwable.getMessage()));
+                        Toast.makeText(mActivity,"获取房间号失败",Toast.LENGTH_SHORT).show();
+                        roomNum.setText("");
+                    }
+                });
 
         if (netWorkCheck(mActivity)) { //機器がネットワークに接続されているかどうかを判断する
             //网络已连接
@@ -193,7 +204,7 @@ public class TopbarFragment extends Fragment {
                 time.setText(sysTimeStr);
                 monthDay.setText(sysDayStr);
             } else {
-                LogUtils.e("TopbarFragment.161", "sysTimeStr = " + sysTimeStr + "; sysDayStr=" + sysDayStr);
+                LogUtils.d("TopbarFragment.161", "sysTimeStr = " + sysTimeStr + "; sysDayStr=" + sysDayStr);
                 Looper.prepare();
                 Toast.makeText(mActivity.getApplication(), "没有获取到时间，请检查时区", Toast.LENGTH_LONG).show();
                 Looper.loop();

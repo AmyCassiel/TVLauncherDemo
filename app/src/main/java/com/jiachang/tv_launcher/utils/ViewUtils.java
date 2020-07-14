@@ -1,6 +1,7 @@
 package com.jiachang.tv_launcher.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -151,4 +152,10 @@ public abstract class ViewUtils {
         return metric.widthPixels;
     }
 
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dp2px(float dpValue) {
+        return (int) (0.5f + dpValue * Resources.getSystem().getDisplayMetrics().density);
+    }
 }

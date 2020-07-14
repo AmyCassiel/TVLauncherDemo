@@ -35,9 +35,7 @@ public class UploadCashService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
-    }
+    protected void onHandleIntent(@Nullable Intent intent) {}
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {

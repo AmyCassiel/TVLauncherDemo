@@ -8,13 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.jiachang.tv_launcher.adapter.SFacTypeAdapter;
-import com.jiachang.tv_launcher.bean.FacType;
+import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
 import com.jiachang.tv_launcher.utils.ImageUtil;
 import com.zhy.autolayout.AutoLinearLayout;
 
@@ -48,7 +48,7 @@ public class FacilityFragment extends Fragment {
     AutoLinearLayout introduceFacility;
 
 
-    private List<FacType> service = new ArrayList<>();
+    private List<FacilityGoodsBean> service = new ArrayList<>();
     private Unbinder mUnbinder;
     private HotelServiceActivity mActivity;
     private SFacTypeAdapter adapter;
@@ -56,14 +56,13 @@ public class FacilityFragment extends Fragment {
     private Bitmap bitmap0;
     private String name0, local, supplyTime;
 
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
+                    FacilityGoodsBean duck = new FacilityGoodsBean(name0, local, "开放时间：" + supplyTime, bitmap0);
                     service.add(duck);
                     break;
                 default:
@@ -77,7 +76,6 @@ public class FacilityFragment extends Fragment {
         View view = inflater.inflate(R.layout.service_facility_fragment, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mActivity = (HotelServiceActivity) getContext();
-
         initView();
         return view;
     }
@@ -114,7 +112,7 @@ public class FacilityFragment extends Fragment {
             if(!name0.isEmpty()){
                 introlFacility.setVisibility(View.VISIBLE);
                 introduceFacility.setVisibility(View.GONE);
-                FacType duck = new FacType(name0, local, "开放时间：" + supplyTime, bitmap0);
+                FacilityGoodsBean duck = new FacilityGoodsBean(name0, local, "开放时间：" + supplyTime, bitmap0);
                 service.add(duck);
             }else {
                 introlFacility.setVisibility(View.GONE);

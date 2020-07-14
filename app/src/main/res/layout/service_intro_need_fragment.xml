@@ -50,17 +50,50 @@
                 android:id="@+id/recycler_goods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/content_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30px"
-                    android:layout_marginEnd="30px"
-                    android:focusable="false"
-                    android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
+                    android:layout_marginStart="60px"
+                    android:layout_marginEnd="60px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:listSelector="@drawable/apower_mirror_solid_bg_focus"
+                    android:nextFocusDown="@drawable/button_ok" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="20px"
+                    android:layout_marginBottom="30px"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/ok_confirm"
+                        android:layout_width="120px"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30px"
+                        android:background="@drawable/b"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:text="我选好了"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/ok_cancel"
+                        android:layout_width="120px"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/b"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:text="清空"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
             </RelativeLayout>
 
             <LinearLayout
@@ -109,6 +142,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/introduce_need"
         style="@style/AboutContextLL">

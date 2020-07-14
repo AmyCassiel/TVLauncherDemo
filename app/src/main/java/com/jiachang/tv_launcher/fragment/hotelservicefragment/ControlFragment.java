@@ -1,7 +1,6 @@
 package com.jiachang.tv_launcher.fragment.hotelservicefragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
-import com.jiachang.tv_launcher.adapter.SControlTypeAdapter;
-import com.jiachang.tv_launcher.adapter.SControlTypeAdapter1;
-import com.jiachang.tv_launcher.bean.Controltype;
-import com.jiachang.tv_launcher.bean.Controltype1;
+import com.jiachang.tv_launcher.adapter.SControlScenesAdapter;
+import com.jiachang.tv_launcher.adapter.SControlDevicesAdapter;
+import com.jiachang.tv_launcher.bean.ControlDevicesBean;
+import com.jiachang.tv_launcher.bean.ControlScenesBean;
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.LogUtils;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -46,8 +45,10 @@ import butterknife.Unbinder;
 public class ControlFragment extends Fragment {
     private Unbinder mUnbinder;
     private HotelServiceActivity mActivity;
-    private SControlTypeAdapter adapter;
-    private SControlTypeAdapter1 adapter1;
+    private SControlDevicesAdapter sControlDevicesAdapter;
+    private SControlScenesAdapter sControlScenesAdapter;
+    private List<ControlDevicesBean> controlDevicesBeanList = new ArrayList<>();
+    private List<ControlScenesBean> controlScenesBeanList = new ArrayList<>();
 
     @BindView(R.id.contentrecyclerview)
     RecyclerView introduceControl;
@@ -64,9 +65,6 @@ public class ControlFragment extends Fragment {
     @BindView(R.id.introduce_control)
     AutoLinearLayout introduceControlJIA;
 
-    private List<Controltype> service = new ArrayList<>();
-    private List<Controltype1> service1 = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,15 +72,15 @@ public class ControlFragment extends Fragment {
         mUnbinder = ButterKnife.bind(this, view);
         mActivity = (HotelServiceActivity) getContext();
 
-        adapter1 = new SControlTypeAdapter1(mActivity,service1);
+        sControlScenesAdapter = new SControlScenesAdapter(mActivity,controlScenesBeanList);
         StaggeredGridLayoutManager layoutManager1 = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
         introduceControl1.setLayoutManager(layoutManager1);
-        introduceControl1.setAdapter(adapter1);
+        introduceControl1.setAdapter(sControlScenesAdapter);
 
-        adapter = new SControlTypeAdapter(mActivity,service);
+        sControlDevicesAdapter = new SControlDevicesAdapter(mActivity,controlDevicesBeanList);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL);
         introduceControl.setLayoutManager(layoutManager);
-        introduceControl.setAdapter(adapter);
+        introduceControl.setAdapter(sControlDevicesAdapter);
         /*Bundle bundle = this.getArguments();
         if (bundle != null){
             String isFirst = bundle.getString("isFirst");
@@ -125,22 +123,22 @@ public class ControlFragment extends Fragment {
                             String name = attrMap.get("NAME").toString();
                             int value = (int) map1.get("value");
                             if (value != 0) {
-                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.cl_1);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：打开", R.mipmap.cl_1);
+                                controlDevicesBeanList.add(controltype);
                             } else {
-                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.cl);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：关闭", R.mipmap.cl);
+                                controlDevicesBeanList.add(controltype);
                             }
                         }
                         if (type.equals("kg")) {
                             String name = attrMap.get("NAME").toString();
                             int value = (int) map1.get("value");
                             if (value != 0) {
-                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：打开", R.mipmap.light_1);
+                                controlDevicesBeanList.add(controltype);
                             } else {
-                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：关闭", R.mipmap.light);
+                                controlDevicesBeanList.add(controltype);
                             }
                         }
                         if (type.equals("color")) {
@@ -148,11 +146,11 @@ public class ControlFragment extends Fragment {
                             Map value = (Map) map1.get("value");
                             int m = (int) value.get("m");
                             if (m != -1) {
-                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.light_1);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：打开", R.mipmap.light_1);
+                                controlDevicesBeanList.add(controltype);
                             } else {
-                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.light);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：关闭", R.mipmap.light);
+                                controlDevicesBeanList.add(controltype);
                             }
                         }
                         if (type.equals("qj")) {
@@ -160,11 +158,11 @@ public class ControlFragment extends Fragment {
                             Map value = (Map) map1.get("value");
                             boolean ISGROUP = (boolean) value.get("ISGROUP");
                             if (ISGROUP) {
-                                Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
-                                service1.add(controltype1);
+                                ControlScenesBean controltype1 = new ControlScenesBean(name, R.mipmap.qj);
+                                controlScenesBeanList.add(controltype1);
                             } else {
-                                Controltype1 controltype1 = new Controltype1(name, R.mipmap.qj);
-                                service1.add(controltype1);
+                                ControlScenesBean controltype1 = new ControlScenesBean(name, R.mipmap.qj);
+                                controlScenesBeanList.add(controltype1);
                             }
                         }
                         if (type.equals("kt")) {
@@ -172,11 +170,11 @@ public class ControlFragment extends Fragment {
                             Map value = (Map) map1.get("value");
                             String open = value.get("open").toString();
                             if (open.equals("0")) {
-                                Controltype controltype = new Controltype(name, "状态：打开", R.mipmap.kt_1);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：打开", R.mipmap.kt_1);
+                                controlDevicesBeanList.add(controltype);
                             } else {
-                                Controltype controltype = new Controltype(name, "状态：关闭", R.mipmap.kt);
-                                service.add(controltype);
+                                ControlDevicesBean controltype = new ControlDevicesBean(name, "状态：关闭", R.mipmap.kt);
+                                controlDevicesBeanList.add(controltype);
                             }
                         }
                     }
@@ -205,8 +203,8 @@ public class ControlFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
-        adapter.setDataList(service);
-        adapter1.setDataList(service1);
+        sControlDevicesAdapter.setDataList(controlDevicesBeanList);
+        sControlScenesAdapter.setDataList(controlScenesBeanList);
     }
 
 

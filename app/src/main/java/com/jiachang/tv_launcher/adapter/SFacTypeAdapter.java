@@ -2,7 +2,6 @@ package com.jiachang.tv_launcher.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.bean.FacType;
-import com.jiachang.tv_launcher.bean.NeedServiceType;
+import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
 import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +31,7 @@ import butterknife.ButterKnife;
  */
 public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHolder> implements View.OnClickListener {
     private Context context;
-    private List<FacType> serviceTypeList;
+    private List<FacilityGoodsBean> serviceTypeList;
     private RecyclerView recyclerView;
     private onItemClickListener itemClickListener;//ItemView的监听器
 
@@ -55,7 +53,7 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
         }
     }
 
-    public SFacTypeAdapter(Context context, List<FacType> serviceTypeList){
+    public SFacTypeAdapter(Context context, List<FacilityGoodsBean> serviceTypeList){
         this.context = context;
         this.serviceTypeList = serviceTypeList;
     }
@@ -72,9 +70,11 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ViewUtils.focusStatus(v);
+                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.item_background);
+                    v.setBackground(drawable);
                 } else {
-                    ViewUtils.normalStatus(v);
+                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.white_radius);
+                    v.setBackground(drawable);
                 }
             }
         });
@@ -82,7 +82,7 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
         return holder;
     }
 
-    public void setDataList( List<FacType> serviceTypeList){
+    public void setDataList( List<FacilityGoodsBean> serviceTypeList){
         serviceTypeList.clear();
         this.serviceTypeList = serviceTypeList;
         notifyDataSetChanged();
@@ -95,7 +95,7 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FacType serviceType = serviceTypeList.get(position);
+        FacilityGoodsBean serviceType = serviceTypeList.get(position);
         holder.serviceImage.setImageBitmap(serviceType.getImage());
         holder.serviceName.setText(serviceType.getName());
         holder.servicePrice.setText(serviceType.getLocal());
@@ -133,6 +133,6 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
         }
     }
     public interface onItemClickListener{
-        void onItemClick(int position, View v, FacType serviceType);
+        void onItemClick(int position, View v, FacilityGoodsBean serviceType);
     }
 }

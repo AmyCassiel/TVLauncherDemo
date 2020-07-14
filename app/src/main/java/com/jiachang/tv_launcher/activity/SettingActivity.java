@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.fragment.ContentFragment;
-import com.jiachang.tv_launcher.utils.IPUtils;
+import com.jiachang.tv_launcher.fragment.dialogfragment.FileUploadDialogFragment;
 import com.jiachang.tv_launcher.utils.LogUtils;
 import com.jiachang.tv_launcher.utils.QRCodeUtil;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -150,7 +148,7 @@ public class SettingActivity extends FragmentActivity {
         switch (keyCode) {
             case KeyEvent.KEYCODE_MENU: //菜单键
                 FragmentManager fM = getSupportFragmentManager();
-                ContentFragment dialogFragment = new ContentFragment();
+                FileUploadDialogFragment dialogFragment = new FileUploadDialogFragment();
                 dialogFragment.show(fM,"");
                 break;
             default:
