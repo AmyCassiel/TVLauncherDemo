@@ -59,13 +59,6 @@ public class DiningActivity extends Activity {
     @OnFocusChange({R.id.dining_main_all, R.id.dining_cake_all, R.id.dining_drink_all, R.id.dining_fruit_all, R.id.dining_iceCream_all, R.id.dining_welcome_all})
     public void onViewFocusChange(View view, boolean isFocus) {
         ViewUtils.sView(view,isFocus);
-        /*if (isFocus){
-            Drawable drawable = ContextCompat.getDrawable(mContext,R.drawable.item_background);
-            view.setBackground(drawable);
-        }else {
-            Drawable drawable = ContextCompat.getDrawable(mContext,R.color.transparent);
-            view.setBackground(drawable);
-        }*/
     }
 
     @Override
@@ -74,8 +67,13 @@ public class DiningActivity extends Activity {
         hideBottomMenu();
         setContentView(R.layout.dining_activity_layout);
         ButterKnife.bind(this);
-
         mContext = DiningActivity.this;
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         initView();
     }
 
@@ -83,10 +81,7 @@ public class DiningActivity extends Activity {
      * 隐藏虚拟按键，并且全屏
      */
     protected void hideBottomMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -109,28 +104,28 @@ public class DiningActivity extends Activity {
         ViewGroup.LayoutParams dM = diningMain.getLayoutParams();
         dM.width = width / 23 * 10;
         dM.height = height / 21 * 11;
-
-
+        diningMain.setLayoutParams(dM);
         ViewGroup.LayoutParams dC = diningCake.getLayoutParams();
         dC.width = width / 21 * 5;
         dC.height = height / 21 * 11;
-
+        diningCake.setLayoutParams(dC);
         ViewGroup.LayoutParams dD = diningDrink.getLayoutParams();
         dD.width = width / 21 * 5;
         dD.height = height / 21 * 11;
-
+        diningDrink.setLayoutParams(dD);
 
         ViewGroup.LayoutParams dF = diningFruit.getLayoutParams();
         dF.width = width / 29 * 6;
         dF.height = height / 3;
-
+        diningFruit.setLayoutParams(dF);
         ViewGroup.LayoutParams dI = diningIceCream.getLayoutParams();
         dI.width = width / 29 * 6;
         dI.height = height / 3;
-
+        diningIceCream.setLayoutParams(dI);
         ViewGroup.LayoutParams dW = diningWelcome.getLayoutParams();
         dW.width = width / 2;
         dW.height = height / 3;
+        diningWelcome.setLayoutParams(dW);
     }
 
     @OnClick({R.id.dining_main_all, R.id.dining_cake_all, R.id.dining_drink_all, R.id.dining_fruit_all, R.id.dining_iceCream_all, R.id.dining_welcome_all})
@@ -182,7 +177,7 @@ public class DiningActivity extends Activity {
                     } else {
                         Log.d(TAG, "请求失败");
                         Looper.prepare();
-                        Toast.makeText(DiningActivity.this,"抱歉，酒店暂不提供该服务",Toast.LENGTH_LONG).show();
+                        Toast.makeText(DiningActivity.this,"抱歉，酒店暂不提供该服务",Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
                 } catch (Exception e) {
@@ -192,4 +187,8 @@ public class DiningActivity extends Activity {
         }.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

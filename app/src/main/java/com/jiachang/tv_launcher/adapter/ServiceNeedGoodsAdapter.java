@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.activity.MainActivity;
 import com.jiachang.tv_launcher.bean.NeedGoodsBean;
 import com.jiachang.tv_launcher.bean.NeedServiceBean;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
@@ -17,6 +18,8 @@ import com.jiachang.tv_launcher.utils.Constant;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.net.CookieHandler;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -89,37 +92,13 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
         context = view.getContext();
 
         holder.serviceTypeCard.setFocusable(true);
-        holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-//                    ViewUtils.focusStatus(v);
-                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.item_background);
-                    v.setBackground(drawable);
-                } else {
-//                    ViewUtils.normalStatus(v);
-                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.white_radius);
-                    v.setBackground(drawable);
-                }
-            }
-        });
         holder.serviceTypeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = recyclerView.getChildAdapterPosition(v);
                 itemClickListener.OnItemSelectedListener(position,v,mServiceGoods.get(position));
-//                int position = recyclerView.getChildAdapterPosition(v);
-//                int goodsId = mServiceGoods.get(position).getId();
-//                mServiceGoods.get(position).setAmount(mServiceGoods.get(position).getAmount() + 1);
-//                int amount = mServiceGoods.get(position).getAmount();
-//                final ServiceNeedGoodsAdapter.ViewHolder holder = new ServiceNeedGoodsAdapter.ViewHolder(v);
-//                holder.serviceAmount.setText("数量：+" + amount);
-//                int serviceTypeId = mServiceGoods.get(position).getTypeId();
-//                NeedGoodsBean goods = new NeedGoodsBean(Constant.hotelId,Constant.roomNum,goodsId,amount,serviceTypeId);
-//                NeedFragment.needGoodsBeans.add(goods);
             }
         });
-
         initView(holder);
         return holder;
     }
@@ -132,7 +111,6 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
 
     public void setDataList(List<NeedServiceBean> mServiceGoods) {
         mServiceGoods.clear();
-        NeedFragment.needGoodsBeans.clear();
         NeedFragment.needGoodsBeansList.clear();
         NeedFragment.list.clear();
         this.mServiceGoods = mServiceGoods;

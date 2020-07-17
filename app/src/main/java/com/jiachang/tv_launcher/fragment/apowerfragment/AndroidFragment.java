@@ -30,4 +30,9 @@ public class AndroidFragment extends Fragment {
         mContext = getActivity();
         return view;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

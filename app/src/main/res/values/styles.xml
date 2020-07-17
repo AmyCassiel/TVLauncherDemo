@@ -158,8 +158,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="sl_shadow_angle">45</item>
         <item name="sl_shadow_color">@color/DKgray</item>
-        <item name="sl_shadow_distance">10dp</item>
-        <item name="sl_shadow_radius">20dp</item>
+        <item name="sl_shadow_distance">7px</item>
+        <item name="sl_shadow_radius">17px</item>
         <item name="sl_shadowed">true</item>
     </style>
     <!--食物分类页面中的图片-->

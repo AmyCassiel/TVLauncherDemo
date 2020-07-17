@@ -47,9 +47,7 @@ public class MenuFragment extends Fragment{
     @BindView(R.id.menu_music)
     AutoLinearLayout menuMusic;
     @BindView(R.id.lin)
-
     LinearLayout menuItemLayout;
-
     @BindView(R.id.spinner_about_item)
     LinearLayout aboutItem;
 
@@ -59,9 +57,7 @@ public class MenuFragment extends Fragment{
         View menuLayout = inflater.inflate(R.layout.main_menu_layout, container, false);
 
         mUb = ButterKnife.bind(this, menuLayout);
-
         mContext = getActivity();
-
         pm = mContext.getPackageManager();
 
         DisplayMetrics metric = new DisplayMetrics();

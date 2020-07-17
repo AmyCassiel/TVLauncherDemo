@@ -2,6 +2,8 @@ package com.jiachang.tv_launcher.utils;
 
 import android.util.Log;
 
+import com.jiachang.tv_launcher.interfaces.RetrofitInterface;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;

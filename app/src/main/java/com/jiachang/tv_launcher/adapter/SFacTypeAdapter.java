@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
-import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,12 +59,12 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_recyview_goods_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_fac_recyview_goods_item,parent,false);
         final ViewHolder holder = new ViewHolder(view);
         context = view.getContext();
 
         initView(holder);
-
+        holder.serviceTypeCard.setFocusable(true);
         holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

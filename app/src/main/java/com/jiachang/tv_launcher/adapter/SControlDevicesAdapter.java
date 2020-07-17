@@ -61,20 +61,13 @@ public class SControlDevicesAdapter extends RecyclerView.Adapter<SControlDevices
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_recyview_goodsitem,parent,false);
         final ViewHolder holder = new ViewHolder(view);
         context = view.getContext();
-
         initView(holder);
 
         holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    ViewUtils.focusStatus(v);
-                } else {
-                    ViewUtils.normalStatus(v);
-                }
             }
         });
-
         return holder;
     }
     private void initView(ViewHolder viewHolder){

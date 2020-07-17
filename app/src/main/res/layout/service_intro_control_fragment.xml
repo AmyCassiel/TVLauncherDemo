@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginStart="20px"
     android:layout_marginEnd="20px"
     android:layout_marginBottom="30px"
@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30px"
                 android:layout_marginEnd="20px"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,13 +70,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants">
+                android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/contentrecyclerview1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:listSelector="@drawable/apower_mirror_solid_bg_focus"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -108,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dip"
-                    android:descendantFocusability="blocksDescendants" />
+                    android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -120,7 +121,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/introduce_control"
                 style="@style/AboutContextLL"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     style="@style/AboutContextTopicLL"

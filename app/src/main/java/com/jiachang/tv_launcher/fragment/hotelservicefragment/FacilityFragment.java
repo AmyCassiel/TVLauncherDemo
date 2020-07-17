@@ -39,14 +39,13 @@ import butterknife.Unbinder;
  */
 public class FacilityFragment extends Fragment {
     private String tag = "FacilityFragment";
-
+    private ListView listView;
     @BindView(R.id.fcontent_recycler_view)
     RecyclerView fconRV;
     @BindView(R.id.intro_facility)
     LinearLayout introlFacility;
     @BindView(R.id.introduce_facility)
     AutoLinearLayout introduceFacility;
-
 
     private List<FacilityGoodsBean> service = new ArrayList<>();
     private Unbinder mUnbinder;
@@ -55,20 +54,6 @@ public class FacilityFragment extends Fragment {
     private String[] sFsNames0, sFsTimes0, sFsImgs0, sFsLocals0;
     private Bitmap bitmap0;
     private String name0, local, supplyTime;
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    FacilityGoodsBean duck = new FacilityGoodsBean(name0, local, "开放时间：" + supplyTime, bitmap0);
-                    service.add(duck);
-                    break;
-                default:
-            }
-        }
-    };
 
     @Nullable
     @Override
@@ -79,13 +64,16 @@ public class FacilityFragment extends Fragment {
         initView();
         return view;
     }
-
-    private void initView() {
-        adapter = new SFacTypeAdapter(mActivity, service);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
-        fconRV.setLayoutManager(layoutManager);
-        fconRV.setAdapter(adapter);
-        fconRV.setOnScrollListener(new OnPopRecyclerViewScrollListener());
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //获取宿主Activity
+        if (mActivity != null) {
+            listView = mActivity.findViewById(R.id.select_listview);
+            listView.getItemsCanFocus();
+            listView.getId();
+            listView.setNextFocusRightId(R.id.fcontent_recycler_view);
+        }
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             sFsImgs0 = bundle.getStringArray("sFsImgs0");
@@ -97,9 +85,15 @@ public class FacilityFragment extends Fragment {
             if (isFirst != null) {
                 fconRV.requestFocus();
             }
-
             initGood(sFsImgs0, sFsNames0, sFsTimes0, sFsLocals0);
         }
+    }
+    private void initView() {
+        adapter = new SFacTypeAdapter(mActivity, service);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
+        fconRV.setLayoutManager(layoutManager);
+        fconRV.setAdapter(adapter);
+        fconRV.setOnScrollListener(new OnPopRecyclerViewScrollListener());
     }
 
     private void initGood(String[] detailsImage, String[] detailsNames, String[] detailsTime, String[] detailsLocal) {

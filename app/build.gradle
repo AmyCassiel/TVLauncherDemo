@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.jiachang.tv_launcher"
-        minSdkVersion 21
+        minSdkVersion 25
         targetSdkVersion 29
-        versionCode 25
-        versionName "2.0.0.25"
+        versionCode 26
+        versionName "2.0.0.26"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构
@@ -47,7 +47,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-
     // 适配库
     implementation 'com.zhy:autolayout:1.4.5'
     //ButterKnife
@@ -73,11 +72,8 @@ dependencies {
     //解析
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
 
-    //动画库
-    implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
-    implementation 'com.github.chenupt.android:multiplemodel:1.1.0@aar'
-    implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
-    implementation 'com.google.guava:guava:28.2-android'
+    //image显示
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     //toastUtils
     implementation 'com.hjq:toast:8.6'

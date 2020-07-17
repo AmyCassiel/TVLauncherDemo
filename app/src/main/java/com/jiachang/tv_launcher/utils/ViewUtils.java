@@ -25,18 +25,12 @@ import androidx.core.view.ViewCompat;
  */
 public abstract class ViewUtils {
     /**
-     * 动画 放大/缩小
+     * 动态放大/缩小
      *
      * @param view
      * @param hasFocus
      */
-    public static void scaleView(View view, boolean hasFocus) {
-        float scale = hasFocus ? 1.2f : 1.0f;
-        view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
-    }
-
     public static void sView(View view, boolean hasFocus) {
-        view.setFocusable(true);
         float scale = hasFocus ? 1.05f : 1.0f;
         view.animate().scaleX(scale).scaleY(scale).setInterpolator(new AccelerateInterpolator()).setDuration(200);
     }
@@ -96,36 +90,6 @@ public abstract class ViewUtils {
      * @param itemView 条目对应的View
      */
     protected static void onItemGetNormal(View itemView) {
-    }
-
-    // the minimum scaling factor for the web dialog (50% of screen size)
-    private static final double MIN_SCALE_FACTOR = 0.5;
-
-    /**
-     * Returns a scaled size (either width or height) based on the parameters passed.
-     *
-     * @param screenSize     a pixel dimension of the screen (either width or height)
-     * @param density        density of the screen
-     * @param noPaddingSize  the size at which there's no padding for the dialog
-     * @param maxPaddingSize the size at which to apply maximum padding for the dialog
-     * @return a scaled size.
-     */
-    public static int getScaledSize(int screenSize, float density, int noPaddingSize, int maxPaddingSize) {
-        int scaledSize = (int) ((float) screenSize / density);
-        double scaleFactor;
-        if (scaledSize <= noPaddingSize) {
-            scaleFactor = 1.0;
-        } else if (scaledSize >= maxPaddingSize) {
-            scaleFactor = MIN_SCALE_FACTOR;
-        } else {
-            // between the noPadding and maxPadding widths, we take a linear reduction to go from 100%
-            // of screen size down to MIN_SCALE_FACTOR
-            scaleFactor = MIN_SCALE_FACTOR +
-                    ((double) (maxPaddingSize - scaledSize))
-                            / ((double) (maxPaddingSize - noPaddingSize))
-                            * (1.0 - MIN_SCALE_FACTOR);
-        }
-        return (int) (screenSize * scaleFactor);
     }
 
     public static int tvLauncherLScale(Context context) {

@@ -72,7 +72,7 @@ public class SettingActivity extends FragmentActivity {
      * 隐藏虚拟按键，并且全屏
      */
     protected void hideBottomMenu() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

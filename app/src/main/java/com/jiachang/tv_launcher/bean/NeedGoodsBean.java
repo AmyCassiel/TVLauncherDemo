@@ -6,6 +6,7 @@ package com.jiachang.tv_launcher.bean;
  * @description
  */
 public class NeedGoodsBean {
+    private boolean isExist;
     private int hotelId;
     private String roomNumber;
     private int serDetailId;
@@ -14,6 +15,8 @@ public class NeedGoodsBean {
     private String goodsName;
     private double price;
     private String goodsPrice;
+
+
 
     public NeedGoodsBean(int hotelId,String roomNumber,int serDetailId,int amount,int serviceTypeId,double price){
         this.hotelId = hotelId;
@@ -86,5 +89,13 @@ public class NeedGoodsBean {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isExist() {
+        return isExist;
+    }
+
+    public void setExist(boolean exist) {
+        isExist = exist;
     }
 }

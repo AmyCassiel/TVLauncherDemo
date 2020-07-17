@@ -82,15 +82,8 @@ public class TopbarFragment extends Fragment {
     private Unbinder mUb;
     private String TAG = "TopbarFragment";
     protected MainActivity mActivity;
-
-    /**
-     * 天气的温度
-     */
     private String temperature, text;
     private int code;
-    private String roomNub;
-
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -118,7 +111,7 @@ public class TopbarFragment extends Fragment {
         View topLayout = inflater.inflate(R.layout.main_top_bar, container, false);
         mUb = ButterKnife.bind(this, topLayout);
         mActivity = (MainActivity) getActivity();
-        initView();
+
         hotelName = mActivity.getApplicationContext()
                 .getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).getString("hotelName", "");
         img = mActivity.getApplicationContext()
@@ -126,7 +119,13 @@ public class TopbarFragment extends Fragment {
         return topLayout;
     }
 
-    private void initView() {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    private void initData() {
         getTime();
         new Thread() {
             @Override
@@ -195,7 +194,6 @@ public class TopbarFragment extends Fragment {
 
     private void getTime() {
         Calendar calendar = Calendar.getInstance();//取得当前时间的星期
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
         long sysTime = System.currentTimeMillis();//获取系统时间
         if (sysTime != 0) {
             CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式

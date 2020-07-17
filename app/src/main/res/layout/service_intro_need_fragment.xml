@@ -49,8 +49,7 @@
             <RelativeLayout
                 android:id="@+id/recycler_goods"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/content_recycler_view"
@@ -58,18 +57,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60px"
                     android:layout_marginEnd="60px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:listSelector="@drawable/apower_mirror_solid_bg_focus"
-                    android:nextFocusDown="@drawable/button_ok" />
+                    android:nextFocusDown="@id/button" />
 
                 <LinearLayout
+                    android:id="@+id/button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20px"
                     android:layout_marginBottom="30px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <Button

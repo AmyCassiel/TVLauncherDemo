@@ -6,11 +6,10 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="20px"
     android:layout_marginStart="10px"
-    android:background="@drawable/white_radius"
+    android:background="@drawable/service_item_bg"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:transitionName="food_card">
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/service_menu1"

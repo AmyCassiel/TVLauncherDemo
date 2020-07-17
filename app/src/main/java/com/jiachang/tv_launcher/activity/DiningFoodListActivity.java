@@ -132,7 +132,7 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
         foodPrice = food.getPrice();
         food.setCount(food.getCount() + 1);
         amount = food.getCount();
-        FoodIntentBean foodItem = new FoodIntentBean(foodId, foodName,  foodPrice, bitmap,  amount);
+        FoodIntentBean foodItem = new FoodIntentBean(foodItemId, foodName,  foodPrice, bitmap,  amount);
         foodItems.add(foodItem);
 
         allCount++;
@@ -275,7 +275,7 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
 
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

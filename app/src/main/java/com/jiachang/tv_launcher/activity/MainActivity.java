@@ -26,6 +26,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ import com.jiachang.tv_launcher.bean.HotelInfoBean.HotelDbBean.ServiceConfsBean.
 import com.jiachang.tv_launcher.fragment.mainfragment.BottomFragment;
 import com.jiachang.tv_launcher.fragment.mainfragment.MenuFragment;
 import com.jiachang.tv_launcher.fragment.mainfragment.TopbarFragment;
+import com.jiachang.tv_launcher.utils.ApiRetrofit;
 import com.jiachang.tv_launcher.utils.CommonUtil;
 import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.HttpUtils;
@@ -61,6 +63,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Mickey.Ma
@@ -70,6 +75,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends FragmentActivity {
     private String TAG = "MainActivity";
     public static String mac;
+    public static int hotelId;
     private Drawable drawable;
     public Context context;
     private static String[] PERMISSIONS_STORAGE = {
@@ -99,7 +105,6 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<String> imageArrayList3 = new ArrayList<>();
     private ArrayList<String> nameArrayList4 = new ArrayList<>();
     private ArrayList<String> imageArrayList4 = new ArrayList<>();
-
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -125,18 +130,21 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         //设置常亮
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         //隐藏虚拟键
         hideBottomMenu();
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-
         context = getApplicationContext();
         //产品授权
         ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 10001);
         //初始化视图
         initView();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         //获取酒店介绍相关数据并缓存
         getData();
     }
@@ -154,56 +162,25 @@ public class MainActivity extends FragmentActivity {
         fT.add(R.id.top, tF);
         fT.add(R.id.bottom, bF);
         fT.commit();
-
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                //打开晓听服务
-                Intent intent = new Intent();
-                ComponentName comp = new ComponentName("com.aispeech.tvui",
-                        "com.aispeech.tvui.service.TelenetService");
-                intent.setComponent(comp);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startService(intent);
-                //打开投屏服务
-                Intent inten = new Intent();
-                ComponentName com = new ComponentName("com.ionitech.airscreen",
-                        "com.ionitech.airscreen.service.MyFirebaseInstanceIDService");
-                inten.setComponent(com);
-                inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startService(inten);
-
-                String packageName = "com.dianshijia.newlive";
-                if (getPackageManager().getLaunchIntentForPackage(packageName) != null) {
-                    PackagesInstaller.uninstallSlient(packageName);
-                }
-            }
-        }.start();
     }
 
     /**
      * 获取酒店的详细信息
      */
     public void getData() {
-        new Thread() {
-            @Override
-            public void run() {
-                if (CommonUtil.isNetworkConnected(MainActivity.this)) {
-                    String url = Constant.hostUrl + "/reservation/api/hic/serHotelInfo/get";
-                    Constant.MAC = IPUtils.getLocalEthernetMacAddress();
-                    Map map = new LinkedHashMap();
-                    map.put("cuid", Constant.MAC);
-                    try {
-                        String req = HttpUtils.mPost(url, map);
-                        LogUtils.d(TAG + ".202", "req = " + req);
-                        if (!req.equals("") && !req.isEmpty()) {
-                            JSONObject json = JSONObject.parseObject(req);
-                            ParserConfig.getGlobalInstance().addAccept("HotelInfo");
-                            HotelInfoBean hotelInfo = JSONObject.toJavaObject(json, HotelInfoBean.class);
+        Constant.MAC = IPUtils.getLocalEthernetMacAddress();
+        if (CommonUtil.isNetworkConnected(MainActivity.this)) {
+            ApiRetrofit.initRetrofit(Constant.hostUrl)
+                    .getHotel(Constant.MAC)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<HotelInfoBean>() {
+                        @Override
+                        public void call(HotelInfoBean hotelInfo) {
                             int code = hotelInfo.getCode();
                             if (code == 0) {
-                                Constant.hotelId = hotelInfo.getHotelDb().getId();
+                                hotelId = hotelInfo.getHotelDb().getId();
+                                Constant.hotelId = hotelId;
                                 Constant.hotelName = hotelInfo.getHotelDb().getHotelName();
                                 LogUtils.d(TAG + ".210", "hotelName = " + Constant.hotelName);
                                 Constant.hotelIntroduction = hotelInfo.getHotelDb().getHotelIntrodu();
@@ -358,7 +335,7 @@ public class MainActivity extends FragmentActivity {
                                 }
                                 if (Constant.hotelName != null && !Constant.hotelName.isEmpty()) {
                                     getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).edit()
-                                            .putString("mac", Constant.MAC)
+                                            .putString("mac", Constant.MAC).putInt("hotelId", Constant.hotelId)
                                             .putString("hotelName", Constant.hotelName).putString("hotelIntroduction", Constant.hotelIntroduction)
                                             .putString("phone", Constant.tel).putString("wifi", Constant.wifiName)
                                             .putString("wifipassword", Constant.wifiPassword).putString("image", Constant.img)
@@ -398,22 +375,17 @@ public class MainActivity extends FragmentActivity {
                                 Toast.makeText(context, "获取酒店信息失败", Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             }
-                        } else {
-                            LogUtils.e(TAG, "请求数据失败，request = " + req);
-                            Looper.prepare();
-                            Toast.makeText(context, "请求数据失败,请检查网络", Toast.LENGTH_LONG).show();
-                            Looper.loop();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Looper.prepare();
-                    Toast.makeText(context, "网络异常,请检查网络", Toast.LENGTH_LONG).show();
-                    Looper.loop();
-                }
-            }
-        }.start();
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            Log.e("MainActivity","数据解析失败，"+throwable.getMessage());
+                            Toast.makeText(context, "请求数据失败,请检查网络" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(context, "网络异常,请检查网络", Toast.LENGTH_LONG).show();
+        }
     }
 
     private boolean hasSDCard() {
@@ -429,14 +401,6 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    //获取设备的具体信息
-    private void getDeviceInfo() {
-        String deviceId = CommonUtil.getDeviceId(getApplicationContext());
-        LogUtils.i(TAG, "deviceID = " + deviceId);
-        String decVersionName = CommonUtil.getVersionName(getApplicationContext());
-        LogUtils.i(TAG, "decVersionName = " + decVersionName);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -446,7 +410,8 @@ public class MainActivity extends FragmentActivity {
             LogUtils.d(TAG, "授权被拒绝！");
         } else {
             if (hasSDCard()) {
-                getDeviceInfo();
+                String decVersionName = CommonUtil.getVersionName(getApplicationContext());
+                LogUtils.i(TAG, "decVersionName = " + decVersionName);
             }
         }
     }
@@ -471,14 +436,30 @@ public class MainActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         hideBottomMenu();
+        //打开晓听服务
+        Intent intent = new Intent();
+        ComponentName comp = new ComponentName("com.aispeech.tvui",
+                "com.aispeech.tvui.service.TelenetService");
+        intent.setComponent(comp);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(intent);
+        //打开投屏服务
+        Intent inten = new Intent();
+        ComponentName com = new ComponentName("com.ionitech.airscreen",
+                "com.ionitech.airscreen.service.MyFirebaseInstanceIDService");
+        inten.setComponent(com);
+        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(inten);
+
+        String packageName = "com.dianshijia.newlive";
+        if (getPackageManager().getLaunchIntentForPackage(packageName) != null) {
+            PackagesInstaller.uninstallSlient(packageName);
+        }
     }
 
     public void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -486,7 +467,6 @@ public class MainActivity extends FragmentActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
-
     }
 }
 

@@ -55,7 +55,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         this.mFoodList = foodList;
     }
 
-
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
@@ -64,17 +63,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         final ViewHolder holder = new ViewHolder(view);
 
         holder.foodCard.setFocusable(true);
-        holder.foodCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    ViewUtils.focusStatus(v);
-                } else {
-                    ViewUtils.normalStatus(v);
-                }
-            }
-        });
-
         initView(holder);
 
         return holder;

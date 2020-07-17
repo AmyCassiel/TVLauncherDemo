@@ -214,8 +214,8 @@ public class HotelInfoBean {
             private int status;
             private long waiterStartTime;
             private long waiterEndTime;
-            private int gmtCreate;
-            private int gmtModified;
+            private long gmtCreate;
+            private long gmtModified;
             private String deliveryType;
             private List<ServiceDetailsBean> serviceDetails;
 

@@ -43,6 +43,13 @@ public class BottomFragment extends Fragment {
         View bottomlayout = inflater.inflate(R.layout.main_bottom_bar,container,false);
         mUnbinder = ButterKnife.bind(this,bottomlayout);
         activity = (MainActivity) getActivity();
+        return bottomlayout;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         Constant.wifiName = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("wifi", "");
         Constant.wifiPassword = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
@@ -51,6 +58,7 @@ public class BottomFragment extends Fragment {
                 .getString("breakfastTime", "");
         Constant.sFacilityLocation = activity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
                 .getString("local", "");
+
         if (!Constant.wifiName.isEmpty()&& !Constant.wifiPassword.isEmpty()){
             tvName.setText("WIFI账号："+Constant.wifiName);
             tvPassword.setText("密码："+Constant.wifiPassword);
@@ -63,6 +71,5 @@ public class BottomFragment extends Fragment {
         }else {
             tvBreakfastTime.setText("");
         }
-        return bottomlayout;
     }
 }

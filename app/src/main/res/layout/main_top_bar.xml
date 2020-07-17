@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25px"
         android:lineSpacingExtra="10dp"
-        android:text="房间号：8888"
         android:textColor="@color/white"
         android:textSize="30px"
         app:layout_constraintBottom_toBottomOf="@id/hotel_icon"

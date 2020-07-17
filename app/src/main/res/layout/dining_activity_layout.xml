@@ -3,35 +3,227 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/dining_main"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:background="@mipmap/dining_main">
+    android:clipToPadding="false">
 
-    <com.zhy.autolayout.AutoRelativeLayout
+    <RelativeLayout
         android:id="@+id/dining_main_all1"
         android:layout_width="625px"
-        android:layout_height="425px"
-        android:layout_marginTop="40px"
+        android:layout_height="380px"
+        android:layout_marginTop="25px"
         android:nextFocusRight="@id/dining_cake_all"
         android:nextFocusDown="@id/dining_fruit_all"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="315px">
 
                 <com.jiachang.tv_launcher.view.MyImageView
                     android:id="@+id/dining_main1"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_main_food" />
 
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="美食正餐" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/dining_cake_all1"
+        android:layout_width="350px"
+        android:layout_height="380px"
+        android:nextFocusLeft="@id/dining_main_all"
+        android:nextFocusRight="@id/dining_drink_all"
+        android:nextFocusDown="@id/dining_welcome_all"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/dining_main_all1"
+        app:layout_constraintTop_toTopOf="@id/dining_main_all1">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="315px">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_cake1"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_snack" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="快餐小吃" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dining_drink_all1"
+        android:layout_width="325px"
+        android:layout_height="380px"
+        android:nextFocusLeft="@id/dining_cake_all1"
+        android:nextFocusRight="@id/dining_fruit_all1"
+        android:nextFocusDown="@id/dining_welcome_all1"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/dining_cake_all1"
+        app:layout_constraintTop_toTopOf="@id/dining_cake_all1">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="315px">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_drink1"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_drink" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="酒水茶饮" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.gigamole.library.ShadowLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dining_fruit_all1"
+        android:layout_width="315px"
+        android:layout_height="315px"
+        android:nextFocusLeft="@id/dining_drink_all1"
+        android:nextFocusRight="@id/dining_iceCream_all1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_fruit1"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_fruit" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="水果轻食" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/dining_iceCream_all1"
+        android:layout_width="315px"
+        android:layout_height="315px"
+        android:nextFocusLeft="@id/dining_fruit_all1"
+        android:nextFocusRight="@id/dining_welcome_all1"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/dining_main_all1"
+        app:layout_constraintTop_toTopOf="@id/dining_fruit_all1">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_iceCream1"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_ice_cream" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="时尚甜品" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/dining_welcome_all1"
+        android:layout_width="675px"
+        android:layout_height="315px"
+        android:nextFocusLeft="@id/dining_iceCream_all1"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/dining_drink_all1"
+        app:layout_constraintStart_toStartOf="@id/dining_cake_all1"
+        app:layout_constraintTop_toTopOf="@id/dining_iceCream_all1">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_welcome1"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_welcome" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="更多菜单" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </com.gigamole.library.ShadowLayout>
+    </RelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/dining_main_all"
+        style="@style/DLAutoRelativeLayoutStyle"
+        android:layout_marginTop="40px"
+        android:nextFocusRight="@id/dining_cake_all"
+        android:nextFocusDown="@id/dining_fruit_all"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.jiachang.tv_launcher.view.MyImageView
+                    android:id="@+id/dining_main"
+                    style="@style/DLImageStyle"
+                    android:src="@mipmap/dining_main_food" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
                     <TextView
                         style="@style/DLTextStyle"
                         android:text="美食正餐" />
@@ -43,220 +235,19 @@
 
 
     <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_cake_all1"
-        android:layout_width="350px"
-        android:layout_height="450px"
-        android:layout_marginTop="40px"
-        android:visibility="gone"
-        android:nextFocusLeft="@id/dining_main_all"
-        android:nextFocusRight="@id/dining_drink_all"
-        android:nextFocusDown="@id/dining_welcome_all"
-        app:layout_constraintStart_toEndOf="@id/dining_main_all1"
-        app:layout_constraintTop_toTopOf="@id/dining_main_all1"
-        app:layout_constraintBottom_toBottomOf="@id/dining_main_all1">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_cake1"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_snack" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                    <TextView
-                        style="@style/DLTextStyle"
-                        android:text="快餐小吃" />
-                </LinearLayout>
-            </FrameLayout>
-        </com.gigamole.library.ShadowLayout>
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_drink_all1"
-        android:layout_width="325px"
-        android:layout_height="425px"
-        android:visibility="gone"
-        android:nextFocusLeft="@id/dining_cake_all1"
-        android:nextFocusRight="@id/dining_fruit_all1"
-        android:nextFocusDown="@id/dining_welcome_all1"
-        app:layout_constraintBottom_toBottomOf="@id/dining_cake_all1"
-        app:layout_constraintStart_toEndOf="@id/dining_cake_all1"
-        app:layout_constraintTop_toTopOf="@id/dining_cake_all1">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_drink1"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_drink" />
-
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                    <TextView
-                        style="@style/DLTextStyle"
-                        android:text="酒水茶饮" />
-                </LinearLayout>
-            </FrameLayout>
-        </com.gigamole.library.ShadowLayout>
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_fruit_all1"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:visibility="gone"
-        android:nextFocusLeft="@id/dining_drink_all1"
-        android:nextFocusRight="@id/dining_iceCream_all1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_fruit1"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_fruit" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                    <TextView
-                        style="@style/DLTextStyle"
-                        android:text="水果轻食" />
-                </LinearLayout>
-            </FrameLayout>
-
-        </com.gigamole.library.ShadowLayout>
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_iceCream_all1"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:visibility="gone"
-        android:nextFocusLeft="@id/dining_fruit_all1"
-        android:nextFocusRight="@id/dining_welcome_all1"
-        app:layout_constraintEnd_toEndOf="@id/dining_main_all1"
-        app:layout_constraintTop_toTopOf="@id/dining_fruit_all1">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_iceCream1"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_ice_cream" />
-
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                    <TextView
-                        style="@style/DLTextStyle"
-                        android:text="时尚甜品" />
-                </LinearLayout>
-            </FrameLayout>
-
-        </com.gigamole.library.ShadowLayout>
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_welcome_all1"
-        android:layout_width="600px"
-        android:layout_height="300px"
-        android:visibility="gone"
-        android:nextFocusLeft="@id/dining_iceCream_all1"
-        app:layout_constraintBottom_toBottomOf="@id/dining_iceCream_all1"
-        app:layout_constraintEnd_toEndOf="@id/dining_drink_all1"
-        app:layout_constraintStart_toStartOf="@id/dining_cake_all1"
-        app:layout_constraintTop_toTopOf="@id/dining_iceCream_all1">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_welcome1"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_welcome" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                    <TextView
-                        style="@style/DLTextStyle"
-                        android:text="更多菜单" />
-                </LinearLayout>
-            </FrameLayout>
-
-        </com.gigamole.library.ShadowLayout>
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-    <com.zhy.autolayout.AutoRelativeLayout
-        android:id="@+id/dining_main_all"
-        style="@style/DLAutoRelativeLayoutStyle"
-        android:layout_marginTop="40px"
-        android:nextFocusRight="@id/dining_cake_all"
-        android:nextFocusDown="@id/dining_fruit_all"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible">
-
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.jiachang.tv_launcher.view.MyImageView
-                    android:id="@+id/dining_main"
-                    style="@style/DLImageStyle"
-                    android:src="@mipmap/dining_main_food" />
-
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="美食正餐" />
-                </LinearLayout>
-            </FrameLayout>
-        </com.gigamole.library.ShadowLayout>
-
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-
-    <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/dining_cake_all"
         style="@style/DLAutoRelativeLayoutStyle"
+        android:layout_marginStart="250px"
         android:nextFocusLeft="@id/dining_main_all"
         android:nextFocusRight="@id/dining_drink_all"
         android:nextFocusDown="@id/dining_welcome_all"
-        android:layout_marginStart="250px"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/dining_main_all"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dining_main_all"
-        android:visibility="visible">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dining_main_all">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -266,11 +257,12 @@
                     android:id="@+id/dining_cake"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_snack" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="快餐小吃" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="快餐小吃" />
                 </LinearLayout>
             </FrameLayout>
         </com.gigamole.library.ShadowLayout>
@@ -282,13 +274,12 @@
         android:nextFocusLeft="@id/dining_cake_all"
         android:nextFocusRight="@id/dining_fruit_all"
         android:nextFocusDown="@id/dining_welcome_all"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/dining_cake_all"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dining_cake_all"
-        android:visibility="visible">
+        app:layout_constraintTop_toTopOf="@id/dining_cake_all">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -299,11 +290,11 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_drink" />
 
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="酒水茶饮" />
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="酒水茶饮" />
                 </LinearLayout>
             </FrameLayout>
         </com.gigamole.library.ShadowLayout>
@@ -314,12 +305,11 @@
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_drink_all"
         android:nextFocusRight="@id/dining_iceCream_all"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="visible">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -329,11 +319,12 @@
                     android:id="@+id/dining_fruit"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_fruit" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="水果轻食" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="水果轻食" />
                 </LinearLayout>
             </FrameLayout>
 
@@ -345,12 +336,11 @@
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_fruit_all"
         android:nextFocusRight="@id/dining_welcome_all"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@id/dining_main_all"
-        app:layout_constraintTop_toTopOf="@id/dining_fruit_all"
-        android:visibility="visible">
+        app:layout_constraintTop_toTopOf="@id/dining_fruit_all">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -361,11 +351,11 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_ice_cream" />
 
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="时尚甜品" />
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="时尚甜品" />
                 </LinearLayout>
             </FrameLayout>
 
@@ -376,14 +366,13 @@
         android:id="@+id/dining_welcome_all"
         style="@style/DLAutoRelativeLayoutStyle"
         android:nextFocusLeft="@id/dining_iceCream_all"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/dining_iceCream_all"
         app:layout_constraintEnd_toEndOf="@id/dining_drink_all"
         app:layout_constraintStart_toStartOf="@id/dining_cake_all"
-        app:layout_constraintTop_toTopOf="@id/dining_iceCream_all"
-        android:visibility="visible">
+        app:layout_constraintTop_toTopOf="@id/dining_iceCream_all">
 
-        <com.gigamole.library.ShadowLayout
-            style="@style/DLShadowLayoutStyle">
+        <com.gigamole.library.ShadowLayout style="@style/DLShadowLayoutStyle">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -393,11 +382,12 @@
                     android:id="@+id/dining_welcome"
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_welcome" />
-                <LinearLayout
-                    style="@style/DLboderTextStyle">
-                <TextView
-                    style="@style/DLTextStyle"
-                    android:text="更多菜单" />
+
+                <LinearLayout style="@style/DLboderTextStyle">
+
+                    <TextView
+                        style="@style/DLTextStyle"
+                        android:text="更多菜单" />
                 </LinearLayout>
             </FrameLayout>
 

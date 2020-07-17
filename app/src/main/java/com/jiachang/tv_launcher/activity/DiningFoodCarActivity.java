@@ -52,7 +52,6 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
 
         //获取前一页的数据
         foodList = DiningFoodListActivity.foodItems;
-
         FoodCarAdapter foodCarAdapter = new FoodCarAdapter(this, foodList);
 //        foodCarAdapter.setItemClickListener((FoodCarAdapter.onItemClickListener) this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -64,7 +63,11 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         getData();
     }
 
@@ -72,16 +75,17 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
         Iterator<FoodIntentBean> iterator = foodList.iterator();
         while (iterator.hasNext()) {
             FoodIntentBean food = (FoodIntentBean) iterator.next();
-            List<Float> pr = new ArrayList<>();
-            float price = 0;
+            List<Double> pr = new ArrayList<>();
+            double prices = 0;
             for (int i = 0; i < foodList.size(); i++){
                 String foodPrice = food.getFoodPrice();
                 int count = food.getFoodCount();
-                price = Float.valueOf(foodPrice) * count;
+                String fPrice = foodPrice.replace("¥","");
+                double price = Double.valueOf(fPrice) * count;
+                prices+=price;
                 pr.add(price);
             }
-            tvAltogether.setText("总计："+price+"元");
-//            tvAltogether.
+            tvAltogether.setText("总计："+prices+"元");
         }
     }
 
@@ -93,10 +97,7 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
 
     protected void hideBottomMenu() {
         //隐藏虚拟按键，并且全屏
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

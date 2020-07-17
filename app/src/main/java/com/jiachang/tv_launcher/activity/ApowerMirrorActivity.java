@@ -28,16 +28,6 @@ public class ApowerMirrorActivity extends FragmentActivity {
     FrameLayout aMiOS;
     @BindView(R.id.apowermirror_android)
     FrameLayout aMa;
-    /*@BindView(R.id.scroll_view)
-    ScrollView scrollView;
-    @BindView(R.id.ios_img)
-    ImageView iosImg;
-    @BindView(R.id.apower_mirror_android)
-    LinearLayout aMA;
-    @BindView(R.id.apower_mirror_android_miracast)
-    FrameLayout aMAM;
-    @BindView(R.id.apower_mirror_android_dlna)
-    FrameLayout aMAD;*/
     @BindView(R.id.ios)
     FrameLayout ios;
     @BindView(R.id.android)
@@ -105,10 +95,7 @@ public class ApowerMirrorActivity extends FragmentActivity {
 
     /**隐藏虚拟按键，并且全屏*/
     protected void hideBottomMenu() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            View v = getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             //for new api versions.
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

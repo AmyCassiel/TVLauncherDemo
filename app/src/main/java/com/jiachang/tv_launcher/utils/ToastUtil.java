@@ -10,7 +10,6 @@ import android.widget.Toast;
  * @description 自定义吐司的实体类
  */
 class ToastUtil {
-    private static Toast toast;//单例的toast
     /**
      * 显示Toast
      */
