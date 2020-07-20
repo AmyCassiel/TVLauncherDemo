@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 /**
  * @author Mickey.Ma
@@ -83,21 +81,15 @@ public class CustomDialog extends Dialog implements DialogInterface {
      */
     private void initEvent() {
         //设置确定按钮被点击后，向外界提供监听
-        positiveBn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( onClickBottomListener!= null) {
-                    onClickBottomListener.onPositiveClick();
-                }
+        positiveBn.setOnClickListener(v -> {
+            if ( onClickBottomListener!= null) {
+                onClickBottomListener.onPositiveClick();
             }
         });
         //设置取消按钮被点击后，向外界提供监听
-        negtiveBn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ( onClickBottomListener!= null) {
-                    onClickBottomListener.onNegtiveClick();
-                }
+        negtiveBn.setOnClickListener(v -> {
+            if ( onClickBottomListener!= null) {
+                onClickBottomListener.onNegtiveClick();
             }
         });
     }
@@ -134,9 +126,6 @@ public class CustomDialog extends Dialog implements DialogInterface {
         }else {
             imageIv.setVisibility(View.GONE);
         }*/
-        /**
-         * 只显示一个按钮的时候隐藏取消按钮，回掉只执行确定的事件
-         */
         if (isSingle){
             columnLineView.setVisibility(View.GONE);
             negtiveBn.setVisibility(View.GONE);
@@ -175,11 +164,11 @@ public class CustomDialog extends Dialog implements DialogInterface {
         /**
          * 点击确定按钮事件
          */
-        public void onPositiveClick();
+        void onPositiveClick();
         /**
          * 点击取消按钮事件
          */
-        public void onNegtiveClick();
+        void onNegtiveClick();
     }
 
     public String getMessage() {

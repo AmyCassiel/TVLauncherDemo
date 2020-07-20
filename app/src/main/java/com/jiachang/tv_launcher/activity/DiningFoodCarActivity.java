@@ -1,10 +1,7 @@
 package com.jiachang.tv_launcher.activity;
-
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,8 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnFocusChange;
-
-
 /**
  * @author Mickey.Ma
  * @date 2020-03-26
@@ -32,7 +27,7 @@ import butterknife.OnFocusChange;
  */
 public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.onItemClickListener {
     private String TAG = "FoodCarActivity";
-    private List<FoodIntentBean> foodList = new ArrayList<FoodIntentBean>();
+    private List<FoodIntentBean> foodList = new ArrayList<>();
     @BindView(R.id.recyclerLisCar)
     RecyclerView carList;
     @BindView(R.id.gopay)
@@ -52,7 +47,7 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
 
         //获取前一页的数据
         foodList = DiningFoodListActivity.foodItems;
-        FoodCarAdapter foodCarAdapter = new FoodCarAdapter(this, foodList);
+        FoodCarAdapter foodCarAdapter = new FoodCarAdapter(foodList);
 //        foodCarAdapter.setItemClickListener((FoodCarAdapter.onItemClickListener) this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         carList.setLayoutManager(layoutManager);
@@ -72,21 +67,19 @@ public class DiningFoodCarActivity extends Activity implements FoodCarAdapter.on
     }
 
     private void getData() {
+        double prices = 0;
         Iterator<FoodIntentBean> iterator = foodList.iterator();
+        List<Double> pr = new ArrayList<>();
         while (iterator.hasNext()) {
             FoodIntentBean food = (FoodIntentBean) iterator.next();
-            List<Double> pr = new ArrayList<>();
-            double prices = 0;
-            for (int i = 0; i < foodList.size(); i++){
-                String foodPrice = food.getFoodPrice();
-                int count = food.getFoodCount();
-                String fPrice = foodPrice.replace("¥","");
-                double price = Double.valueOf(fPrice) * count;
-                prices+=price;
-                pr.add(price);
-            }
-            tvAltogether.setText("总计："+prices+"元");
+            String foodPrice = food.getFoodPrice();
+            int count = food.getFoodCount();
+            String fPrice = foodPrice.replace("¥","");
+            double price = Double.valueOf(fPrice) * count;
+            prices+=price;
+            pr.add(price);
         }
+        tvAltogether.setText("总计："+prices+"元");
     }
 
     @Override

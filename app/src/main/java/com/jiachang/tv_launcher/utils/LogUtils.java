@@ -19,11 +19,11 @@ import java.util.Date;
  */
 public class LogUtils {
     private static Boolean MYLOG_SWITCH = true; // 日志文件总开关
-    private static Boolean MYLOG_WRITE_TO_FILE = true;// 日志写入文件开关
-    private static char MYLOG_TYPE = 'v';// 输入日志类型，w代表只输出告警信息等，v代表输出所有信息
-    private static int SDCARD_LOG_FILE_SAVE_DAYS = 0;// sd卡中日志文件的最多保存天数
-    private static SimpleDateFormat myLogSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
-    private static SimpleDateFormat logfile = new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
+    private static final Boolean MYLOG_WRITE_TO_FILE = true;// 日志写入文件开关
+    private static final char MYLOG_TYPE = 'v';// 输入日志类型，w代表只输出告警信息等，v代表输出所有信息
+    private static final int SDCARD_LOG_FILE_SAVE_DAYS = 0;// sd卡中日志文件的最多保存天数
+    private static final SimpleDateFormat myLogSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
+    private static final SimpleDateFormat logfile = new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
     public Context context;
 
     public static void w(String tag, Object msg) { // 警告信息

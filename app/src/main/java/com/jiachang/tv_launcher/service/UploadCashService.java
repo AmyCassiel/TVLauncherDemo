@@ -54,8 +54,8 @@ public class UploadCashService extends IntentService {
     }
     public void uploadFile()throws Exception{
         String cuid= URLEncoder.encode(Constant.MAC,"utf-8");
-        Map<String, String> params = new HashMap<String, String>();
-        Map<String, File> upfiles = new HashMap<String, File>();
+        Map<String, String> params = new HashMap<>();
+        Map<String, File> upfiles = new HashMap<>();
         File file = new File(Constant.LOG_FILE_PATH);
         upfiles.put(Constant.MAC+".txt", file);
         params.put("cuid", cuid);

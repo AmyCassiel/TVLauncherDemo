@@ -106,6 +106,10 @@
         <activity android:name=".activity.ApowerMirrorActivity"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"/>
+<!--        客控界面-->
+        <activity android:name=".activity.ControlActivity"
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
 
 <!--        菜单页面-->
         <activity

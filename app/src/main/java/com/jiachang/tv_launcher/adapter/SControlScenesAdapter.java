@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.bean.ControlScenesBean;
 import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
 import com.jiachang.tv_launcher.utils.ViewUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,10 +26,7 @@ import butterknife.ButterKnife;
  * @description
  */
 public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAdapter.ViewHolder>{
-    private Context context;
     private List<ControlScenesBean> mServiceGoods;
-    private RecyclerView recyclerView;
-    private onItemClickListener itemClickListener;//ItemView的监听器
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.service_control_image1)
@@ -48,8 +42,7 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
         }
     }
 
-    public SControlScenesAdapter(Context context, List<ControlScenesBean> serviceTypeList){
-        this.context = context;
+    public SControlScenesAdapter(List<ControlScenesBean> serviceTypeList){
         this.mServiceGoods = serviceTypeList;
     }
     @NonNull
@@ -57,17 +50,12 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_recyview_goodsitem1,parent,false);
         final ViewHolder holder = new ViewHolder(view);
-        context = view.getContext();
-
         initView(holder);
-        holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    ViewUtils.focusStatus(v);
-                } else {
-                    ViewUtils.normalStatus(v);
-                }
+        holder.serviceTypeCard.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                ViewUtils.focusStatus(v);
+            } else {
+                ViewUtils.normalStatus(v);
             }
         });
 
@@ -94,11 +82,6 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
         return position;
     }
 
-    @Override
-    public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
-        this.recyclerView=recyclerView;
-
-    }
     public void setDataList( List<ControlScenesBean> serviceTypeList){
         serviceTypeList.clear();
         this.mServiceGoods = serviceTypeList;

@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +11,6 @@ import android.widget.TextView;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.bean.ControlDevicesBean;
 import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
-import com.jiachang.tv_launcher.utils.ViewUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -30,11 +26,7 @@ import butterknife.ButterKnife;
  * @description
  */
 public class SControlDevicesAdapter extends RecyclerView.Adapter<SControlDevicesAdapter.ViewHolder>{
-    private Context context;
     private List<ControlDevicesBean> mServiceGoods;
-    private RecyclerView recyclerView;
-    private onItemClickListener itemClickListener;//ItemView的监听器
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.service_control_image)
         ImageView serviceImage;
@@ -51,8 +43,7 @@ public class SControlDevicesAdapter extends RecyclerView.Adapter<SControlDevices
         }
     }
 
-    public SControlDevicesAdapter(Context context, List<ControlDevicesBean> serviceTypeList){
-        this.context = context;
+    public SControlDevicesAdapter(List<ControlDevicesBean> serviceTypeList){
         this.mServiceGoods = serviceTypeList;
     }
     @NonNull
@@ -60,13 +51,9 @@ public class SControlDevicesAdapter extends RecyclerView.Adapter<SControlDevices
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_recyview_goodsitem,parent,false);
         final ViewHolder holder = new ViewHolder(view);
-        context = view.getContext();
         initView(holder);
 
-        holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-            }
+        holder.serviceTypeCard.setOnFocusChangeListener((v, hasFocus) -> {
         });
         return holder;
     }
@@ -95,12 +82,6 @@ public class SControlDevicesAdapter extends RecyclerView.Adapter<SControlDevices
 
     public void setmServiceGoods(List<ControlDevicesBean> mServiceGoods) {
         this.mServiceGoods = mServiceGoods;
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
-        this.recyclerView=recyclerView;
-
     }
 
     public void setDataList( List<ControlDevicesBean> serviceTypeList){

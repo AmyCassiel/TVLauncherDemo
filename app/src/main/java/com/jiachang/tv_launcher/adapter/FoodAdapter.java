@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.bean.FoodListBean;
-import com.jiachang.tv_launcher.utils.ViewUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,8 +25,7 @@ import butterknife.ButterKnife;
  * @description
  */
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> implements View.OnClickListener {
-    private List<FoodListBean> mFoodList;
-    private Context context;
+    private final List<FoodListBean> mFoodList;
     private onItemClickListener itemClickListener;//ItemView的监听器
     private RecyclerView recyclerView;
 
@@ -50,8 +47,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> im
         }
     }
 
-    public  FoodAdapter (Context context,List <FoodListBean> foodList){
-        this.context = context;
+    public  FoodAdapter (List <FoodListBean> foodList){
         this.mFoodList = foodList;
     }
 

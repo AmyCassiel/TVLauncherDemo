@@ -1,11 +1,11 @@
 package com.jiachang.tv_launcher.interfaces;
 
+import com.jiachang.tv_launcher.bean.BaseUrlBean;
 import com.jiachang.tv_launcher.bean.FoodListRequestBean;
 import com.jiachang.tv_launcher.bean.HotelInfoBean;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,9 +27,10 @@ public interface RetrofitInterface {
     /**
      * 获取房间设备详情列表（用于查询设备信号和设备是否在线）
      */
+    @FormUrlEncoded
     @POST("/reservation/api/hic/cuid/roomNum")
     Observable<ResponseBody> getRoomNum(
-            @Query("cuid") String cuid
+            @Field("cuid") String cuid
     );
 
     /**
@@ -55,20 +56,23 @@ public interface RetrofitInterface {
             @Query("cuid") String cuid
     );
 
-
-    @POST("/App/c/sys/callb.php")
-    Call<ResponseBody> getDevice(
-            @Query("url") String url,
-            @Query("hictoken") String hictoken,
-            @Query("rs") String rs
+    /*
+     * 获取BaseUrl
+     * */
+    @FormUrlEncoded
+    @POST
+    Observable<BaseUrlBean> getBaseUrl(
+            @Url String url,
+            @Field("rs") String getdturl
     );
-
 
     @FormUrlEncoded
     @POST("/App/c/sys/callb.php")
     Observable<ResponseBody> getAllDevice(
-            @Field("url") String url,
-            @Field("hictoken") String hictoken,
+            @Query("url") String url,
+            @Query("hictoken") String hictoken,
             @Field("rs") String getDevListJson
     );
+
+
 }

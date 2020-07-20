@@ -1,7 +1,5 @@
 package com.jiachang.tv_launcher.bean;
 
-import android.graphics.Bitmap;
-
 /**
  * @author Mickey.Ma
  * @date 2020-05-29

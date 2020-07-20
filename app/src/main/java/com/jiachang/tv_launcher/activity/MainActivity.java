@@ -26,9 +26,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -44,6 +46,7 @@ import com.jiachang.tv_launcher.fragment.mainfragment.TopbarFragment;
 import com.jiachang.tv_launcher.utils.ApiRetrofit;
 import com.jiachang.tv_launcher.utils.CommonUtil;
 import com.jiachang.tv_launcher.utils.Constant;
+import com.jiachang.tv_launcher.utils.DialogUtil;
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.ImageUtil;
@@ -56,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -64,7 +66,6 @@ import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -73,54 +74,33 @@ import rx.schedulers.Schedulers;
  * @description 主界面
  */
 public class MainActivity extends FragmentActivity {
-    private String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
     public static String mac;
+    private String bg,bg1;
     public static int hotelId;
     private Drawable drawable;
     public Context context;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"};
-    private MenuFragment mF;
-    private String[] sTypeNames1;
-    private String[] sDetailsNames1, sDetailsNames3, sDetailsNames4;
-    private String[] sDetailsImage1, sDetailsImage3, sDetailsImage4;
-    private String[] sFsNames0, sFsImgs0, sFsTimes0, sFsLocals0;
-    private ArrayList<String> sTypeTime1 = new ArrayList<>();
-    private ArrayList<String> eTypeTime1 = new ArrayList<>();
-    private ArrayList<String> sTypeTime3 = new ArrayList<>();
-    private ArrayList<String> eTypeTime3 = new ArrayList<>();
-    private ArrayList<String> sTypeTime4 = new ArrayList<>();
-    private ArrayList<String> eTypeTime4 = new ArrayList<>();
 
-    private ArrayList<String> sTypeNames = new ArrayList<>();
-    private ArrayList<String> sFsNames = new ArrayList<>();
-    private ArrayList<String> sFsImgs = new ArrayList<>();
-    private ArrayList<String> sFsTimes = new ArrayList<>();
-    private ArrayList<String> sFsLocals = new ArrayList<>();
-
-    private ArrayList<String> nameArrayList1 = new ArrayList<>();
-    private ArrayList<String> imageArrayList1 = new ArrayList<>();
-    private ArrayList<String> nameArrayList3 = new ArrayList<>();
-    private ArrayList<String> imageArrayList3 = new ArrayList<>();
-    private ArrayList<String> nameArrayList4 = new ArrayList<>();
-    private ArrayList<String> imageArrayList4 = new ArrayList<>();
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 0:
-                    if (drawable != null) {
+                    if (drawable != null){
                         constraintLayout.setBackground(drawable);
                     }
                     break;
                 default:
+                    break;
             }
         }
     };
 
     @BindView(R.id.main_activity)
-    ConstraintLayout constraintLayout;
+    RelativeLayout constraintLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +114,7 @@ public class MainActivity extends FragmentActivity {
         hideBottomMenu();
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-        context = getApplicationContext();
+        context = MainActivity.this;
         //产品授权
         ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 10001);
         //初始化视图
@@ -145,6 +125,12 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         //获取酒店介绍相关数据并缓存
         getData();
     }
@@ -154,7 +140,7 @@ public class MainActivity extends FragmentActivity {
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
 
-        mF = new MenuFragment();
+        MenuFragment mF = new MenuFragment();
         TopbarFragment tF = new TopbarFragment();
         BottomFragment bF = new BottomFragment();
 
@@ -168,19 +154,26 @@ public class MainActivity extends FragmentActivity {
      * 获取酒店的详细信息
      */
     public void getData() {
-        Constant.MAC = IPUtils.getLocalEthernetMacAddress();
-        if (CommonUtil.isNetworkConnected(MainActivity.this)) {
-            ApiRetrofit.initRetrofit(Constant.hostUrl)
-                    .getHotel(Constant.MAC)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<HotelInfoBean>() {
-                        @Override
-                        public void call(HotelInfoBean hotelInfo) {
+        DialogUtil.start(context,"正在加载酒店数据...");
+        new Thread() {
+            @Override
+            public void run() {
+                if (CommonUtil.isNetworkConnected(MainActivity.this)) {
+                    String url = Constant.hostUrl + "/reservation/api/hic/serHotelInfo/get";
+                    mac = IPUtils.getLocalEthernetMacAddress();
+                    Constant.MAC = mac;
+                    Map map = new LinkedHashMap();
+                    map.put("cuid", mac);
+                    try {
+                        String req = HttpUtils.mPost(url, map);
+                        LogUtils.d(TAG + ".202", "req = " + req);
+                        if (!req.equals("") && !req.isEmpty()) {
+                            DialogUtil.finish();
+                            JSONObject json = JSONObject.parseObject(req);
+                            ParserConfig.getGlobalInstance().addAccept("HotelInfo");
+                            HotelInfoBean hotelInfo = JSONObject.toJavaObject(json, HotelInfoBean.class);
                             int code = hotelInfo.getCode();
                             if (code == 0) {
-                                hotelId = hotelInfo.getHotelDb().getId();
-                                Constant.hotelId = hotelId;
                                 Constant.hotelName = hotelInfo.getHotelDb().getHotelName();
                                 LogUtils.d(TAG + ".210", "hotelName = " + Constant.hotelName);
                                 Constant.hotelIntroduction = hotelInfo.getHotelDb().getHotelIntrodu();
@@ -188,204 +181,78 @@ public class MainActivity extends FragmentActivity {
                                 Constant.business = hotelInfo.getHotelDb().getBusiness();
                                 Constant.wifiName = hotelInfo.getHotelDb().getWifi();
                                 Constant.wifiPassword = hotelInfo.getHotelDb().getPassword();
+                                LogUtils.d(TAG+".216","Constant.wifiPassword = "+Constant.wifiPassword);
                                 Constant.tel = hotelInfo.getHotelDb().getTelephone();
                                 Constant.img = hotelInfo.getHotelDb().getLogo();
-                                String bg = hotelInfo.getHotelDb().getHotelPromote().getMainImage();
-                                LogUtils.d(TAG + ".216", "MainActivityBG = " + bg);
-                                if (!bg.isEmpty()) {
-                                    drawable = ImageUtil.ImageOperations(context, bg, "bg.png");
+                                String bgurl = hotelInfo.getHotelDb().getAppearancePicUrl();
+                                bg1 = bgurl.substring(0, bgurl.indexOf(","));
+                                bg = hotelInfo.getHotelDb().getHotelPromote().getMainImage();
+                                LogUtils.d(TAG+".216","MainActivityBG = "+bg);
+                                if (!bg.isEmpty()){
+                                    drawable = ImageUtil.ImageOperations(context,bg,"bg.png");
                                     Message message = new Message();
                                     message.what = 0;
                                     message.obj = drawable;
                                     handler.sendMessage(message);
-                                } else {
-                                    String bgurl = hotelInfo.getHotelDb().getAppearancePicUrl();
-                                    String bg1 = bgurl.substring(0, bgurl.indexOf(","));
-                                    drawable = ImageUtil.ImageOperations(context, bg1, "bg.png");
+                                }else {
+                                    drawable = ImageUtil.ImageOperations(context,bg1,"bg.png");
                                     Message message = new Message();
                                     message.what = 0;
                                     message.obj = drawable;
                                     handler.sendMessage(message);
                                 }
+                                Constant.serviceConfs = hotelInfo.getHotelDb().getServiceConfs();
 
-                                List<ServiceConfsBean> serviceConfs = hotelInfo.getHotelDb().getServiceConfs();
-                                int typeSize = serviceConfs.size();
-                                for (int i = 0; i < serviceConfs.size(); i++) {
-                                    Constant.sTypeName = serviceConfs.get(i).getServiceType().getServiceTypeName();
-                                    Constant.sTypeId = serviceConfs.get(i).getServiceType().getId();
-                                    sTypeNames.add(Constant.sTypeName);
-                                    List<ServiceDetailsBean> serviceDetails = hotelInfo.getHotelDb().getServiceConfs().get(i).getServiceDetails();
-                                    int id = serviceConfs.get(i).getServiceType().getId();
-                                    //补充服务
-                                    if (id == 1) {
-                                        Constant.sTypeName = serviceConfs.get(i).getServiceType().getServiceTypeName();
-                                        int size = serviceDetails.size();
-                                        Constant.idArrayList1 = new ArrayList<>();
-                                        for (int d = 0; d < size; d++) {
-                                            int sDetailsId = serviceDetails.get(d).getId();
-                                            Constant.sDetailsName = serviceDetails.get(d).getNeedName();
-                                            Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
-                                            Constant.idArrayList1.add(sDetailsId);
-                                            nameArrayList1.add(Constant.sDetailsName);
-                                            imageArrayList1.add(Constant.sDetailsImage);
-                                            long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
-                                            long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
-                                            sTypeTime1.add(String.valueOf(supplyStartTime));
-                                            eTypeTime1.add(String.valueOf(supplyEndTime));
-                                        }
-                                        Constant.startTime1 = sTypeTime1.toArray(new String[size]);
-                                        Constant.endTime1 = eTypeTime1.toArray(new String[size]);
-                                        sDetailsNames1 = nameArrayList1.toArray(new String[size]);
-                                        sDetailsImage1 = imageArrayList1.toArray(new String[size]);
-
-                                    }
-                                    //客房清洁
-                                    if (id == 2) {
-                                        Constant.start2 = serviceConfs.get(i).getWaiterStartTime();
-                                        Constant.end2 = serviceConfs.get(i).getWaiterEndTime();
-                                    }
-                                    //送餐服务
-                                    if (id == 3) {
-                                        Constant.sTypeName = serviceConfs.get(i).getServiceType().getServiceTypeName();
-                                        Constant.idArrayList3 = new ArrayList<>();
-                                        Constant.priceArrayList3 = new ArrayList<>();
-                                        int size = serviceDetails.size();
-                                        for (int d = 0; d < size; d++) {
-                                            int sDetailsId = serviceDetails.get(d).getId();
-                                            Constant.idArrayList3.add(sDetailsId);
-                                            Constant.sDetailsName = serviceDetails.get(d).getNeedName();
-                                            Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
-                                            Constant.foodPrice = serviceDetails.get(d).getPrice();
-                                            nameArrayList3.add(Constant.sDetailsName);
-                                            imageArrayList3.add(Constant.sDetailsImage);
-                                            Constant.priceArrayList3.add(Constant.foodPrice);
-                                            long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
-                                            long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
-                                            sTypeTime3.add(String.valueOf(supplyStartTime));
-                                            eTypeTime3.add(String.valueOf(supplyEndTime));
-                                        }
-                                        Constant.startTime3 = sTypeTime3.toArray(new String[size]);
-                                        Constant.endTime3 = eTypeTime3.toArray(new String[size]);
-                                        sDetailsNames3 = nameArrayList3.toArray(new String[size]);
-                                        sDetailsImage3 = imageArrayList3.toArray(new String[size]);
-                                    }
-                                    //保障服务
-                                    if (id == 4) {
-                                        Constant.sTypeName = serviceConfs.get(i).getServiceType().getServiceTypeName();
-                                        Constant.idArrayList4 = new ArrayList<>();
-                                        int size = serviceDetails.size();
-                                        for (int d = 0; d < size; d++) {
-                                            int sDetailsId = serviceDetails.get(d).getId();
-                                            Constant.sDetailsName = serviceDetails.get(d).getNeedName();
-                                            Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
-                                            Constant.idArrayList4.add(sDetailsId);
-                                            nameArrayList4.add(Constant.sDetailsName);
-                                            imageArrayList4.add(Constant.sDetailsImage);
-                                            long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
-                                            long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
-                                            sTypeTime4.add(String.valueOf(supplyStartTime));
-                                            eTypeTime4.add(String.valueOf(supplyEndTime));
-                                        }
-                                        Constant.startTime4 = sTypeTime4.toArray(new String[size]);
-                                        Constant.endTime4 = eTypeTime4.toArray(new String[size]);
-                                        sDetailsNames4 = nameArrayList4.toArray(new String[size]);
-                                        sDetailsImage4 = imageArrayList4.toArray(new String[size]);
-                                    }
-                                    //退房服务
-                                    if (id == 5) {
-                                        Constant.start5 = serviceConfs.get(i).getWaiterStartTime();
-                                        Constant.end5 = serviceConfs.get(i).getWaiterEndTime();
-                                    }
-                                    //续住服务
-                                    if (id == 6) {
-                                        Constant.start6 = serviceConfs.get(i).getWaiterStartTime();
-                                        Constant.end6 = serviceConfs.get(i).getWaiterEndTime();
-                                    }
-                                    //洗衣服务
-                                    if (id == 7) {
-                                        Constant.start7 = serviceConfs.get(i).getWaiterStartTime();
-                                        Constant.end7 = serviceConfs.get(i).getWaiterEndTime();
-                                    }
-                                }
-
-                                sTypeNames1 = sTypeNames.toArray(new String[typeSize]);
-                                List<HotelDbBean.HotelFacilitiesBean> hotelFacilities = hotelInfo.getHotelDb().getHotelFacilities();
-                                if (!hotelFacilities.isEmpty()) {
-                                    int fsize = hotelFacilities.size();
+                                Constant.hotelFacilities = hotelInfo.getHotelDb().getHotelFacilities();
+                                if (!Constant.hotelFacilities.isEmpty()) {
+                                    int fsize = Constant.hotelFacilities.size();
                                     for (int j = 0; j < fsize; j++) {
-                                        Constant.sFacilitiesName = hotelFacilities.get(j).getName();
-                                        Constant.sFacilitiesImg = hotelFacilities.get(j).getImage();
-                                        Constant.sFacilitiesTime = hotelFacilities.get(j).getTime();
-                                        Constant.sFacilitiesLocation = hotelFacilities.get(j).getLocation();
-                                        sFsNames.add(Constant.sFacilitiesName);
-                                        sFsImgs.add(Constant.sFacilitiesImg);
-                                        sFsTimes.add(Constant.sFacilitiesTime);
-                                        sFsLocals.add(Constant.sFacilitiesLocation);
-
-                                        String tyna = hotelFacilities.get(j).getHotelFacilitiesType().getName();
+                                        String tyna = Constant.hotelFacilities.get(j).getHotelFacilitiesType().getName();
                                         if (tyna.equals("早餐") && !tyna.isEmpty()) {
-                                            Constant.breakfastTime = hotelFacilities.get(j).getTime();
-                                            Constant.sFacilityLocation = hotelFacilities.get(j).getLocation();
+                                            Constant.breakfastTime = Constant.hotelFacilities.get(j).getTime();
+                                            Constant.sFacilityLocation = Constant.hotelFacilities.get(j).getLocation();
                                         }
                                     }
-                                    sFsNames0 = sFsNames.toArray(new String[fsize]);
-                                    sFsImgs0 = sFsImgs.toArray(new String[fsize]);
-                                    sFsTimes0 = sFsTimes.toArray(new String[fsize]);
-                                    sFsLocals0 = sFsLocals.toArray(new String[fsize]);
                                 }
                                 if (Constant.hotelName != null && !Constant.hotelName.isEmpty()) {
                                     getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).edit()
-                                            .putString("mac", Constant.MAC).putInt("hotelId", Constant.hotelId)
                                             .putString("hotelName", Constant.hotelName).putString("hotelIntroduction", Constant.hotelIntroduction)
                                             .putString("phone", Constant.tel).putString("wifi", Constant.wifiName)
-                                            .putString("wifipassword", Constant.wifiPassword).putString("image", Constant.img)
-                                            .putString("breakfastTime", Constant.breakfastTime).putString("local", Constant.sFacilityLocation)
-                                            .putString("hotelPolicys", Constant.hotelPolicys).putString("business", Constant.business)
-                                            .putLong("start2", Constant.start2).putLong("end2", Constant.end2)
-                                            .putLong("start5", Constant.start5).putLong("end5", Constant.end5)
-                                            .putLong("start6", Constant.start6).putLong("end6", Constant.end6)
-                                            .putLong("start7", Constant.start7).putLong("end7", Constant.end7)
+                                            .putString("wifipassword",Constant.wifiPassword).putString("image", Constant.img)
+                                            .putString("breakfastTime", Constant.breakfastTime).putString("local", Constant.sFacilityLocation).putString("business", Constant.business)
                                             .apply();
-
-                                    setSharedPreference("sTypeNames", sTypeNames1);
-                                    setSharedPreference("sDetailsNames1", sDetailsNames1);
-                                    setSharedPreference("sDetailsNames3", sDetailsNames3);
-                                    setSharedPreference("sDetailsNames4", sDetailsNames4);
-                                    setSharedPreference("sDetailsImage1", sDetailsImage1);
-                                    setSharedPreference("sDetailsImage3", sDetailsImage3);
-                                    setSharedPreference("sDetailsImage4", sDetailsImage4);
-                                    setSharedPreference("sFsNames0", sFsNames0);
-                                    setSharedPreference("sFsTimes0", sFsTimes0);
-                                    setSharedPreference("sFsImgs0", sFsImgs0);
-                                    setSharedPreference("sFsLocals0", sFsLocals0);
-                                    setSharedPreference("startTime1", Constant.startTime1);
-                                    setSharedPreference("endTime1", Constant.endTime1);
-                                    setSharedPreference("startTime3", Constant.startTime3);
-                                    setSharedPreference("endTime3", Constant.endTime3);
-                                    setSharedPreference("startTime4", Constant.startTime4);
-                                    setSharedPreference("endTime4", Constant.endTime4);
                                 }
-                            } else if (hotelInfo.getErrno() == 404) {
+                            } else if(hotelInfo.getErrno() == 404){
+                                DialogUtil.finish();
                                 Looper.prepare();
                                 Toast.makeText(context, hotelInfo.getErrmsg(), Toast.LENGTH_LONG).show();
                                 Looper.loop();
-                            } else {
+                            }else {
+                                DialogUtil.finish();
                                 LogUtils.e(TAG, "获取酒店信息失败");
                                 Looper.prepare();
                                 Toast.makeText(context, "获取酒店信息失败", Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             }
+                        } else {
+                            DialogUtil.finish();
+                            LogUtils.e(TAG, "请求数据失败，request = " + req);
+                            Looper.prepare();
+                            Toast.makeText(context, "请求数据失败,请刷新后重试", Toast.LENGTH_LONG).show();
+                            Looper.loop();
                         }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            Log.e("MainActivity","数据解析失败，"+throwable.getMessage());
-                            Toast.makeText(context, "请求数据失败,请检查网络" + throwable.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(context, "网络异常,请检查网络", Toast.LENGTH_LONG).show();
-        }
+                    } catch (Exception e) {
+                        DialogUtil.finish();
+                        e.printStackTrace();
+                    }
+                } else {
+                    DialogUtil.finish();
+                    Looper.prepare();
+                    Toast.makeText(context, "网络异常,请检查网络", Toast.LENGTH_LONG).show();
+                    Looper.loop();
+                }
+            }
+        }.start();
     }
 
     private boolean hasSDCard() {
@@ -418,15 +285,15 @@ public class MainActivity extends FragmentActivity {
 
     public void setSharedPreference(String key, String[] values) {
         String regularEx = "#";
-        String str = "";
+        StringBuilder str = new StringBuilder();
         SharedPreferences sp = getApplicationContext().getSharedPreferences("hotel", Context.MODE_PRIVATE);
         if (values != null && values.length > 0) {
             for (String value : values) {
-                str += value;
-                str += regularEx;
+                str.append(value);
+                str.append(regularEx);
             }
             SharedPreferences.Editor et = sp.edit();
-            et.putString(key, str);
+            et.putString(key, str.toString());
             et.apply();
         }
     }

@@ -17,13 +17,7 @@ public class ApiRetrofit {
      * 初始化retrofit
      * */
     public static RetrofitInterface initRetrofit(String baseUrl){
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Log.i("okHttp",message);
-            }
-        });
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> Log.i("okHttp",message));
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);//Level中还有其他等级
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)//添加拦截者

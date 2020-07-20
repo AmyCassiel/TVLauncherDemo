@@ -5,7 +5,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.ApowerMirrorActivity;
+import com.jiachang.tv_launcher.activity.ControlActivity;
 import com.jiachang.tv_launcher.activity.DiningActivity;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -78,7 +77,7 @@ public class MenuFragment extends Fragment{
         return menuLayout;
     }
 
-    @OnClick({R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.about_item_4,R.id.about_item_5,
+    @OnClick({R.id.about_item_1,R.id.about_item_2,R.id.about_item_3,R.id.about_item_5,
             R.id.menu_tv,R.id.menu_music,R.id.menu_apower_mirror,R.id.menu_dining,R.id.menu_service})
     void imageClick( View v) {
         switch (v.getId()){
@@ -105,7 +104,7 @@ public class MenuFragment extends Fragment{
                 break;
             case R.id.menu_apower_mirror:
                 Intent ent = new Intent();
-                ent.setClass(mContext, ApowerMirrorActivity.class);
+                ent.setClass(mContext, ControlActivity.class);
                 mContext.startActivity(ent);
                 break;
             case R.id.menu_dining:
@@ -137,16 +136,9 @@ public class MenuFragment extends Fragment{
                 Intent ite = new Intent();
                 Bundle bundle = new Bundle();
                 ite.setClass(mContext, HotelServiceActivity.class);
-                ite.putExtra("about_item_3",true);
+                ite.putExtra("about_item_4",true);
                 ite.putExtras(bundle);
                 mContext.startActivity(ite);
-                break;
-            case R.id.about_item_4:
-                Intent ie = new Intent();
-                ie.setClass(mContext, HotelServiceActivity.class);
-                ie.putExtra("about_item_4",true);
-                ie.putExtras(new Bundle());
-                mContext.startActivity(ie);
                 break;
             case R.id.about_item_5:
                 Intent iten = new Intent();
@@ -187,4 +179,9 @@ public class MenuFragment extends Fragment{
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUb.unbind();
+    }
 }

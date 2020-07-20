@@ -1,15 +1,11 @@
 package com.jiachang.tv_launcher.fragment.hotelservicefragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,30 +24,25 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.TypeUtils;
 import com.hjq.toast.ToastUtils;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.jiachang.tv_launcher.activity.MainActivity;
 import com.jiachang.tv_launcher.adapter.ServiceNeedGoodsAdapter;
 import com.jiachang.tv_launcher.adapter.ServiceNeedListViewAdapter;
+import com.jiachang.tv_launcher.bean.HotelInfoBean;
 import com.jiachang.tv_launcher.bean.NeedGoodsBean;
 import com.jiachang.tv_launcher.bean.NeedServiceBean;
 import com.jiachang.tv_launcher.utils.ApiRetrofit;
 import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.ImageUtil;
-import com.jiachang.tv_launcher.view.CustomDialog;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -63,9 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -76,32 +65,34 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * @description
  */
 public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.OnItemSelectedListener {
-    private List<NeedServiceBean> service = new ArrayList<>();
-    public static List<NeedGoodsBean> needGoodsBeansList = new ArrayList<NeedGoodsBean>();
-    public static ArrayList<String> list = new ArrayList<String>();
-    private String TAG = "NeedFragment";
+    private final List<NeedServiceBean> service = new ArrayList<>();
+    public static final List<NeedGoodsBean> needGoodsBeansList = new ArrayList<>();
+    public static ArrayList<String> list = new ArrayList<>();
+    private final String TAG = "NeedFragment";
     private Unbinder mUnbinder;
-    private ServiceNeedListViewAdapter hListViewAdapter;
     protected HotelServiceActivity mActivity;
     private ServiceNeedGoodsAdapter needAdapter;
-    private StaggeredGridLayoutManager layoutManager;
-    private MyAlertDialogAdapter myAdapter;
-    private String[] titles;
-    private ArrayList<Integer> idArrayList1;
-    private ArrayList<Integer> idArrayList3;
-    private ArrayList<Integer> idArrayList4;
-    private ArrayList<Float> priceArrayList3;
-    private String[] nameArrayList1, nameArrayList3, nameArrayList4;
-    private String[] imageArrayList1, imageArrayList3, imageArrayList4;
-    private Bitmap bitmap;
-    private String name;
-    private ListView listView;
+    private  List<HotelInfoBean.HotelDbBean.ServiceConfsBean> serviceConfs = Constant.serviceConfs;
+    private ArrayList<Integer> idArrayList1 = new ArrayList<>();
+    private ArrayList<Integer> idArrayList3 = new ArrayList<>();
+    private ArrayList<Integer> idArrayList4 = new ArrayList<>();
+    private ArrayList<Float> priceArrayList3= new ArrayList<>();
+    private ArrayList<String> nameArrayList1 = new ArrayList<>();
+    private ArrayList<String> nameArrayList3 = new ArrayList<>();
+    private ArrayList<String> nameArrayList4 = new ArrayList<>();
+    private ArrayList<String> imageArrayList1 = new ArrayList<>();
+    private ArrayList<String> imageArrayList3 = new ArrayList<>();
+    private ArrayList<String> imageArrayList4 = new ArrayList<>();
+    private ArrayList<String> sTypeTime1 = new ArrayList<>();
+    private ArrayList<String> eTypeTime1 = new ArrayList<>();
+    private ArrayList<String> sTypeTime3 = new ArrayList<>();
+    private ArrayList<String> eTypeTime3 = new ArrayList<>();
+    private ArrayList<String> sTypeTime4 = new ArrayList<>();
+    private ArrayList<String> eTypeTime4 = new ArrayList<>();
     private Bundle bundle;
-    private NeedGoodsBean goods;
     private NeedServiceBean needServiceType;
     private int scrollPosition = -1;
-    private View Alertlayout;
-
+    private final ArrayList<String> sTypeNames = new ArrayList<>();
     @BindView(R.id.recycler_goods)
     RelativeLayout recyclerGoods;
     @BindView(R.id.horizon_listview)
@@ -123,7 +114,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     @BindView(R.id.ok_cancel)
     Button okCancel;
 
-    Handler handler = new Handler() {
+    final Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             int what = msg.what;
@@ -132,21 +123,12 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
                     needAdapter = new ServiceNeedGoodsAdapter(mActivity, service);
                     needAdapter.notifyDataSetChanged();
                     contentReVi.setAdapter(needAdapter);
-                    initUI(titles);
+                    initUI(sTypeNames);
                 default:
                     break;
             }
         }
     };
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        idArrayList1 = Constant.idArrayList1;
-        idArrayList3 = Constant.idArrayList3;
-        idArrayList4 = Constant.idArrayList4;
-        priceArrayList3 = Constant.priceArrayList3;
-    }
 
     @Nullable
     @Override
@@ -156,7 +138,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         mActivity = (HotelServiceActivity) getContext();
         //获取宿主Activity
         if (mActivity != null) {
-            listView = mActivity.findViewById(R.id.select_listview);
+            ListView listView = mActivity.findViewById(R.id.select_listview);
             listView.getItemsCanFocus();
             listView.getId();
             listView.setNextFocusRightId(R.id.horizon_listview);
@@ -181,43 +163,100 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         horizontalListView.getNextFocusRightId();
     }
 
-    private void getData(){
+    private void getData() {
+        int typeSize = serviceConfs.size();
+        for (int i = 0; i < typeSize; i++) {
+            Constant.sTypeName = serviceConfs.get(i).getServiceType().getServiceTypeName();
+            Constant.sTypeId = serviceConfs.get(i).getServiceType().getId();
+            sTypeNames.add(Constant.sTypeName);
+            List<HotelInfoBean.HotelDbBean.ServiceConfsBean.ServiceDetailsBean> serviceDetails = serviceConfs.get(i).getServiceDetails();
+            int id = serviceConfs.get(i).getServiceType().getId();
+            //补充服务
+            if (id == 1) {
+                int size = serviceDetails.size();
+                idArrayList1 = new ArrayList<>();
+                for (int d = 0; d < size; d++) {
+                    int sDetailsId = serviceDetails.get(d).getId();
+                    Constant.sDetailsName = serviceDetails.get(d).getNeedName();
+                    Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
+                    idArrayList1.add(sDetailsId);
+                    nameArrayList1.add(Constant.sDetailsName);
+                    imageArrayList1.add(Constant.sDetailsImage);
+                    long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
+                    long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
+                    sTypeTime1.add(String.valueOf(supplyStartTime));
+                    eTypeTime1.add(String.valueOf(supplyEndTime));
+                }
+            }
+            //客房清洁
+            if (id == 2) {
+                Constant.start2 = serviceConfs.get(i).getWaiterStartTime();
+                Constant.end2 = serviceConfs.get(i).getWaiterEndTime();
+            }
+            //送餐服务
+            if (id == 3) {
+                int size = serviceDetails.size();
+                for (int d = 0; d < size; d++) {
+                    int sDetailsId = serviceDetails.get(d).getId();
+                    idArrayList3.add(sDetailsId);
+                    Constant.sDetailsName = serviceDetails.get(d).getNeedName();
+                    Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
+                    Constant.foodPrice = serviceDetails.get(d).getPrice();
+                    nameArrayList3.add(Constant.sDetailsName);
+                    imageArrayList3.add(Constant.sDetailsImage);
+                    priceArrayList3.add(Constant.foodPrice);
+                    long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
+                    long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
+                    sTypeTime3.add(String.valueOf(supplyStartTime));
+                    eTypeTime3.add(String.valueOf(supplyEndTime));
+                }
+            }
+            //保障服务
+            if (id == 4) {
+                int size = serviceDetails.size();
+                for (int d = 0; d < size; d++) {
+                    int sDetailsId = serviceDetails.get(d).getId();
+                    Constant.sDetailsName = serviceDetails.get(d).getNeedName();
+                    Constant.sDetailsImage = serviceDetails.get(d).getNeedImage();
+                    idArrayList4.add(sDetailsId);
+                    nameArrayList4.add(Constant.sDetailsName);
+                    imageArrayList4.add(Constant.sDetailsImage);
+                    long supplyStartTime = serviceDetails.get(d).getSupplyStartTime();
+                    long supplyEndTime = serviceDetails.get(d).getSupplyEndTime();
+                    sTypeTime4.add(String.valueOf(supplyStartTime));
+                    eTypeTime4.add(String.valueOf(supplyEndTime));
+                }
+            }
+            //退房服务
+            if (id == 5) {
+                Constant.start5 = serviceConfs.get(i).getWaiterStartTime();
+                Constant.end5 = serviceConfs.get(i).getWaiterEndTime();
+            }
+            //续住服务
+            if (id == 6) {
+                Constant.start6 = serviceConfs.get(i).getWaiterStartTime();
+                Constant.end6 = serviceConfs.get(i).getWaiterEndTime();
+            }
+            //洗衣服务
+            if (id == 7) {
+                Constant.start7 = serviceConfs.get(i).getWaiterStartTime();
+                Constant.end7 = serviceConfs.get(i).getWaiterEndTime();
+            }
+        }
         if (bundle != null) {
-            titles = bundle.getStringArray("title");
-            idArrayList1 = bundle.getIntegerArrayList("detailsId0");
-            idArrayList3 = bundle.getIntegerArrayList("detailsId2");
-            idArrayList4 = bundle.getIntegerArrayList("detailsId3");
-            nameArrayList1 = bundle.getStringArray("detailsNames0");
-            imageArrayList1 = bundle.getStringArray("sDetailsImage0");
-            nameArrayList3 = bundle.getStringArray("detailsNames2");
-            imageArrayList3 = bundle.getStringArray("sDetailsImage2");
-            nameArrayList4 = bundle.getStringArray("detailsNames3");
-            imageArrayList4 = bundle.getStringArray("sDetailsImage3");
-            Constant.start2 = bundle.getLong("start2");
-            Constant.start5 = bundle.getLong("start5");
-            Constant.start6 = bundle.getLong("start6");
-            Constant.start7 = bundle.getLong("start7");
-            Constant.end2 = bundle.getLong("end2");
-            Constant.end5 = bundle.getLong("end5");
-            Constant.end6 = bundle.getLong("end6");
-            Constant.end7 = bundle.getLong("end7");
-
-            Constant.startTime1 = bundle.getStringArray("startTime1");
-            Constant.endTime1 = bundle.getStringArray("endTime1");
-            Constant.startTime3 = bundle.getStringArray("startTime3");
-            Constant.endTime3 = bundle.getStringArray("endTime3");
-            Constant.startTime4 = bundle.getStringArray("startTime4");
-            Constant.endTime4 = bundle.getStringArray("endTime4");
             String isFirst = bundle.getString("isFirst");
             if (isFirst != null) {
                 horizontalListView.requestFocus();
             }
-            if (titles.length > 0) {
-                initUI(titles);
-            } else {
-                introControl.setVisibility(View.GONE);
-                introduceControl.setVisibility(View.VISIBLE);
-            }
+        } else {
+            introControl.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.VISIBLE);
+        }
+
+        if (!sTypeNames.isEmpty()) {
+            introControl.setVisibility(View.VISIBLE);
+            introduceControl.setVisibility(View.GONE);
+            initUI(sTypeNames);
         } else {
             introControl.setVisibility(View.GONE);
             introduceControl.setVisibility(View.VISIBLE);
@@ -225,20 +264,14 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     }
 
     private void initView() {
-        okConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initDatas();
-                upload();
-            }
+        okConfirm.setOnClickListener(v -> {
+            initDatas();
+            upload();
         });
-        okCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
-            }
+        okCancel.setOnClickListener(v -> {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
         });
     }
 
@@ -261,15 +294,14 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         for (int i = 0; i < needGoodsBeansList.size(); i++) {
             NeedGoodsBean bean = needGoodsBeansList.get(i);
             int serId = bean.getSerDetailId();
-            if(serId == serId) {
-                Log.e(TAG, "serId===" + serId);
-                if (bean.isExist()) {
-                    int amount = 0;
-                    amount++;
-                    bean.setAmount(amount);
-                    Log.e(TAG, "amount===" + amount);
-                }
+            Log.i(TAG, "serId===" + serId);
+            if (bean.isExist()) {
+                int amount = 0;
+                amount++;
+                bean.setAmount(amount);
+                Log.i(TAG, "amount===" + amount);
             }
+
         }
         return needGoodsBeansList;
     }
@@ -281,10 +313,10 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
             return;
         }
         LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(LAYOUT_INFLATER_SERVICE);
-        Alertlayout = inflater.inflate(R.layout.alertdialog_listview, null);
+        View Alertlayout = inflater.inflate(R.layout.alertdialog_listview, null);
         ListView myAlertListView = Alertlayout.findViewById(R.id.mylistview);
         myAlertListView.setFocusable(false);
-        myAdapter = new MyAlertDialogAdapter(mActivity, list);
+        MyAlertDialogAdapter myAdapter = new MyAlertDialogAdapter(mActivity, list);
         myAlertListView.setAdapter(myAdapter);
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.AlertDialogStyle);
         builder.setTitle("提示");
@@ -305,72 +337,56 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         }
         builder.setView(Alertlayout);
         builder.setCancelable(false);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (needServiceType.getAmount() == 0) {
-                    ToastUtils.show("操作失败，请检查物品是否为空！");
-                    return;
-                }
-                RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(needGoodsBeansList));
-                ApiRetrofit.initRetrofit(Constant.hostUrl)
-                        .sendGoods(Constant.MAC, body)
-                        .subscribeOn(Schedulers.io())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<ResponseBody>() {
-                            @Override
-                            public void call(ResponseBody responseBody) {
-                                try {
-                                    String body = responseBody.string();
-                                    JSONObject object = JSONObject.parseObject(body);
-                                    int code = object.getIntValue("code");
-                                    if (code == 0) {
-                                        Message message = new Message();
-                                        message.what = 1;
-                                        handler.sendMessage(message);
-                                        ToastUtils.show("操作成功！");
-                                    } else {
-                                        ToastUtils.show("操作失败，请检查后重试！");
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                ToastUtils.show("操作失败，请联系前台！");
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            if (needServiceType.getAmount() == 0) {
+                ToastUtils.show("操作失败，请检查物品是否为空！");
+                return;
+            }
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(needGoodsBeansList));
+            ApiRetrofit.initRetrofit(Constant.hostUrl)
+                    .sendGoods(Constant.MAC, body)
+                    .subscribeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(responseBody -> {
+                        try {
+                            String body1 = responseBody.string();
+                            JSONObject object = JSONObject.parseObject(body1);
+                            int code = object.getIntValue("code");
+                            if (code == 0) {
                                 Message message = new Message();
                                 message.what = 1;
                                 handler.sendMessage(message);
-                                Log.e(TAG, Objects.requireNonNull(throwable.getMessage()));
+                                ToastUtils.show("操作成功！");
+                            } else {
+                                ToastUtils.show("操作失败，请检查后重试！");
                             }
-                        });
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                needGoodsBeansList.clear();
-                list.clear();
-                dialog.dismiss();
-            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }, throwable -> {
+                        ToastUtils.show("操作失败，请联系前台！");
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                        Log.e(TAG, Objects.requireNonNull(throwable.getMessage()));
+                    });
+        }).setNegativeButton("取消", (dialog, which) -> {
+            needGoodsBeansList.clear();
+            list.clear();
+            dialog.dismiss();
         });
         AlertDialog dialog = builder.create();
         dialog.setInverseBackgroundForced(true);
         dialog.show();
     }
 
-    private void initUI(String[] title) {
+    private void initUI(ArrayList<String> title) {
         if (title != null) {
-            introControl.setVisibility(View.VISIBLE);
-            introduceControl.setVisibility(View.GONE);
-            horizontalListView.setVisibility(View.VISIBLE);
-            recyclerGoods.setVisibility(View.VISIBLE);
-            hListViewAdapter = new ServiceNeedListViewAdapter(mActivity, title);
+            ServiceNeedListViewAdapter hListViewAdapter = new ServiceNeedListViewAdapter(mActivity, title);
             horizontalListView.setAdapter(hListViewAdapter);
             needAdapter = new ServiceNeedGoodsAdapter(mActivity, service);
             needAdapter.setItemSelectedListener(this);
-            layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             contentReVi.setLayoutManager(layoutManager);
             contentReVi.setOnScrollListener(new OnPopRecyclerViewScrollListener());
             contentReVi.setAdapter(needAdapter);
@@ -392,33 +408,44 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     contentReVi.setNextFocusLeftId(R.id.horizon_listview);
-
-                    if (titles[position].equals("补充服务")) {
-                        if (Constant.startTime1 != null && Constant.endTime1 != null) {
-                            initGoods(1, idArrayList1, nameArrayList1, null, imageArrayList1, Constant.startTime1, Constant.endTime1);
-                        } else {
-                            initGoods(1, idArrayList1, nameArrayList1, null, imageArrayList1, null, null);
-                        }
-                    } else if (titles[position].equals("客房清洁")) {
-                        needAdapter.setDataList(service);
-                        supplyTime(Constant.start2, Constant.end2);
-                        Txt.setText("请对我说：我要客房清洁");
-                    } else if (title[position].equals("送餐服务")) {
-                        initGoods(3, idArrayList3, nameArrayList3, priceArrayList3, imageArrayList3, Constant.startTime3, Constant.endTime3);
-                    } else if (title[position].equals("保障服务")) {
-                        initGoods(4, idArrayList4, nameArrayList4, null, imageArrayList4, Constant.startTime4, Constant.endTime4);
-                    } else if (title[position].equals("退房服务")) {
-                        needAdapter.setDataList(service);
-                        supplyTime(Constant.start5, Constant.end5);
-                        Txt.setText("请对我说：我要退房");
-                    } else if (title[position].equals("续住服务")) {
-                        needAdapter.setDataList(service);
-                        supplyTime(Constant.start6, Constant.end6);
-                        Txt.setText("请对我说：我要续住");
-                    } else if (title[position].equals("洗衣服务")) {
-                        needAdapter.setDataList(service);
-                        supplyTime(Constant.start7, Constant.end7);
-                        Txt.setText("请对我说：我要洗衣服");
+                    switch (sTypeNames.get(position)){
+                        case "补充服务":
+                            if (sTypeTime1 != null && eTypeTime1 != null) {
+                                initGoods(1, idArrayList1, nameArrayList1, null, imageArrayList1, sTypeTime1, eTypeTime1);
+                            } else {
+                                initGoods(1, idArrayList1, nameArrayList1, null, imageArrayList1, null, null);
+                            }
+                            break;
+                        case "客房清洁":
+                            needAdapter.setDataList(service);
+                            supplyTime(Constant.start2, Constant.end2);
+                            Txt.setText("请对我说：我要客房清洁");
+                            break;
+                        case "送餐服务":
+                            initGoods(3, idArrayList3, nameArrayList3, priceArrayList3,
+                                    imageArrayList3, sTypeTime3, eTypeTime3);
+                            break;
+                        case "保障服务":
+                            initGoods(4, idArrayList4, nameArrayList4, null,
+                                    imageArrayList4, sTypeTime4, eTypeTime4);
+                            break;
+                        case "退房服务":
+                            needAdapter.setDataList(service);
+                            supplyTime(Constant.start5, Constant.end5);
+                            Txt.setText("请对我说：我要退房");
+                            break;
+                        case "续住服务":
+                            needAdapter.setDataList(service);
+                            supplyTime(Constant.start6, Constant.end6);
+                            Txt.setText("请对我说：我要续住");
+                            break;
+                        case "洗衣服务":
+                            needAdapter.setDataList(service);
+                            supplyTime(Constant.start7, Constant.end7);
+                            Txt.setText("请对我说：我要洗衣服");
+                            break;
+                        default:
+                            break;
                     }
                 }
 
@@ -430,7 +457,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         } else {
             introControl.setVisibility(View.GONE);
             introduceControl.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -448,7 +475,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     }
 
 
-    private void initGoods(int typeId, ArrayList<Integer> idArrayList, String[] detailsNames, ArrayList<Float> priceArrayList, String[] detailsImage, String[] startTime, String[] endTime) {
+    private void initGoods(int typeId, ArrayList<Integer> idArrayList, ArrayList<String> detailsNames, ArrayList<Float> priceArrayList, ArrayList<String> detailsImage, ArrayList<String> startTime, ArrayList<String> endTime) {
         recyclerGoods.setVisibility(View.VISIBLE);
         timeShow.setVisibility(View.GONE);
         needAdapter.setDataList(service);
@@ -456,7 +483,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
             introControl.setVisibility(View.GONE);
             introduceControl.setVisibility(View.VISIBLE);
         } else {
-            for (int i = 0; i < detailsNames.length; i++) {
+            for (int i = 0; i < idArrayList.size(); i++) {
                 int goodsId = idArrayList.get(i);
                 final int count = 0;
                 final float price;
@@ -465,13 +492,13 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
                 } else {
                     price = 0;
                 }
-                String path = detailsImage[i];
+                String path = detailsImage.get(i);
                 if (path != null) {
-                    name = detailsNames[i];
-                    bitmap = ImageUtil.returnBitmap(path);
+                    String name = detailsNames.get(i);
+                    Bitmap bitmap = ImageUtil.returnBitmap(path);
                     if (name != null && bitmap != null && startTime != null && endTime != null) {
-                        long start = Long.parseLong(startTime[i]);
-                        long end = Long.parseLong(endTime[i]);
+                        long start = Long.parseLong(startTime.get(i));
+                        long end = Long.parseLong(endTime.get(i));
                         CharSequence sTimeStr = DateFormat.format("HH:mm", start);
                         CharSequence eTimeStr = DateFormat.format("HH:mm", end);
                         NeedServiceBean needST = new NeedServiceBean(typeId, goodsId, bitmap, name, "¥" + price, "供应时间：" + sTimeStr + "-" + eTimeStr, count);
@@ -482,7 +509,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
                     }
                 } else {
                     recyclerGoods.setVisibility(View.GONE);
-                    Toast.makeText(getContext().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -498,7 +525,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     }
 
     private List<NeedGoodsBean> addList(NeedServiceBean serviceType) {
-        List<NeedGoodsBean> needGoodsBeans = new ArrayList<NeedGoodsBean>();
+        List<NeedGoodsBean> needGoodsBeans = new ArrayList<>();
         int goodsId = serviceType.getId();
         int serviceTypeId = serviceType.getTypeId();
         String goodsPrice = serviceType.getPrice();
@@ -510,7 +537,7 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
             float price = Float.parseFloat(transPrice);
             goods = new NeedGoodsBean(MainActivity.hotelId, Constant.roomNum, goodsId, amount, serviceTypeId, price);
         } else {
-            goods = new NeedGoodsBean(Constant.hotelId, Constant.roomNum, goodsId, amount, serviceTypeId, 0);
+            goods = new NeedGoodsBean(MainActivity.hotelId, Constant.roomNum, goodsId, amount, serviceTypeId, 0);
         }
         goods.setExist(true);
         goods.setGoodsName(goodsName);
@@ -533,16 +560,22 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
         needGoodsBeansList.clear();
         service.clear();
+        serviceConfs.clear();
     }
 
     static class MyAlertDialogAdapter extends BaseAdapter {
-        public ArrayList<String> stringArrayList;
-        public Context mContext;
+        public final ArrayList<String> stringArrayList;
+        public final Context mContext;
 
         public MyAlertDialogAdapter(Context context, ArrayList<String> list) {
             this.mContext = context;
@@ -582,17 +615,13 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
             return convertView;
         }
 
-        class Goods {
+        static class Goods {
             TextView goodsName;
         }
 
-        public void setClear() {
-            stringArrayList.clear();
-            notifyDataSetChanged();
-        }
     }
 
-    private View.OnKeyListener backlistener = new View.OnKeyListener() {
+    private final View.OnKeyListener backlistener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View view, int i, KeyEvent keyEvent) {
             if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {

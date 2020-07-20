@@ -48,9 +48,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static android.provider.Telephony.Mms.Part.CHARSET;
@@ -70,17 +68,9 @@ public class HttpUtils {
                 .sendGoods(mac, body)
                 .subscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResponseBody>() {
-                    @Override
-                    public void call(ResponseBody responseBody) {
-                        Toast.makeText(context,"订购成功！",Toast.LENGTH_LONG).show();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Toast.makeText(context,"订购失败，请联系前台！",Toast.LENGTH_LONG).show();
-                        Log.e("FoodListActivity", Objects.requireNonNull(throwable.getMessage()));
-                    }
+                .subscribe(responseBody -> Toast.makeText(context,"订购成功！",Toast.LENGTH_LONG).show(), throwable -> {
+                    Toast.makeText(context,"订购失败，请联系前台！",Toast.LENGTH_LONG).show();
+                    Log.e("FoodListActivity", Objects.requireNonNull(throwable.getMessage()));
                 });
     }
 
@@ -170,11 +160,13 @@ public class HttpUtils {
         BufferedReader in = null;
         in = new BufferedReader(
                 new InputStreamReader(connection.getInputStream(), encoding));
-        String result = "";
+        String result;
         String getLine;
+        StringBuilder resultBuilder = new StringBuilder();
         while ((getLine = in.readLine()) != null) {
-            result += getLine;
+            resultBuilder.append(getLine);
         }
+        result = resultBuilder.toString();
         in.close();
         System.err.println("result:" + result);
         return result;
@@ -183,7 +175,7 @@ public class HttpUtils {
     public static String mpost(String url, Map<String, Object> map) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        List<BasicNameValuePair> params = new ArrayList<>();
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             Object value = map.get(key);
@@ -350,12 +342,12 @@ public class HttpUtils {
      * @return
      */
     public static String mPost(String url, Map<String, Object> map) {
-        Map<String, String> headerMap = new HashMap();
+        Map<String, String> headerMap = new HashMap<>();
 //        headerMap.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjM5MzQ1NzgzMzgsImFwcElkIjoiN1YzZHh5aUtzOFdteG1iNmF4aW9idTFlZHRhaHVSWlMiLCJ1dWlkIjoxNjQ4ODc4NzgxNTgwNTMzMjM1fQ.wEMJUPwsJE1HhJsKOR-5_87TueqoKeyyEDL4hB5iVpU");
         headerMap.put("Content-Type", "application/x-www-form-urlencoded");
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+        List<BasicNameValuePair> params = new ArrayList<>();
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             Object value = map.get(key);
@@ -406,19 +398,13 @@ public class HttpUtils {
             HttpResponse response = client.execute(get);
             if (response.getStatusLine().getStatusCode() == 200) {
                 StringBuffer buffer = new StringBuffer();
-                InputStream in = null;
-                try {
-                    in = response.getEntity().getContent();
+                try (InputStream in = response.getEntity().getContent()) {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, CHARSET));
                     String line = null;
                     while ((line = reader.readLine()) != null) {
                         buffer.append(line);
                     }
                     reader.close();
-                } finally {
-                    if (in != null) {
-                        in.close();
-                    }
                 }
                 return buffer.toString();
             } else {
@@ -481,10 +467,9 @@ public class HttpUtils {
             sb.append(PREFIX);
             sb.append(BOUNDARY);
             sb.append(LINEND);
-            sb.append("Content-Disposition: form-data; name=\""
-                    + entry.getKey() + "\"" + LINEND);
-            sb.append("Content-Type: text/plain; charset=" + CHARSET + LINEND);
-            sb.append("Content-Transfer-Encoding: 8bit" + LINEND);
+            sb.append("Content-Disposition: form-data; name=\"").append(entry.getKey()).append("\"").append(LINEND);
+            sb.append("Content-Type: text/plain; charset=").append(CHARSET).append(LINEND);
+            sb.append("Content-Transfer-Encoding: 8bit").append(LINEND);
             sb.append(LINEND);
             sb.append(entry.getValue());
             sb.append(LINEND);
@@ -495,16 +480,15 @@ public class HttpUtils {
         // 发送文件数据
         if (files != null){
             for (Map.Entry<String, File> file : files.entrySet()) {
-                StringBuilder sb1 = new StringBuilder();
-                sb1.append(PREFIX);
-                sb1.append(BOUNDARY);
-                sb1.append(LINEND);
-                sb1.append("Content-Disposition: form-data; name=\"file\"; filename=\""
-                        + file.getKey() + "\"" + LINEND);
-                sb1.append("Content-Type: multipart/form-data; charset="
-                        + CHARSET + LINEND);
-                sb1.append(LINEND);
-                outStream.write(sb1.toString().getBytes());
+                String sb1 = PREFIX +
+                        BOUNDARY +
+                        LINEND +
+                        "Content-Disposition: form-data; name=\"file\"; filename=\""
+                        + file.getKey() + "\"" + LINEND +
+                        "Content-Type: multipart/form-data; charset="
+                        + CHARSET + LINEND +
+                        LINEND;
+                outStream.write(sb1.getBytes());
                 InputStream is = new FileInputStream(file.getValue());
                 byte[] buffer = new byte[1024];
                 int len = 0;
@@ -525,9 +509,9 @@ public class HttpUtils {
         InputStreamReader isReader = new InputStreamReader(in);
         BufferedReader bufReader = new BufferedReader(isReader);
         String line = null;
-        String data = "getResult=";
+        StringBuilder data = new StringBuilder("getResult=");
         while ((line = bufReader.readLine()) != null){
-            data += line;
+            data.append(line);
         }
         outStream.close();
         conn.disconnect();
@@ -535,7 +519,6 @@ public class HttpUtils {
     }
 
 
-    /**上传日志文件*/
     /**
      * 提交数据到服务器
      * @param path 上传路径(注：避免使用localhost或127.0.0.1这样的路径测试，因为它会指向手机模拟器，你可以使用http://www.itcast.cn或http://192.168.1.10:8080这样的路径测试)
@@ -568,8 +551,8 @@ public class HttpUtils {
             fileExplain.append("--");
             fileExplain.append(BOUNDARY);
             fileExplain.append("\r\n");
-            fileExplain.append("Content-Disposition: form-data;name=\""+ uploadFile.getParameterName()+"\";filename=\""+ uploadFile.getFilname() + "\"\r\n");
-            fileExplain.append("Content-Type: "+ uploadFile.getContentType()+"\r\n\r\n");
+            fileExplain.append("Content-Disposition: form-data;name=\"").append(uploadFile.getParameterName()).append("\";filename=\"").append(uploadFile.getFilname()).append("\"\r\n");
+            fileExplain.append("Content-Type: ").append(uploadFile.getContentType()).append("\r\n\r\n");
             fileExplain.append("\r\n");
             fileDataLength += fileExplain.length();
             if(uploadFile.getInStream()!=null){
@@ -583,7 +566,7 @@ public class HttpUtils {
             textEntity.append("--");
             textEntity.append(BOUNDARY);
             textEntity.append("\r\n");
-            textEntity.append("Content-Disposition: form-data; name=\""+ entry.getKey() + "\"\r\n\r\n");
+            textEntity.append("Content-Disposition: form-data; name=\"").append(entry.getKey()).append("\"\r\n\r\n");
             textEntity.append(entry.getValue());
             textEntity.append("\r\n");
         }
@@ -615,13 +598,12 @@ public class HttpUtils {
         outStream.write(textEntity.toString().getBytes());
         //把所有文件类型的实体数据发送出来
         for(FormFileUploadBean uploadFile : files){
-            StringBuilder fileEntity = new StringBuilder();
-            fileEntity.append("--");
-            fileEntity.append(BOUNDARY);
-            fileEntity.append("\r\n");
-            fileEntity.append("Content-Disposition: form-data;name=\""+ uploadFile.getParameterName()+"\";filename=\""+ uploadFile.getFilname() + "\"\r\n");
-            fileEntity.append("Content-Type: "+ uploadFile.getContentType()+"\r\n\r\n");
-            outStream.write(fileEntity.toString().getBytes());
+            String fileEntity = "--" +
+                    BOUNDARY +
+                    "\r\n" +
+                    "Content-Disposition: form-data;name=\"" + uploadFile.getParameterName() + "\";filename=\"" + uploadFile.getFilname() + "\"\r\n" +
+                    "Content-Type: " + uploadFile.getContentType() + "\r\n\r\n";
+            outStream.write(fileEntity.getBytes());
             if(uploadFile.getInStream()!=null){
                 byte[] buffer = new byte[1024];
                 int len = 0;
@@ -638,7 +620,7 @@ public class HttpUtils {
         outStream.write(endline.getBytes());
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        if(reader.readLine().indexOf("200")==-1){//读取web服务器返回的数据，判断请求码是否为200，如果不是200，代表请求失败
+        if(!reader.readLine().contains("200")){//读取web服务器返回的数据，判断请求码是否为200，如果不是200，代表请求失败
             return false;
         }
         outStream.flush();

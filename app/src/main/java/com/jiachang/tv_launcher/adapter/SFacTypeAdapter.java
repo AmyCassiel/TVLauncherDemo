@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,7 +30,6 @@ import butterknife.ButterKnife;
  * @description
  */
 public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHolder> implements View.OnClickListener {
-    private Context context;
     private List<FacilityGoodsBean> serviceTypeList;
     private RecyclerView recyclerView;
     private onItemClickListener itemClickListener;//ItemView的监听器
@@ -44,7 +44,7 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
         @BindView(R.id.service_price)
         TextView servicePrice;
         @BindView(R.id.service_type_card)
-        RelativeLayout serviceTypeCard;
+        LinearLayout serviceTypeCard;
 
         ViewHolder (View view) {
             super(view);
@@ -52,8 +52,7 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
         }
     }
 
-    public SFacTypeAdapter(Context context, List<FacilityGoodsBean> serviceTypeList){
-        this.context = context;
+    public SFacTypeAdapter(List<FacilityGoodsBean> serviceTypeList){
         this.serviceTypeList = serviceTypeList;
     }
     @NonNull
@@ -61,23 +60,8 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.service_fac_recyview_goods_item,parent,false);
         final ViewHolder holder = new ViewHolder(view);
-        context = view.getContext();
-
         initView(holder);
         holder.serviceTypeCard.setFocusable(true);
-        holder.serviceTypeCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.item_background);
-                    v.setBackground(drawable);
-                } else {
-                    Drawable drawable = ContextCompat.getDrawable(context, R.drawable.white_radius);
-                    v.setBackground(drawable);
-                }
-            }
-        });
-
         return holder;
     }
 
@@ -105,7 +89,6 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
     public int getItemCount() {
         return serviceTypeList.size();
     }
-
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -118,15 +101,11 @@ public class SFacTypeAdapter extends RecyclerView.Adapter<SFacTypeAdapter.ViewHo
     @Override
     public void onAttachedToRecyclerView(@NotNull RecyclerView recyclerView) {
         this.recyclerView=recyclerView;
-
     }
 
     @Override
     public void onClick(View v) {
         if (itemClickListener != null && recyclerView != null){
-            //recyclerView 21以下使用,　22时作废
-//             int position = recyclerView.getChildPosition(v);
-            //22时用些方法替换上面的方法
             int position = recyclerView.getChildAdapterPosition(v);
             itemClickListener.onItemClick(position,v,serviceTypeList.get(position));
         }

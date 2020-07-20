@@ -1,9 +1,7 @@
 package com.jiachang.tv_launcher.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 
 /**

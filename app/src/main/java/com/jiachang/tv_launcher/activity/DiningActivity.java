@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.LogUtils;
@@ -40,7 +39,7 @@ import static com.jiachang.tv_launcher.utils.Constant.hostUrl;
  */
 public class DiningActivity extends Activity {
     private Context mContext;
-    private String TAG = "DiningActivity.class";
+    private final String TAG = "DiningActivity.class";
     private float price;
 
     @BindView(R.id.dining_main)

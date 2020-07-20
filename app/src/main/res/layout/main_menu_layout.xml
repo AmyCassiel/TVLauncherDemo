@@ -69,13 +69,13 @@
 
             <ImageView
                 style="@style/MenuImageViewStyle"
-                android:src="@mipmap/menu_apower_mirror" />
+                android:src="@mipmap/menu_control" />
 
             <TextView
                 android:id="@+id/text_apower_mirror"
                 style="@style/MenuTextStyle"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_apower_mirror" />
+                android:text="@string/menu_control" />
         </com.zhy.autolayout.AutoLinearLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -148,14 +148,6 @@
                 android:id="@+id/about_item_3"
                 style="@style/MenuItemTextStyle"
                 android:nextFocusLeft="@id/menu_dining"
-                android:nextFocusDown="@id/about_item_4"
-                android:text="客控服务" />
-
-            <TextView
-                android:id="@+id/about_item_4"
-                style="@style/MenuItemTextStyle"
-                android:nextFocusLeft="@id/menu_dining"
-                android:nextFocusDown="@id/about_item_5"
                 android:text="客需服务" />
 
             <TextView

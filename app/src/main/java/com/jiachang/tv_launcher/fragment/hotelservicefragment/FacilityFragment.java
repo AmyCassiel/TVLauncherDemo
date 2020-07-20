@@ -2,8 +2,7 @@ package com.jiachang.tv_launcher.fragment.hotelservicefragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,8 @@ import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.jiachang.tv_launcher.adapter.SFacTypeAdapter;
 import com.jiachang.tv_launcher.bean.FacilityGoodsBean;
+import com.jiachang.tv_launcher.bean.HotelInfoBean;
+import com.jiachang.tv_launcher.utils.Constant;
 import com.jiachang.tv_launcher.utils.ImageUtil;
 import com.zhy.autolayout.AutoLinearLayout;
 
@@ -39,7 +40,6 @@ import butterknife.Unbinder;
  */
 public class FacilityFragment extends Fragment {
     private String tag = "FacilityFragment";
-    private ListView listView;
     @BindView(R.id.fcontent_recycler_view)
     RecyclerView fconRV;
     @BindView(R.id.intro_facility)
@@ -47,13 +47,21 @@ public class FacilityFragment extends Fragment {
     @BindView(R.id.introduce_facility)
     AutoLinearLayout introduceFacility;
 
-    private List<FacilityGoodsBean> service = new ArrayList<>();
+    private final List<FacilityGoodsBean> service = new ArrayList<>();
     private Unbinder mUnbinder;
     private HotelServiceActivity mActivity;
     private SFacTypeAdapter adapter;
-    private String[] sFsNames0, sFsTimes0, sFsImgs0, sFsLocals0;
-    private Bitmap bitmap0;
-    private String name0, local, supplyTime;
+    private ArrayList<String> sFsNames = new ArrayList<>();
+    private ArrayList<String> sFsImgs = new ArrayList<>();
+    private ArrayList<String> sFsTimes = new ArrayList<>();
+    private ArrayList<String> sFsLocals = new ArrayList<>();
+    private List<HotelInfoBean.HotelDbBean.HotelFacilitiesBean> hotelFacilities = Constant.hotelFacilities;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Nullable
     @Override
@@ -64,68 +72,91 @@ public class FacilityFragment extends Fragment {
         initView();
         return view;
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.i(tag,"onActivityCreated");
         //获取宿主Activity
         if (mActivity != null) {
-            listView = mActivity.findViewById(R.id.select_listview);
+            ListView listView = mActivity.findViewById(R.id.select_listview);
             listView.getItemsCanFocus();
             listView.getId();
             listView.setNextFocusRightId(R.id.fcontent_recycler_view);
         }
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            sFsImgs0 = bundle.getStringArray("sFsImgs0");
-            sFsNames0 = bundle.getStringArray("sFsNames0");
-            sFsTimes0 = bundle.getStringArray("sFsTimes0");
-            sFsLocals0 = bundle.getStringArray("sFsLocals0");
-
             String isFirst = bundle.getString("isFirst");
             if (isFirst != null) {
                 fconRV.requestFocus();
             }
-            initGood(sFsImgs0, sFsNames0, sFsTimes0, sFsLocals0);
+        }
+
+        if (!hotelFacilities.isEmpty()) {
+            int fsize = hotelFacilities.size();
+            for (int j = 0; j < fsize; j++) {
+                Constant.sFacilitiesName = hotelFacilities.get(j).getName();
+                Constant.sFacilitiesImg = hotelFacilities.get(j).getImage();
+                Constant.sFacilitiesTime = hotelFacilities.get(j).getTime();
+                Constant.sFacilitiesLocation = hotelFacilities.get(j).getLocation();
+                sFsNames.add(Constant.sFacilitiesName);
+                sFsImgs.add(Constant.sFacilitiesImg);
+                sFsTimes.add(Constant.sFacilitiesTime);
+                sFsLocals.add(Constant.sFacilitiesLocation);
+            }
+        }
+
+        if (sFsNames != null && !sFsNames.isEmpty()) {
+            initGood(sFsImgs, sFsNames, sFsTimes, sFsLocals);
+        } else {
+            introlFacility.setVisibility(View.GONE);
+            introduceFacility.setVisibility(View.VISIBLE);
         }
     }
+
     private void initView() {
-        adapter = new SFacTypeAdapter(mActivity, service);
+        adapter = new SFacTypeAdapter(service);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
         fconRV.setLayoutManager(layoutManager);
         fconRV.setAdapter(adapter);
         fconRV.setOnScrollListener(new OnPopRecyclerViewScrollListener());
     }
 
-    private void initGood(String[] detailsImage, String[] detailsNames, String[] detailsTime, String[] detailsLocal) {
-        for (int i = 0; i < detailsNames.length; i++) {
-            String path = detailsImage[i];
-            bitmap0 = ImageUtil.returnBitmap(path);
-            name0 = detailsNames[i];
-            supplyTime = detailsTime[i];
-            local = detailsLocal[i];
-            if(!name0.isEmpty()){
+    private void initGood(ArrayList<String> detailsImage, ArrayList<String> detailsNames, ArrayList<String> detailsTime, ArrayList<String> detailsLocal) {
+        adapter.setDataList(service);
+        for (int i = 0; i < detailsNames.size(); i++) {
+            String path = detailsImage.get(i);
+            Bitmap bitmap = ImageUtil.returnBitmap(path);
+            String name = detailsNames.get(i);
+            String supplyTime = detailsTime.get(i);
+            String local = detailsLocal.get(i);
+            if (!name.isEmpty()) {
                 introlFacility.setVisibility(View.VISIBLE);
                 introduceFacility.setVisibility(View.GONE);
-                FacilityGoodsBean duck = new FacilityGoodsBean(name0, local, "开放时间：" + supplyTime, bitmap0);
+                FacilityGoodsBean duck = new FacilityGoodsBean(name, local, "开放时间：" + supplyTime, bitmap);
                 service.add(duck);
-            }else {
+            } else {
                 introlFacility.setVisibility(View.GONE);
                 introduceFacility.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity().getApplicationContext(), "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, "酒店暂时不提供该服务", Toast.LENGTH_LONG).show();
             }
         }
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
         adapter.setDataList(service);
+        Log.i(tag,"onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
+        service.clear();
+        hotelFacilities.clear();
+        Log.i(tag,"onDestroy");
     }
 
     private static class OnPopRecyclerViewScrollListener extends RecyclerView.OnScrollListener {

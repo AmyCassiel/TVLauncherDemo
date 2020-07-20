@@ -3,7 +3,6 @@ package com.jiachang.tv_launcher.fragment.mainfragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,5 +70,11 @@ public class BottomFragment extends Fragment {
         }else {
             tvBreakfastTime.setText("");
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 }

@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.fragment.dialogfragment;
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,12 +36,9 @@ public class UploadGoodsFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.dialog_ok_fragment, container, false);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         Button bt = v.findViewById(R.id.ok);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //在activity里面处理点击事件
-                onItemClickListener.onItemClick(v);
-            }
+        bt.setOnClickListener(v1 -> {
+            //在activity里面处理点击事件
+            onItemClickListener.onItemClick(v1);
         });
         return v;
     }

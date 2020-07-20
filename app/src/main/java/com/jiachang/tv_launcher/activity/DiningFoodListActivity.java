@@ -54,19 +54,18 @@ import butterknife.OnFocusChange;
  * @description 食物列表界面
  */
 public class DiningFoodListActivity extends Activity implements FoodAdapter.onItemClickListener {
-    private String TAG = "FoodListActivity";
-    public static List<FoodListBean> foodList = new ArrayList<>();
-    public static List<FoodIntentBean> foodItems = new ArrayList<FoodIntentBean>();
+    private final String TAG = "FoodListActivity";
+    public static final List<FoodListBean> foodList = new ArrayList<>();
+    public static final List<FoodIntentBean> foodItems = new ArrayList<>();
     private String foodName;
     private String foodPrice;
     private String foodImg;
     private Bitmap bitmap;
     private ArrayList arrayList = new ArrayList();
     // 贝塞尔曲线中间过程点坐标
-    private float[] mCurrentPosition = new float[2];
-    private Context context = this;
+    private final float[] mCurrentPosition = new float[2];
+    private final Context context = this;
 
-    private int foodItemId;
     private int amount;
     private int allCount;
     private int foodId;
@@ -96,27 +95,24 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
         initFood();
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
-        FoodAdapter adapter = new FoodAdapter(this, foodList);
+        FoodAdapter adapter = new FoodAdapter(foodList);
         recyclerView.setLayoutManager(layoutManager);
         adapter.setItemClickListener(this);//给适配器添加点击事件，回调处理
         recyclerView.setAdapter(adapter);
         recyclerView.setOnScrollListener(new OnPopRecyclerViewScrollListener());
 
-        shoppingCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent();
-                    intent.setClass(context, DiningFoodCarActivity.class);
-                    ActivityOptions options = ActivityOptions.makeScaleUpAnimation(
-                            shoppingCar, 0, 0, //拉伸开始的坐标
-                            shoppingCar.getMeasuredWidth(), shoppingCar.getMeasuredHeight()); // 初始的宽高
-                    startActivity(intent, options.toBundle());
-                }catch (Exception e){
-                    Log.e(TAG,"报错："+e.getMessage());
-                }
-
+        shoppingCar.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent();
+                intent.setClass(context, DiningFoodCarActivity.class);
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(
+                        shoppingCar, 0, 0, //拉伸开始的坐标
+                        shoppingCar.getMeasuredWidth(), shoppingCar.getMeasuredHeight()); // 初始的宽高
+                startActivity(intent, options.toBundle());
+            }catch (Exception e){
+                Log.e(TAG,"报错："+e.getMessage());
             }
+
         });
     }
 
@@ -127,7 +123,7 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
 
     @Override
     public void onItemClick(int position, View v, FoodListBean food) {
-        foodItemId = food.getId();
+        int foodItemId = food.getId();
         foodName = food.getName();
         foodPrice = food.getPrice();
         food.setCount(food.getCount() + 1);
@@ -144,18 +140,6 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
         mTvShoppingCartCount.setText(String.valueOf(allCount));
 
         addGoods2CartAnim(v);
-    }
-
-    private void calculatePrice(List<FoodIntentBean> foodList) {
-        double totalPrice = 0;
-        int totalNum = 0;
-        for (int i = 0; i < foodList.size(); i++) {//循环的商家
-            FoodIntentBean foodBean = foodList.get(i);
-            //计算价格
-//            totalPrice = totalPrice + foodBean.getAmount() * foodBean.getFoodPrice();
-            totalNum += foodBean.getFoodCount();//计数
-
-        }
     }
 
     /**
@@ -206,21 +190,18 @@ public class DiningFoodListActivity extends Activity implements FoodAdapter.onIt
         valueAnimator.setDuration(time);
         valueAnimator.start();
         valueAnimator.setInterpolator(new AccelerateInterpolator());
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                // 当插值计算进行时，获取中间的每个值，
-                // 这里这个值是中间过程中的曲线长度（下面根据这个值来得出中间点的坐标值）
-                float value = (Float) animation.getAnimatedValue();
-                // 获取当前点坐标封装到mCurrentPosition
-                // boolean getPosTan(float distance, float[] pos, float[] tan) ：
-                // 传入一个距离distance(0<=distance<=getLength())，然后会计算当前距离的坐标点和切线，pos会自动填充上坐标，这个方法很重要。
-                // mCurrentPosition此时就是中间距离点的坐标值
-                pathMeasure.getPosTan(value, mCurrentPosition, null);
-                // 移动的商品图片（动画图片）的坐标设置为该中间点的坐标
-                goods.setTranslationX(mCurrentPosition[0]);
-                goods.setTranslationY(mCurrentPosition[1]);
-            }
+        valueAnimator.addUpdateListener(animation -> {
+            // 当插值计算进行时，获取中间的每个值，
+            // 这里这个值是中间过程中的曲线长度（下面根据这个值来得出中间点的坐标值）
+            float value = (Float) animation.getAnimatedValue();
+            // 获取当前点坐标封装到mCurrentPosition
+            // boolean getPosTan(float distance, float[] pos, float[] tan) ：
+            // 传入一个距离distance(0<=distance<=getLength())，然后会计算当前距离的坐标点和切线，pos会自动填充上坐标，这个方法很重要。
+            // mCurrentPosition此时就是中间距离点的坐标值
+            pathMeasure.getPosTan(value, mCurrentPosition, null);
+            // 移动的商品图片（动画图片）的坐标设置为该中间点的坐标
+            goods.setTranslationX(mCurrentPosition[0]);
+            goods.setTranslationY(mCurrentPosition[1]);
         });
         valueAnimator.addListener(new AnimatorListenerAdapter() {
             @Override

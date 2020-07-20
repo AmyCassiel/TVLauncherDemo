@@ -2,19 +2,13 @@ package com.jiachang.tv_launcher.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.ImageView;
-
-import com.jiachang.tv_launcher.activity.MainActivity;
 
 import androidx.core.view.ViewCompat;
 

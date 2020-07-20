@@ -3,16 +3,6 @@
 
     <style name="AppTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen" />
 
-    <!--主界面-->
-    <style name="MainLayoutFragmentStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
-    </style>
-
     <!--主菜单界面的AutoLinearLayout-->
     <style name="MenuAutoLinearLayout">
         <item name="android:layout_width">247px</item>

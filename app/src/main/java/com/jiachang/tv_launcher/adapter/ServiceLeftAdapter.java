@@ -1,19 +1,14 @@
 package com.jiachang.tv_launcher.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
-
-import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 
@@ -23,21 +18,15 @@ import androidx.annotation.NonNull;
  * @description
  */
 public class ServiceLeftAdapter extends ArrayAdapter {
-    private String[] data;
-    private int selectItem=0;
-    private Context mContext;
-    private int res;
+    private final String[] data;
+    private final Context mContext;
+    private final int res;
 
     public ServiceLeftAdapter(@NonNull Context context, int resource,String[] data) {
         super(context, resource);
         this.mContext = context;
         this.res = resource;
         this.data = data;
-    }
-
-
-    public void setSelectItem(int selectItem) {
-        this.selectItem = selectItem;
     }
 
     @Override
@@ -75,7 +64,7 @@ public class ServiceLeftAdapter extends ArrayAdapter {
     
     public static class ViewHolder{
 
-        TextView mText;
+        final TextView mText;
 
         ViewHolder(View itemView) {
             mText= itemView.findViewById(R.id.text1);

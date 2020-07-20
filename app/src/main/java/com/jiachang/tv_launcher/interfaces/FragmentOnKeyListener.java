@@ -9,6 +9,6 @@ import android.view.KeyEvent;
  */
 public interface FragmentOnKeyListener {
 
-    public boolean onKeyDowns(int keyCode, KeyEvent event);
-    public void onWindowFocusChanged(boolean hasFocus);
+    boolean onKeyDowns(int keyCode, KeyEvent event);
+    void onWindowFocusChanged(boolean hasFocus);
 }

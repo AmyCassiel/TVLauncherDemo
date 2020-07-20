@@ -10,10 +10,10 @@ import android.graphics.Bitmap;
 public class NeedServiceBean {
     private int typeId;
     private int id;
-    private String name;
-    private String supplyTime;
+    private final String name;
+    private final String supplyTime;
     private String price;
-    private Bitmap image;
+    private final Bitmap image;
     private int amount;
 
     public NeedServiceBean(int typeId, int id, Bitmap image, String name, String price, String supplyTime, int amount){

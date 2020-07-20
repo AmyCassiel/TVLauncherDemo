@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +25,10 @@ import butterknife.ButterKnife;
  */
 public class FoodCarAdapter extends RecyclerView.Adapter<FoodCarAdapter.ViewHolder> implements View.OnClickListener{
     private RecyclerView recyclerView;
-    private Context context;
-    private List<FoodIntentBean> foodNameList;
+    private final List<FoodIntentBean> foodNameList;
     private onItemClickListener itemClickListener;
 
-    public FoodCarAdapter(Context context, List<FoodIntentBean> foodNameList) {
-        this.context = context;
+    public FoodCarAdapter(List<FoodIntentBean> foodNameList) {
         this.foodNameList = foodNameList;
     }
     @Override
@@ -49,12 +46,7 @@ public class FoodCarAdapter extends RecyclerView.Adapter<FoodCarAdapter.ViewHold
         view.setOnClickListener(this);
         ViewHolder holder = new ViewHolder(view);
         holder.foodItemLayout.setFocusable(true);
-        holder.foodItemLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ViewUtils.sView(v,hasFocus);
-            }
-        });
+        holder.foodItemLayout.setOnFocusChangeListener(ViewUtils::sView);
         return holder;
     }
 

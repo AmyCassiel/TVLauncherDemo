@@ -1,18 +1,10 @@
 package com.jiachang.tv_launcher.utils;
 
-import android.Manifest;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.telephony.TelephonyManager;
-
-import java.util.Iterator;
-import java.util.List;
-
-import androidx.core.app.ActivityCompat;
 
 /**
  * @author Mickey.Ma

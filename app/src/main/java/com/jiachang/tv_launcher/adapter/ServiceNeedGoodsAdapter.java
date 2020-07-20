@@ -1,30 +1,23 @@
 package com.jiachang.tv_launcher.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jiachang.tv_launcher.R;
-import com.jiachang.tv_launcher.activity.MainActivity;
-import com.jiachang.tv_launcher.bean.NeedGoodsBean;
 import com.jiachang.tv_launcher.bean.NeedServiceBean;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
-import com.jiachang.tv_launcher.utils.Constant;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.net.CookieHandler;
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +32,6 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
     private Context context;
     private OnItemSelectedListener itemClickListener;//ItemView的监听器
     private RecyclerView recyclerView;
-    private ViewHolder holders;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.service_image1)
         ImageView serviceImage;
@@ -52,7 +44,7 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
         @BindView(R.id.service_price1)
         TextView servicePrice;
         @BindView(R.id.service_type_card1)
-        RelativeLayout serviceTypeCard;
+        LinearLayout serviceTypeCard;
 
         public ViewHolder(View view) {
             super(view);
@@ -92,12 +84,9 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
         context = view.getContext();
 
         holder.serviceTypeCard.setFocusable(true);
-        holder.serviceTypeCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = recyclerView.getChildAdapterPosition(v);
-                itemClickListener.OnItemSelectedListener(position,v,mServiceGoods.get(position));
-            }
+        holder.serviceTypeCard.setOnClickListener(v -> {
+            int position = recyclerView.getChildAdapterPosition(v);
+            itemClickListener.OnItemSelectedListener(position,v,mServiceGoods.get(position));
         });
         initView(holder);
         return holder;
@@ -120,11 +109,10 @@ public class ServiceNeedGoodsAdapter extends RecyclerView.Adapter<ServiceNeedGoo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NeedServiceBean serviceType = mServiceGoods.get(position);
-        holders = holder ;
         holder.serviceImage.setImageBitmap(serviceType.getImageId());
         holder.serviceName.setText(serviceType.getName());
         holder.serviceSupplyTime.setText(serviceType.getSupplyTime());
-        String price = serviceType.getPrice().toString();
+        String price = serviceType.getPrice();
         if (price.equals("¥0.0")) {
             holder.servicePrice.setText("免费");
         } else {

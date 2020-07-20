@@ -18,17 +18,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.adapter.ServiceLeftAdapter;
-import com.jiachang.tv_launcher.fragment.dialogfragment.UploadGoodsFragment;
+import com.jiachang.tv_launcher.bean.HotelInfoBean;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.NeedFragment;
-import com.jiachang.tv_launcher.fragment.hotelservicefragment.ControlFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.IntroHotelFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.FacilityFragment;
 import com.jiachang.tv_launcher.fragment.hotelservicefragment.RequestFragment;
 import com.jiachang.tv_launcher.utils.Constant;
+import com.jiachang.tv_launcher.utils.HttpUtils;
+import com.jiachang.tv_launcher.utils.IPUtils;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,20 +44,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.jiachang.tv_launcher.utils.Constant.breakfastTime;
-import static com.jiachang.tv_launcher.utils.Constant.business;
-import static com.jiachang.tv_launcher.utils.Constant.endTime1;
-import static com.jiachang.tv_launcher.utils.Constant.endTime3;
-import static com.jiachang.tv_launcher.utils.Constant.endTime4;
-import static com.jiachang.tv_launcher.utils.Constant.hotelIntroduction;
-import static com.jiachang.tv_launcher.utils.Constant.hotelPolicys;
-import static com.jiachang.tv_launcher.utils.Constant.startTime1;
-import static com.jiachang.tv_launcher.utils.Constant.startTime3;
-import static com.jiachang.tv_launcher.utils.Constant.startTime4;
-import static com.jiachang.tv_launcher.utils.Constant.usageMonitoring;
-import static com.jiachang.tv_launcher.utils.Constant.userNeeds;
-import static com.jiachang.tv_launcher.utils.Constant.wifiName;
 
 /**
  * @author Mickey.Ma
@@ -72,24 +64,15 @@ public class HotelServiceActivity extends FragmentActivity {
     @BindView(R.id.weather_text)
     TextView weatherText;
 
-    private String[] sFsNames0, sFsTimes0, sFsImgs0, sFsLocals0;
-    private String[] sTypeNames;
-    private String[] sDetailsNames0, sDetailsNames2, sDetailsNames3;
-    private String[] sDetailsImage0, sDetailsImage2, sDetailsImage3;
-    private long start2, end2, start5, end5, start6, end6, start7, end7;
-
-    private ServiceLeftAdapter leftAdapter;
     private Context context;
-    private String[] mStrings = {"酒店介绍", "酒店设施", "使用客控", "使用客需", "服务反馈"};
+    private final String[] mStrings = {"酒店介绍", "酒店设施", "使用客需", "服务反馈"};
     private Fragment currentFragment;
-    private IntroHotelFragment hIF = new IntroHotelFragment();
-    private NeedFragment hNF = new NeedFragment();
-    private ControlFragment hCF = new ControlFragment();
-    private FacilityFragment hFF = new FacilityFragment();
-    private RequestFragment hRF = new RequestFragment();
+    private final IntroHotelFragment hIF = new IntroHotelFragment();
+    private final NeedFragment hNF = new NeedFragment();
+    private final FacilityFragment hFF = new FacilityFragment();
+    private final RequestFragment hRF = new RequestFragment();
     private static final String TAG = "HotelServiceActivity";
-
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
@@ -111,78 +94,15 @@ public class HotelServiceActivity extends FragmentActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.service_activity);
+        getWindow().setBackgroundDrawable(null);
         hideBottomMenu();
         ButterKnife.bind(this);
         context = HotelServiceActivity.this;
         /*最左侧listView*/
-        leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
+        ServiceLeftAdapter leftAdapter = new ServiceLeftAdapter(context, R.layout.service_activity_list_item, mStrings);
         leftListView.setAdapter(leftAdapter);
         leftListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        isFirstIn();
-        getTime();
         initView();
-    }
-    /**
-     * 获取缓存的所有所需参数
-     */
-    public void isFirstIn() {
-        sTypeNames = getSharedPreference("sTypeNames");
-        sDetailsNames0 = getSharedPreference("sDetailsNames1");
-        sDetailsNames2 = getSharedPreference("sDetailsNames3");
-        sDetailsNames3 = getSharedPreference("sDetailsNames4");
-        sDetailsImage0 = getSharedPreference("sDetailsImage1");
-        sDetailsImage2 = getSharedPreference("sDetailsImage3");
-        sDetailsImage3 = getSharedPreference("sDetailsImage4");
-        sFsNames0 = getSharedPreference("sFsNames0");
-        sFsTimes0 = getSharedPreference("sFsTimes0");
-        sFsImgs0 = getSharedPreference("sFsImgs0");
-        sFsLocals0 = getSharedPreference("sFsLocals0");
-
-        startTime1 = getSharedPreference("startTime1");
-        endTime1 = getSharedPreference("endTime1");
-        startTime3 = getSharedPreference("startTime3");
-        endTime3 = getSharedPreference("endTime3");
-        startTime4 = getSharedPreference("startTime4");
-        endTime4 = getSharedPreference("endTime4");
-
-        start2 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("start2", 0);
-        end2 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("end2", 0);
-
-        start5 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("start5", 0);
-        end5 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("end5", 0);
-        start6 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("start6", 0);
-        end6 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("end6", 0);
-        start7 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("start7", 0);
-        end7 = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getLong("end7", 0);
-
-
-        hotelIntroduction = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("hotelIntroduction", "");
-        breakfastTime = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("breakfastTime", "");
-        business = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("business", "");
-        hotelPolicys = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("hotelPolicys", "");
-        usageMonitoring = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("usageMonitoring", "");
-        userNeeds = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("userNeeds", "");
-        wifiName = getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS)
-                .getString("wifi", "");
-
     }
 
     private void initView() {
@@ -203,7 +123,6 @@ public class HotelServiceActivity extends FragmentActivity {
             lvBackground.setVisibility(View.GONE);
         } else if (bundle.getBoolean("about_item_2")) {
             Bundle bundle1 = new Bundle();
-            onBundleFac(bundle1);
             bundle1.putString("isFirst", "true");
             hFF.setArguments(bundle1);
             currentFragment = hFF;
@@ -214,21 +133,8 @@ public class HotelServiceActivity extends FragmentActivity {
             }
             fT.commitAllowingStateLoss();
             lvBackground.setVisibility(View.GONE);
-        } else if (bundle.getBoolean("about_item_3")) {
-            Bundle bundl = new Bundle();
-            bundl.putString("isFirst", "true");
-            hFF.setArguments(bundl);
-            currentFragment = hCF;
-            if (hCF.isAdded()) {
-                fT.hide(currentFragment).show(hCF);
-            } else {
-                fT.hide(currentFragment).replace(R.id.head_fragment, hCF).show(hCF);
-            }
-            fT.commitAllowingStateLoss();
-            lvBackground.setVisibility(View.GONE);
-        } else if (bundle.getBoolean("about_item_4")) {
+        }  else if (bundle.getBoolean("about_item_4")) {
             Bundle bund = new Bundle();
-            onBundleNeed(bund);
             bund.putString("isFirst", "true");
             hNF.setArguments(bund);
             currentFragment = hNF;
@@ -274,48 +180,46 @@ public class HotelServiceActivity extends FragmentActivity {
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
         currentFragment = hIF;
-        if (strings.equals("酒店介绍")) {
-            if (hIF.isAdded()) {
-                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).show(hIF);
-            } else {
-                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hIF).show(hIF);
+        switch (strings) {
+            case "酒店介绍":
+                if (hIF.isAdded()) {
+                    fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).show(hIF);
+                } else {
+                    fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hIF).show(hIF);
+                }
+                fT.commitAllowingStateLoss();
+                break;
+            case "酒店设施":
+                Bundle bundle1 = new Bundle();
+                hFF.setArguments(bundle1);
+                if (hFF.isAdded()) {
+                    fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hFF);
+                } else {
+                    fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hFF).show(hFF);
+                }
+                fT.commitAllowingStateLoss();
+                break;
+            case "使用客需": {
+                Bundle bund = new Bundle();
+                hNF.setArguments(bund);
+                if (hNF.isAdded()) {
+                    fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).show(hNF);
+                } else {
+                    fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hNF).show(hNF);
+                }
+                fT.commitAllowingStateLoss();
+                break;
             }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("酒店设施")) {
-            Bundle bundle1 = new Bundle();
-            onBundleFac(bundle1);
-            hFF.setArguments(bundle1);
-            if (hFF.isAdded()) {
-                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hFF);
-            } else {
-                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hFF).show(hFF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("使用客控")) {
-            Bundle bund = new Bundle();
-            if (hCF.isAdded()) {
-                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).show(hCF);
-            } else {
-                fT.hide(currentFragment).hide(hNF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hCF).show(hCF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("使用客需")) {
-            Bundle bund = new Bundle();
-            onBundleNeed(bund);
-            hNF.setArguments(bund);
-            if (hNF.isAdded()) {
-                fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).show(hNF);
-            } else {
-                fT.hide(currentFragment).hide(hIF).hide(hRF).hide(hFF).replace(R.id.head_fragment, hNF).show(hNF);
-            }
-            fT.commitAllowingStateLoss();
-        } else if (strings.equals("服务反馈")) {
-            if (hRF.isAdded()) {
-                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hRF);
-            } else {
-                fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hRF).show(hRF);
-            }
-            fT.commitAllowingStateLoss();
+            case "服务反馈":
+                if (hRF.isAdded()) {
+                    fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).show(hRF);
+                } else {
+                    fT.hide(currentFragment).hide(hNF).hide(hIF).hide(hFF).replace(R.id.head_fragment, hRF).show(hRF);
+                }
+                fT.commitAllowingStateLoss();
+                break;
+            default:
+                break;
         }
     }
 
@@ -362,47 +266,6 @@ public class HotelServiceActivity extends FragmentActivity {
     }
 
     /**
-     * 获取酒店设施的参数
-     */
-    private void onBundleFac(Bundle bund) {
-        bund.putStringArray("sFsNames0", sFsNames0);
-        bund.putStringArray("sFsTimes0", sFsTimes0);
-        bund.putStringArray("sFsImgs0", sFsImgs0);
-        bund.putStringArray("sFsLocals0", sFsLocals0);
-    }
-
-    /**
-     * 绑定酒店客需参数
-     */
-    private void onBundleNeed(Bundle bund) {
-        bund.putStringArray("title", sTypeNames);
-        bund.putIntegerArrayList("detailsId0", Constant.idArrayList1);
-        bund.putIntegerArrayList("detailsId2", Constant.idArrayList3);
-        bund.putIntegerArrayList("detailsId3", Constant.idArrayList4);
-        bund.putStringArray("detailsNames0", sDetailsNames0);
-        bund.putStringArray("sDetailsImage0", sDetailsImage0);
-        bund.putStringArray("detailsNames2", sDetailsNames2);
-        bund.putStringArray("sDetailsImage2", sDetailsImage2);
-        bund.putStringArray("detailsNames3", sDetailsNames3);
-        bund.putStringArray("sDetailsImage3", sDetailsImage3);
-        bund.putLong("start2", start2);
-        bund.putLong("end2", end2);
-        bund.putLong("start5", start5);
-        bund.putLong("end5", end5);
-        bund.putLong("start6", start6);
-        bund.putLong("end6", end6);
-        bund.putLong("start7", start7);
-        bund.putLong("end7", end7);
-        bund.putStringArray("startTime1", startTime1);
-        bund.putStringArray("startTime1", endTime1);
-        bund.putStringArray("startTime3", startTime3);
-        bund.putStringArray("endTime3", endTime3);
-        bund.putStringArray("startTime4", startTime4);
-        bund.putStringArray("endTime4", endTime4);
-
-    }
-
-    /**
      * 隐藏虚拟按键，并且全屏
      */
     protected void hideBottomMenu() {
@@ -441,6 +304,7 @@ public class HotelServiceActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        finish();
     }
 
 }

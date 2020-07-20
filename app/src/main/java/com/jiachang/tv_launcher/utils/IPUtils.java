@@ -1,7 +1,5 @@
 package com.jiachang.tv_launcher.utils;
 
-import android.util.Log;
-
 import org.json.JSONException;
 
 import java.io.BufferedReader;
@@ -9,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
@@ -41,7 +38,7 @@ public class IPUtils {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "utf-8"));
                 StringBuilder strber = new StringBuilder();
                 while ((line = reader.readLine()) != null) {
-                    strber.append(line + "\n");
+                    strber.append(line).append("\n");
                 }
                 inStream.close();
                 // 从反馈的结果中提取出IP地址
@@ -63,8 +60,6 @@ public class IPUtils {
                 LogUtils.e("提示", "IP接口异常，无法获取IP地址！");
 
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,12 +96,11 @@ public class IPUtils {
 
     private static String convertToMac(byte[] mac) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mac.length; i++) {
-            byte b = mac[i];
+        for (byte b : mac) {
             int value = 0;
             if (b >= 0 && b <= 16) {
                 value = b;
-                sb.append("0" + Integer.toHexString(value));
+                sb.append("0").append(Integer.toHexString(value));
             } else if (b > 16) {
                 value = b;
                 sb.append(Integer.toHexString(value));

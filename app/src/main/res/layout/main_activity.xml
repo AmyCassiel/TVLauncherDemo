@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_activity"
@@ -7,22 +7,17 @@
 
     <FrameLayout
         android:id="@+id/top"
-        style="@style/MainLayoutFragmentStyle"/>
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
     <FrameLayout
         android:id="@+id/menu"
-        style="@style/MainLayoutFragmentStyle"/>
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
     <FrameLayout
         android:id="@+id/bottom"
-        style="@style/MainLayoutFragmentStyle"/>
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="本系统由上海家畅智能科技有限公司提供技术支持"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="15px"/>-->
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

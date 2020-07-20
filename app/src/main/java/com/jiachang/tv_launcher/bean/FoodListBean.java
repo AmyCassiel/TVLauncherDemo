@@ -9,10 +9,10 @@ import android.graphics.Bitmap;
  */
 public class FoodListBean {
     private int id;
-    private String name;
-    private String price;
+    private final String name;
+    private final String price;
     private String supplyTime;
-    private Bitmap image;
+    private final Bitmap image;
     private int count;
 
     public FoodListBean(int id, String name, String price, Bitmap image, int count) {

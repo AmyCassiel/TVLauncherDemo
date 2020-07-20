@@ -1,77 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/service_type_card1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20px"
     android:layout_marginStart="10px"
+    android:layout_marginTop="20px"
     android:background="@drawable/service_item_bg"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/service_image1"
+        android:layout_width="200px"
+        android:layout_height="170px"
+        android:layout_gravity="center"
+        android:transitionName="image_dining" />
 
     <LinearLayout
-        android:id="@+id/service_menu1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:focusable="true"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/service_image1"
-            android:layout_width="200px"
-            android:layout_height="170px"
-            android:layout_gravity="center"
-            android:transitionName="image_dining" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:layout_gravity="center"
-            android:layout_marginStart="7px"
-            android:layout_marginEnd="7px"
-            android:layout_marginTop="5px"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/service_name1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:textSize="18px" />
-
-            <TextView
-                android:id="@+id/service_amount1"
-                android:layout_width="120px"
-                android:layout_height="match_parent"
-                android:gravity="end|center_vertical"
-                android:textSize="13px"
-                android:layout_weight="1"
-                android:textColor="@color/red" />
-        </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginStart="7px"
+        android:layout_marginTop="5px"
+        android:layout_marginEnd="7px"
+        android:alpha="0.8"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/service_price1"
+            android:id="@+id/service_name1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15px"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="7px"
-            android:layout_marginEnd="7px"
-            android:textColor="@color/red" />
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="18px" />
+
         <TextView
-            android:id="@+id/service_supply_time1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7px"
-            android:layout_marginEnd="7px"
-            android:layout_marginBottom="7px"
-            android:textColor="@color/golden"
+            android:id="@+id/service_amount1"
+            android:layout_width="120px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/red"
             android:textSize="13px" />
     </LinearLayout>
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/service_price1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7px"
+        android:layout_marginEnd="7px"
+        android:layout_weight="1"
+        android:textColor="@color/red"
+        android:textSize="15px" />
+
+    <TextView
+        android:id="@+id/service_supply_time1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7px"
+        android:layout_marginEnd="7px"
+        android:layout_marginBottom="7px"
+        android:textColor="@color/golden"
+        android:textSize="13px" />
+</LinearLayout>

@@ -1,10 +1,9 @@
 package com.jiachang.tv_launcher.view;
 
-
+import androidx.appcompat.widget.AppCompatImageView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -13,17 +12,14 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 /**
  * @author Mickey.Ma
  * @date 2020-04-08
  * @description 食物详情页的图片展示
  */
-public class MyImageView extends ImageView {
-
-    private Paint paint;
+public class MyImageView extends AppCompatImageView {
+    private final Paint paint;
 
     public MyImageView(Context context) {
         this(context,null);

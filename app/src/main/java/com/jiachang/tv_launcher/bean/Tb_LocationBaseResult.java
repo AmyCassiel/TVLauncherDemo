@@ -34,7 +34,7 @@ public class Tb_LocationBaseResult {
         this.status = status;
     }
 
-    public class getresult {
+    public static class getresult {
         private String address;
         private getaddressComponent address_detail;
         private getpoint point;

@@ -1,8 +1,5 @@
 package com.jiachang.tv_launcher.utils;
 
-import android.content.Context;
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -13,10 +10,6 @@ import java.io.InputStreamReader;
  * @description
  */
 public class PackagesInstaller {
-    private Context mContext;
-    public PackagesInstaller(Context context) {
-        mContext = context;
-    }
     /*静默卸载*/
     public static void uninstallSlient(String packageName) {
         String cmd = "pm uninstall " + packageName;

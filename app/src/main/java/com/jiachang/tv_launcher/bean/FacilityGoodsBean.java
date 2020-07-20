@@ -1,7 +1,6 @@
 package com.jiachang.tv_launcher.bean;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 /**
  * @author Mickey.Ma

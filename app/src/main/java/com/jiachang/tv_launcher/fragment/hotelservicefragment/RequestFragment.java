@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.fragment.hotelservicefragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiachang.tv_launcher.R;
+import com.jiachang.tv_launcher.activity.HotelServiceActivity;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import androidx.annotation.NonNull;
@@ -24,18 +24,16 @@ import butterknife.Unbinder;
  */
 public class RequestFragment extends Fragment {
     private Unbinder mUnbinder;
-    private Activity mActivity;
 
     @BindView(R.id.introduce_request)
     AutoLinearLayout introduceRequest;
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.service_intro_request_fragment,container,false);
         mUnbinder = ButterKnife.bind(this,view);
-        mActivity = (Activity) getContext();
+        HotelServiceActivity mActivity = (HotelServiceActivity) getContext();
 
         DisplayMetrics metric = new DisplayMetrics();
         mActivity.getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -72,5 +70,6 @@ public class RequestFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mUnbinder.unbind();
     }
 }

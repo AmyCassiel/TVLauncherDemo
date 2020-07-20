@@ -1,8 +1,6 @@
 package com.jiachang.tv_launcher.fragment.mainfragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +22,6 @@ import com.jiachang.tv_launcher.R;
 import com.jiachang.tv_launcher.activity.MainActivity;
 import com.jiachang.tv_launcher.utils.ApiRetrofit;
 import com.jiachang.tv_launcher.utils.Constant;
-import com.jiachang.tv_launcher.utils.HttpUtils;
 import com.jiachang.tv_launcher.utils.IPUtils;
 import com.jiachang.tv_launcher.utils.ImageUtil;
 import com.jiachang.tv_launcher.utils.LogUtils;
@@ -37,8 +34,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -48,9 +43,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static com.jiachang.tv_launcher.utils.Constant.API_KEY;
@@ -80,11 +73,11 @@ public class TopbarFragment extends Fragment {
     ImageView hotelIcon;
 
     private Unbinder mUb;
-    private String TAG = "TopbarFragment";
+    private final String TAG = "TopbarFragment";
     protected MainActivity mActivity;
     private String temperature, text;
     private int code;
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
@@ -138,29 +131,24 @@ public class TopbarFragment extends Fragment {
                 .getRoomNum(Constant.MAC)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResponseBody>() {
-                    @Override
-                    public void call(ResponseBody responseBody) {
-                        try {
-                            JSONObject ja = JSON.parseObject(responseBody.string());
-                            String msg = ja.getString("msg");
-                            if (msg.equals("未知异常，请联系管理员")){
-                                roomNum.setText("");
-                            }else {
-                                Constant.roomNum = msg;
-                                roomNum.setText("房间号：" + Constant.roomNum);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                .subscribe(responseBody -> {
+                    try {
+                        JSONObject ja = JSON.parseObject(responseBody.string());
+                        String msg = ja.getString("msg");
+                        Log.d("TopbarFragment: 请求房间号成功,msg = ",msg);
+                        if (msg.isEmpty()){
+                            roomNum.setText("");
+                        }else {
+                            Constant.roomNum = msg;
+                            roomNum.setText("房间号：" + Constant.roomNum);
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.e("TopbarFragment: 请求房间号失败", Objects.requireNonNull(throwable.getMessage()));
-                        Toast.makeText(mActivity,"获取房间号失败",Toast.LENGTH_SHORT).show();
-                        roomNum.setText("");
-                    }
+                }, throwable -> {
+                    Log.e("TopbarFragment: 请求房间号失败", Objects.requireNonNull(throwable.getMessage()));
+                    Toast.makeText(mActivity,"获取房间号失败",Toast.LENGTH_SHORT).show();
+                    roomNum.setText("");
                 });
 
         if (netWorkCheck(mActivity)) { //機器がネットワークに接続されているかどうかを判断する
@@ -193,12 +181,11 @@ public class TopbarFragment extends Fragment {
     }
 
     private void getTime() {
-        Calendar calendar = Calendar.getInstance();//取得当前时间的星期
         long sysTime = System.currentTimeMillis();//获取系统时间
         if (sysTime != 0) {
             CharSequence sysTimeStr = DateFormat.format("HH:mm", sysTime);//时间显示格式
             CharSequence sysDayStr = DateFormat.format("yyyy/MM/dd", sysTime);
-            if (!sysTimeStr.equals(0) & !sysDayStr.equals(0)) {
+            if (!sysTimeStr.equals("") & !sysDayStr.equals("")) {
                 time.setText(sysTimeStr);
                 monthDay.setText(sysDayStr);
             } else {
@@ -262,7 +249,6 @@ public class TopbarFragment extends Fragment {
                     Looper.prepare();
                     Toast.makeText(mActivity, "请求失败,请检查网络", Toast.LENGTH_LONG).show();
                     Looper.loop();
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -271,75 +257,6 @@ public class TopbarFragment extends Fragment {
             //使用api的数据接口
         }.execute(url);
     }
-
-    /**
-     * 获取天气
-     */
-    private void getWeather(String city) {
-        new Thread() {
-            @Override
-            public void run() {
-                LogUtils.d(TAG, "city = " + city);
-                String url1 = "https://api.seniverse.com/v3/weather/now.json?key=" + API_KEY + "&location=" + city + "&language=zh-Hans&unit=c";
-                try {
-                    URL url = new URL(url1);
-                    URLConnection connection = url.openConnection();//获取互联网连接
-                    InputStream is = connection.getInputStream();//获取输入流
-                    InputStreamReader isr = new InputStreamReader(is, "utf-8");//字节转字符，字符集是utf-8
-                    BufferedReader bufferedReader = new BufferedReader(isr);//通过BufferedReader可以读取一行字符串
-                    String line = bufferedReader.readLine();
-                    if (!line.isEmpty()) {
-//                        while (line != null) {
-                        JSONObject json = JSONObject.parseObject(line);
-                        String result = json.getString("results");
-                        LogUtils.i(TAG, result);
-                        JSONArray array = json.getJSONArray("results");
-                        for (int i = 0; i < array.size(); i++) {
-                            JSONObject jo = array.getJSONObject(i);
-                            String now = jo.getString("now");
-                            JSONObject jos = jo.getJSONObject("now");
-                            temperature = jos.getString("temperature");
-                            text = jos.getString("text");
-                            Log.i(TAG, "text=" + text);
-                            if (temperature != null && temperature.length() > 0
-                                    && text != null && text.length() > 0) {
-                                code = Integer.parseInt(jos.getString("code"));
-                                Log.i(TAG, "code = " + code);
-                                Message msg = new Message();
-                                msg.what = 1;
-                                msg.obj = temperature;//传对象，还有arg1、arg2……
-                                msg.obj = text;
-                                msg.arg1 = code;
-                                mHandler.sendMessage(msg);
-                            }
-                        }
-//                        }
-                        bufferedReader.close();
-                        isr.close();
-                        is.close();
-                    } else {
-                        LogUtils.e(TAG, "line = " + line);
-                        Looper.prepare();
-                        Toast.makeText(mActivity, "请求失败,请检查网络", Toast.LENGTH_LONG).show();
-                        Looper.loop();
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                    Looper.prepare();
-                    Toast.makeText(mActivity, "网络异常,请检查网络", Toast.LENGTH_LONG).show();
-                    Looper.loop();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Thread.sleep(6000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
     class TimeThread extends Thread {
         @Override
         public void run() {
@@ -363,7 +280,6 @@ public class TopbarFragment extends Fragment {
                 try {
                     Thread.sleep(84600000);
                     getWeather1(IPUtils.getPubIp());
-                    getWeather(IPUtils.getPubIp());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -468,5 +384,10 @@ public class TopbarFragment extends Fragment {
             e.getMessage();
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

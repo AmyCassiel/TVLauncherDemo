@@ -2,7 +2,6 @@ package com.jiachang.tv_launcher.fragment.dialogfragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,22 +39,14 @@ public class FileUploadDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.service_wifipassword_layout, null);
         builder.setTitle("上传日志");
         builder.setMessage("版本号：" + CommonUtil.getVersionName(activity.getApplicationContext())).setMessage("mac地址：" + MAC);
-        builder.setView(view).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //检查文件是否存在 存在就开启服务  上传到服务器
-                final File logFile = new File(Constant.LOG_FILE_PATH);
-                if (logFile.exists()) {
-                    LogUtils.i("ContentFragment", "logFile文件存在");
-                    activity.startService(new Intent(activity, UploadCashService.class));
-                }
+        builder.setView(view).setPositiveButton("确定", (dialog, which) -> {
+            //检查文件是否存在 存在就开启服务  上传到服务器
+            final File logFile = new File(Constant.LOG_FILE_PATH);
+            if (logFile.exists()) {
+                LogUtils.i("ContentFragment", "logFile文件存在");
+                activity.startService(new Intent(activity, UploadCashService.class));
             }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(activity.getApplicationContext(), "您已取消日志上传", Toast.LENGTH_LONG).show();
-            }
-        });
+        }).setNegativeButton("取消", (dialog, which) -> Toast.makeText(activity.getApplicationContext(), "您已取消日志上传", Toast.LENGTH_LONG).show());
         return builder.create();
     }
 }

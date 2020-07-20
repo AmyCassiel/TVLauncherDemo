@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -109,16 +108,16 @@ public class ControlBean {
         this.jr = jr;
     }
 
-    private class addrBean {
+    private static class addrBean {
     }
 
-    private class mapBean {
+    private static class mapBean {
     }
 
-    private class offlineBean {
+    private static class offlineBean {
     }
 
-    private class pageBean {
+    private static class pageBean {
         private numberBean number;
 
         private class numberBean {
@@ -253,21 +252,21 @@ public class ControlBean {
         }
     }
 
-    private class layoutBean {
+    private static class layoutBean {
     }
 
-    private class tqBean {
+    private static class tqBean {
     }
 
-    private class favoriteBean {
+    private static class favoriteBean {
     }
 
-    private class placelistBean {
+    private static class placelistBean {
     }
 
-    private class alarmBean {
+    private static class alarmBean {
     }
 
-    private class jrBean {
+    private static class jrBean {
     }
 }

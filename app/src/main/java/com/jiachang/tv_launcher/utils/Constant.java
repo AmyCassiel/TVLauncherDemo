@@ -1,11 +1,11 @@
 package com.jiachang.tv_launcher.utils;
 
-import android.content.Context;
 import android.os.Environment;
 
-import java.text.SimpleDateFormat;
+import com.jiachang.tv_launcher.bean.HotelInfoBean;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mickey.Ma
@@ -13,10 +13,10 @@ import java.util.Date;
  * @description  软件总体所需的参数
  */
 public class Constant {
-    public static String hostUrl = "https://jczh.jiachang8.com";
+    public static final String hostUrl = "https://jczh.jiachang8.com";
     public static String localhostUrl = "http://192.168.0.243:8383";
     public static String MAC = "";
-    public static String API_KEY = "l7in2sysjxkwjolf";
+    public static final String API_KEY = "l7in2sysjxkwjolf";
     public static String hotelName = "";
     public static String hotelIntroduction = "";
     public static String usageMonitoring = "";
@@ -49,25 +49,12 @@ public class Constant {
     public static long end6 = 0;
     public static long start7 = 0;
     public static long end7 = 0;
-    public static String[] startTime1 = null;
-    public static String[] endTime1 = null;
-    public static String[] startTime3 = null;
-    public static String[] endTime3 = null;
-    public static String[] startTime4 = null;
-    public static String[] endTime4 = null;
-
-    public static ArrayList<Integer> idArrayList1 = null;
-    public static ArrayList<Integer> idArrayList3 = null;
-    public static ArrayList<Integer> idArrayList4 = null;
-    public static ArrayList<Float> priceArrayList3 = null;
+    public static List<HotelInfoBean.HotelDbBean.ServiceConfsBean> serviceConfs = null;
+    public static List<HotelInfoBean.HotelDbBean.HotelFacilitiesBean> hotelFacilities = null;
 
     public static final String CASHUPLOAD = hostUrl+"/reservation/notify/logUpload";
 
-    public static String LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory().getPath() + "/tv_launcher/log";
-    public static String LOG_FILE_Name = "log.txt";
-    public static String LOG_FILE_PATH = LOG_PATH_SDCARD_DIR +"/"+LOG_FILE_Name;
-    private Context context;
-    public Constant(Context context) {
-        this.context = context;
-    }
+    public static final String LOG_PATH_SDCARD_DIR = Environment.getExternalStorageDirectory().getPath() + "/tv_launcher/log";
+    public static final String LOG_FILE_Name = "log.txt";
+    public static final String LOG_FILE_PATH = LOG_PATH_SDCARD_DIR +"/"+LOG_FILE_Name;
 }

@@ -1,6 +1,5 @@
 package com.jiachang.tv_launcher.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -36,7 +35,6 @@ import static com.jiachang.tv_launcher.utils.Constant.MAC;
  */
 public class SettingActivity extends FragmentActivity {
     private static final String TAG = "SettingActivity";
-    private Context context;
     @BindView(R.id.et_account)
     EditText ed_account;
     @BindView(R.id.et_pwd)
@@ -63,7 +61,6 @@ public class SettingActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         hideBottomMenu();
         setContentView(R.layout.service_setting_activity);
-        context = this;
         ButterKnife.bind(this);
         getMac();
     }
@@ -146,7 +143,7 @@ public class SettingActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_MENU: //菜单键
+            case KeyEvent.KEYCODE_SETTINGS: //菜单键
                 FragmentManager fM = getSupportFragmentManager();
                 FileUploadDialogFragment dialogFragment = new FileUploadDialogFragment();
                 dialogFragment.show(fM,"");
@@ -159,6 +156,7 @@ public class SettingActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         finish();
     }
 }

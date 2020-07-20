@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    android:clipChildren="false"
-    android:clipToPadding="false"
     android:orientation="vertical">
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
@@ -38,33 +36,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ios"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/android"/>
 
-    <!--<ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/dlna"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/miracast"/>
-        </LinearLayout>
-    </ScrollView>
-    <ImageView
-        android:id="@+id/ios_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/ios1"
-        android:visibility="gone"/>-->
 </LinearLayout>

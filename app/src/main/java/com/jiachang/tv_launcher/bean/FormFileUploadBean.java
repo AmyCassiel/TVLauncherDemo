@@ -1,11 +1,5 @@
 package com.jiachang.tv_launcher.bean;
 
-/**
- * @author Mickey.Ma
- * @date 2020-06-08
- * @description
- */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

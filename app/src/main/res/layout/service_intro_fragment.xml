@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AboutSCol">
 
-    <ScrollView
-        android:id="@+id/scroll"
-        style="@style/AboutSCol">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:id="@+id/introduce_hotel"
+            style="@style/AboutContextLL"
+            android:layout_marginTop="50px"
+            android:visibility="visible">
 
-            <com.zhy.autolayout.AutoLinearLayout
-                android:id="@+id/introduce_hotel"
-                android:layout_marginTop="50px"
-                android:visibility="visible"
-                style="@style/AboutContextLL">
+            <TextView
+                style="@style/AboutContextTopicLL"
+                android:text="@string/hotel_introduce_tittle" />
 
-                <TextView
-                    style="@style/AboutContextTopicLL"
-                    android:text="@string/hotel_introduce_tittle" />
-
-                <TextView
-                    android:id="@+id/introduce_hotel_txt"
-                    style="@style/AboutContextContextLL"
-                    android:layout_marginBottom="200px"
-                    android:text="@string/hotel_introduce_text" />
-            </com.zhy.autolayout.AutoLinearLayout>
+            <TextView
+                android:id="@+id/introduce_hotel_txt"
+                style="@style/AboutContextContextLL"
+                android:layout_marginBottom="200px"
+                android:text="@string/hotel_introduce_text" />
         </com.zhy.autolayout.AutoLinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</ScrollView>
