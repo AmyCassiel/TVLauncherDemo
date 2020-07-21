@@ -1,5 +1,4 @@
 package com.jiachang.tv_launcher.fragment.mainfragment;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -147,7 +146,7 @@ public class TopbarFragment extends Fragment {
                     }
                 }, throwable -> {
                     Log.e("TopbarFragment: 请求房间号失败", Objects.requireNonNull(throwable.getMessage()));
-                    Toast.makeText(mActivity,"获取房间号失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity,"获取房间号失败,当前设备可能暂时未绑定",Toast.LENGTH_SHORT).show();
                     roomNum.setText("");
                 });
 

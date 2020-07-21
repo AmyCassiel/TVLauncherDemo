@@ -109,16 +109,23 @@ public class ControlActivity extends Activity {
                         JSONObject object = JSONObject.parseObject(body);
                         int code = object.getIntValue("code");
                         if (code == 0) {
+                            introduceControlJIA.setVisibility(View.GONE);
                             String url = object.getString("url");
                             String token = object.getString("token");
                             getBaseUrl(token,url);
                         } else {
-                            ToastUtils.show("获取token失败，请检查后重试！");
+                            DialogUtil.finish();
+                            introduceControlJIA.setVisibility(View.VISIBLE);
+                            ToastUtils.show("获取失败，请检查是否已绑定网关后重试！");
                         }
                     } catch (IOException e) {
+                        DialogUtil.finish();
+                        introduceControlJIA.setVisibility(View.VISIBLE);
                         e.printStackTrace();
                     }
                 }, throwable -> {
+                    DialogUtil.finish();
+                    introduceControlJIA.setVisibility(View.VISIBLE);
                     Log.e(Tag, "错误：" + throwable.getMessage());
                     ToastUtils.show("获取失败，请重试");
                 });
@@ -155,12 +162,13 @@ public class ControlActivity extends Activity {
                      public void call(ResponseBody responseBody) {
                          DialogUtil.finish();
                          try {
-                             String request = responseBody.string();
-                             if (!request.isEmpty()){
-                                 if (!request.contains("logout")) {
+                             String response = responseBody.string();
+                             Log.i(Tag,"response = "+response);
+                             if (!response.isEmpty()){
+                                 if (!response.contains("logout")) {
                                      introControl.setVisibility(View.VISIBLE);
                                      introduceControlJIA.setVisibility(View.GONE);
-                                     Map responseMap = (Map) JSONObject.parse(request, Feature.OrderedField);
+                                     Map responseMap = (Map) JSONObject.parse(response, Feature.OrderedField);
                                      Map pageMap = (Map) responseMap.get("page");
                                      Set set = pageMap.keySet();
                                      Iterator iterator = set.iterator();

@@ -383,7 +383,8 @@
                     style="@style/DLImageStyle"
                     android:src="@mipmap/dining_welcome" />
 
-                <LinearLayout style="@style/DLboderTextStyle">
+                <LinearLayout
+                    style="@style/DLboderTextStyle">
 
                     <TextView
                         style="@style/DLTextStyle"

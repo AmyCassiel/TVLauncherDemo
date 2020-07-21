@@ -153,7 +153,14 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getData();
+        if (serviceConfs!=null){
+            getData();
+        }else {
+            introControl.setVisibility(View.GONE);
+            introduceControl.setVisibility(View.VISIBLE);
+            Toast.makeText(mActivity, "酒店暂时不提供该服务", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -570,7 +577,10 @@ public class NeedFragment extends Fragment implements ServiceNeedGoodsAdapter.On
         super.onDestroy();
         needGoodsBeansList.clear();
         service.clear();
-        serviceConfs.clear();
+        if (serviceConfs != null){
+            serviceConfs.clear();
+        }
+
     }
 
     static class MyAlertDialogAdapter extends BaseAdapter {

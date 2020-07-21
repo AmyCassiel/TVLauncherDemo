@@ -57,12 +57,6 @@ public class FacilityFragment extends Fragment {
     private ArrayList<String> sFsLocals = new ArrayList<>();
     private List<HotelInfoBean.HotelDbBean.HotelFacilitiesBean> hotelFacilities = Constant.hotelFacilities;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,7 +70,6 @@ public class FacilityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i(tag,"onActivityCreated");
         //获取宿主Activity
         if (mActivity != null) {
             ListView listView = mActivity.findViewById(R.id.select_listview);
@@ -92,7 +85,7 @@ public class FacilityFragment extends Fragment {
             }
         }
 
-        if (!hotelFacilities.isEmpty()) {
+        if (hotelFacilities != null) {
             int fsize = hotelFacilities.size();
             for (int j = 0; j < fsize; j++) {
                 Constant.sFacilitiesName = hotelFacilities.get(j).getName();
@@ -104,9 +97,14 @@ public class FacilityFragment extends Fragment {
                 sFsTimes.add(Constant.sFacilitiesTime);
                 sFsLocals.add(Constant.sFacilitiesLocation);
             }
+        }else {
+            introlFacility.setVisibility(View.GONE);
+            introduceFacility.setVisibility(View.VISIBLE);
         }
 
         if (sFsNames != null && !sFsNames.isEmpty()) {
+            introlFacility.setVisibility(View.VISIBLE);
+            introduceFacility.setVisibility(View.GONE);
             initGood(sFsImgs, sFsNames, sFsTimes, sFsLocals);
         } else {
             introlFacility.setVisibility(View.GONE);
@@ -148,15 +146,15 @@ public class FacilityFragment extends Fragment {
         super.onDestroyView();
         mUnbinder.unbind();
         adapter.setDataList(service);
-        Log.i(tag,"onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         service.clear();
-        hotelFacilities.clear();
-        Log.i(tag,"onDestroy");
+        if (hotelFacilities!=null){
+            hotelFacilities.clear();
+        }
     }
 
     private static class OnPopRecyclerViewScrollListener extends RecyclerView.OnScrollListener {

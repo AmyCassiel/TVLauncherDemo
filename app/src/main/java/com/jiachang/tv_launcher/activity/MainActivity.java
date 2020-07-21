@@ -172,8 +172,7 @@ public class MainActivity extends FragmentActivity {
                             JSONObject json = JSONObject.parseObject(req);
                             ParserConfig.getGlobalInstance().addAccept("HotelInfo");
                             HotelInfoBean hotelInfo = JSONObject.toJavaObject(json, HotelInfoBean.class);
-                            int code = hotelInfo.getCode();
-                            if (code == 0) {
+                            if (hotelInfo.getCode() == 0) {
                                 Constant.hotelName = hotelInfo.getHotelDb().getHotelName();
                                 LogUtils.d(TAG + ".210", "hotelName = " + Constant.hotelName);
                                 Constant.hotelIntroduction = hotelInfo.getHotelDb().getHotelIntrodu();
@@ -222,16 +221,17 @@ public class MainActivity extends FragmentActivity {
                                             .putString("breakfastTime", Constant.breakfastTime).putString("local", Constant.sFacilityLocation).putString("business", Constant.business)
                                             .apply();
                                 }
-                            } else if(hotelInfo.getErrno() == 404){
-                                DialogUtil.finish();
-                                Looper.prepare();
-                                Toast.makeText(context, hotelInfo.getErrmsg(), Toast.LENGTH_LONG).show();
-                                Looper.loop();
-                            }else {
+                            } else {
                                 DialogUtil.finish();
                                 LogUtils.e(TAG, "获取酒店信息失败");
                                 Looper.prepare();
                                 Toast.makeText(context, "获取酒店信息失败", Toast.LENGTH_LONG).show();
+                                Looper.loop();
+                            }
+                            if(hotelInfo.getErrno() == 404){
+                                DialogUtil.finish();
+                                Looper.prepare();
+                                Toast.makeText(context, hotelInfo.getErrmsg(), Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             }
                         } else {

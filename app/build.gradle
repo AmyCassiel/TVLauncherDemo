@@ -10,8 +10,8 @@ android {
         applicationId "com.jiachang.tv_launcher"
         minSdkVersion 25
         targetSdkVersion 29
-        versionCode 26
-        versionName "2.0.0.26"
+        versionCode 29
+        versionName "2.0.0.29"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构
@@ -25,7 +25,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled true //true为打开混淆代码，使代码不易泄露
+            shrinkResources true //排除未使用的资源文件不打入apk中
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         signingConfigs {
