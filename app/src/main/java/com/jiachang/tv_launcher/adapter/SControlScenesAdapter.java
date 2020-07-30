@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
         @BindView(R.id.service_control_name1)
         TextView serviceName;
         @BindView(R.id.service_control_type_card1)
-        RelativeLayout serviceTypeCard;
+        LinearLayout serviceTypeCard;
 
         ViewHolder (View view) {
             super(view);
@@ -52,11 +53,11 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
         final ViewHolder holder = new ViewHolder(view);
         initView(holder);
         holder.serviceTypeCard.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
+            /*if (hasFocus) {
                 ViewUtils.focusStatus(v);
             } else {
                 ViewUtils.normalStatus(v);
-            }
+            }*/
         });
 
         return holder;
@@ -89,6 +90,5 @@ public class SControlScenesAdapter extends RecyclerView.Adapter<SControlScenesAd
     }
     public interface onItemClickListener{
         void onItemClick(int position, View v, FacilityGoodsBean serviceType);
-
     }
 }

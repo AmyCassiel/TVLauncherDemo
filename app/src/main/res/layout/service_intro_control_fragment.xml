@@ -115,6 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dip"
+                        android:nextFocusDown="@null"
                         android:listSelector="@drawable/apower_mirror_solid_bg_focus" />
                 </RelativeLayout>
 

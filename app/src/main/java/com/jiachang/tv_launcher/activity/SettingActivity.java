@@ -110,7 +110,7 @@ public class SettingActivity extends FragmentActivity {
             case R.id.tv_confirm:
                 String username = ed_account.getText().toString();
                 String mypwd = ed_pwd.getText().toString();
-                if (username.equals("admin") && mypwd.equals("jiachang888")) {
+                if (username.equals("admin") && mypwd.equals("88")) {
                     /*Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);*/
                     PackageManager packageManager = getPackageManager();

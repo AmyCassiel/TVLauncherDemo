@@ -183,8 +183,6 @@ public class MainActivity extends FragmentActivity {
                                 LogUtils.d(TAG+".216","Constant.wifiPassword = "+Constant.wifiPassword);
                                 Constant.tel = hotelInfo.getHotelDb().getTelephone();
                                 Constant.img = hotelInfo.getHotelDb().getLogo();
-                                String bgurl = hotelInfo.getHotelDb().getAppearancePicUrl();
-                                bg1 = bgurl.substring(0, bgurl.indexOf(","));
                                 bg = hotelInfo.getHotelDb().getHotelPromote().getMainImage();
                                 LogUtils.d(TAG+".216","MainActivityBG = "+bg);
                                 if (!bg.isEmpty()){
@@ -194,6 +192,8 @@ public class MainActivity extends FragmentActivity {
                                     message.obj = drawable;
                                     handler.sendMessage(message);
                                 }else {
+                                    String bgurl = hotelInfo.getHotelDb().getAppearancePicUrl();
+                                    bg1 = bgurl.substring(0, bgurl.indexOf(","));
                                     drawable = ImageUtil.ImageOperations(context,bg1,"bg.png");
                                     Message message = new Message();
                                     message.what = 0;

@@ -2,11 +2,20 @@ package com.jiachang.tv_launcher.utils;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jiachang.tv_launcher.interfaces.RetrofitInterface;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -33,5 +42,32 @@ public class ApiRetrofit {
                 .build();
         //创建Retrofit接口对象
         return retrofit.create(RetrofitInterface.class);
+    }
+
+    /*
+     * 初始化retrofit
+     * */
+    public static void getRetrofit(String baseUrl){
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        // request body
+        Map<String, String> foo = new HashMap<>();
+        foo.put("rs", "execAttr");
+        foo.put("rsargs[]", "18");
+        foo.put("rsargs[m]","");
+
+        Request request = new Request.Builder().url(baseUrl)
+                .post(RequestBody.create(MediaType.get("application/json"), JSONObject.toJSONString(foo))).build();
+
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            ResponseBody body = response.body();
+            if (response.isSuccessful()) {
+                Log.i("success:{}", body == null ? "" : body.string());
+            } else {
+                Log.e("error,statusCode={},body={}", ""+response.code()+""+body == null ? "" : body.string());
+            }
+        }catch (IOException e){
+            e.getMessage();
+        }
     }
 }

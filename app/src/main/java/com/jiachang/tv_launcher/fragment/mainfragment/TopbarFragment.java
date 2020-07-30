@@ -114,6 +114,11 @@ public class TopbarFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         initData();
     }
 
@@ -133,13 +138,14 @@ public class TopbarFragment extends Fragment {
                 .subscribe(responseBody -> {
                     try {
                         JSONObject ja = JSON.parseObject(responseBody.string());
-                        String msg = ja.getString("msg");
-                        Log.d("TopbarFragment: 请求房间号成功,msg = ",msg);
-                        if (msg.isEmpty()){
+                        Constant.roomNum = ja.getString("msg");
+                        Log.d("TopbarFragment: 请求房间号成功,房间号为",Constant.roomNum);
+                        if (Constant.roomNum.isEmpty()){
                             roomNum.setText("");
                         }else {
-                            Constant.roomNum = msg;
                             roomNum.setText("房间号：" + Constant.roomNum);
+                            mActivity.getApplicationContext().getSharedPreferences("hotel", Context.MODE_MULTI_PROCESS).edit()
+                                        .putString("hotelroomNum", Constant.roomNum).apply();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

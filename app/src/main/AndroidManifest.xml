@@ -145,21 +145,6 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustPan"/>
 
-        <!-- 应用程序发生改变，替换，被删除的广播监听 -->
-        <receiver android:name="com.jiachang.tv_launcher.receiver.PackageChangedReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
-                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-            </intent-filter>
-        </receiver>
-        <!-- 开机广播监听 -->
-        <receiver android:name="com.jiachang.tv_launcher.receiver.StartUpReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
-
         <service android:name=".service.UploadCashService"/>
 
         <!-- AutoLayout 基准分辨率初始化 -->

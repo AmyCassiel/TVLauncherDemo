@@ -6,26 +6,22 @@ package com.jiachang.tv_launcher.bean;
  * @description
  */
 public class ControlDevicesBean {
+    private String type;
     private String name;
-    private String supplyTime;
-    private String local;
+    private String state;
+    private String devId;
+    private int stateCode;
     private int image;
 
-    public ControlDevicesBean(String name, String supplyTime, int image){
+    public ControlDevicesBean(String type, String name, String state, int stateCode, String devId, int image){
+        this.type =type;
         this.name = name;
-        this.supplyTime = supplyTime;
-        this.local = local;
+        this.state = state;
+        this.devId = devId;
         this.image = image;
+        this.stateCode =stateCode;
     }
 
-
-    public String getSupplyTime() {
-        return supplyTime;
-    }
-
-    public void setSupplyTime(String supplyTime) {
-        this.supplyTime = supplyTime;
-    }
 
     public String getName() {
         return name;
@@ -41,5 +37,37 @@ public class ControlDevicesBean {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getDevId() {
+        return devId;
+    }
+
+    public void setDevId(String devId) {
+        this.devId = devId;
+    }
+
+    public int getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(int stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

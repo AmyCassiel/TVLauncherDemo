@@ -173,6 +173,12 @@ public class HotelServiceActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getTime();
+    }
+
     /**
      * 服务界面的最左边item控制右边fragment的显示
      */

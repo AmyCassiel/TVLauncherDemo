@@ -73,6 +73,4 @@ public interface RetrofitInterface {
             @Query("hictoken") String hictoken,
             @Field("rs") String getDevListJson
     );
-
-
 }
